@@ -1,0 +1,17 @@
+{
+  "name": "simulation",
+  "version": "1.0.0",
+  "description": "This is your new Play application =================================",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "test"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bower": "^1.4.1"
+  }
+}
