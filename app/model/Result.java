@@ -9,22 +9,15 @@ import java.util.List;
  * Created by chelen on 02/05/15.
  */
 public class Result {
-    private final double resultA;
-    private final double resultB;
+    private final NumericResults results;
     private final List<Event> events;
-//    private final double lc;
-//    private final double la;
-//    private final double lb;
-//    private final double l;
-//    private final double wcA;
-//    private final double wcB;
-//    private final double wC;
 
 
     public Result() {
         events = new ArrayList<>();
-        resultA = 0;
-        resultB = 0;
+        results = new NumericResults();
+        results.setResultA(2.64);
+        results.setResultB(3.14);
     }
     public void addEvent(Event e) {
         events.add(e);
@@ -34,11 +27,7 @@ public class Result {
         return events;
     }
 
-    public double getResultB() {
-        return resultB;
-    }
-
-    public double getResultA() {
-        return resultA;
+    public NumericResults getResults(){
+        return results;
     }
 }

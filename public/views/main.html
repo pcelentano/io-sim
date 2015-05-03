@@ -1,19 +1,72 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-12 text-center">
+            <a class="glyphicon glyphicon-arrow-left left-positioned text-primary animate-hide"
+               aria-hidden="true" ng-click="mainCtrl.reset()" ng-show="!mainCtrl.editing && !mainCtrl.loading"></a>
             <h2 class="section-heading">Simulation</h2>
             <hr class="primary">
         </div>
     </div>
 </div>
-<div class="container">
-    <div class="row">
-        <div class="col-lg-3 col-md-6 text-center" ng-repeat="data in mainCtrl.items">
-            <div class="service-box">
-                <i class="fa fa-4x fa-diamond text-primary"></i>
-                <h3>{{data.name}}</h3>
-                <p class="text-muted">Our templates are updated regularly so they don't break.</p>
+<div class="row text-center animate-hide" ng-show="mainCtrl.loading">
+    <img src="/assets/images/hex-loader.gif" >
+</div>
+
+<div class="container animate-hide" ng-show="mainCtrl.editing" name="simForm">
+    <form ng-submit="mainCtrl.submit()" ng-disabled="simForm.$invalid">
+        <div class="row">
+            <div class="form-group col-sm-6">
+                <label for="straT"> Simulation Strategy</label>
+                <input type="text" class="form-control" id="straT" placeholder="Rate" disabled value="RelativePriorityTotalAbandonment">
             </div>
+            <div class="form-group col-sm-6">
+                <label for="cliB">Time</label>
+                <input type="number" class="form-control" id="time" placeholder="Time" ng-model="mainCtrl.formData.time">
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-6">
+                <label for="cliA">Clients <strong>A</strong> Per Hour</label>
+                <input type="number" class="form-control" id="cliA" placeholder="Rate" ng-model="mainCtrl.formData.clientsHourA">
+            </div>
+            <div class="form-group col-sm-6">
+                <label for="cliB">Clients <strong>B</strong> Per Hour</label>
+                <input type="number" class="form-control" id="cliB" placeholder="Rate" ng-model="mainCtrl.formData.clientsHourB">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-sm-6">
+                <label for="muA">Attention <strong>A</strong> Per Hour</label>
+                <input type="number" class="form-control" id="muA" placeholder="Rate" ng-model="mainCtrl.formData.muA">
+            </div>
+            <div class="form-group col-sm-6">
+                <label for="muB">Attention <strong>B</strong> Per Hour</label>
+                <input type="number" class="form-control" id="muB" placeholder="Rate" ng-model="mainCtrl.formData.muB">
+            </div>
+        </div>
+        <div class="row text-center">
+            <input type="submit" class="btn btn-default btn-xl" value="Submit"/>
+        </div>
+    </form>
+
+    <pre> {{mainCtrl.formData | json}}</pre>
+</div>
+
+<div class="container animate-hide" ng-show="!mainCtrl.editing && !mainCtrl.loading" >
+    <div class="row">
+        <div class="col-md-3 col-xs-4 text-center" ng-repeat="(key, value) in mainCtrl.items.results">
+            <div class="service-box">
+                <i class="glyphicon glyphicon-ok text-primary"></i>
+                <h3>{{value}}</h3>
+                <p class="text-muted">{{key}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"> View Events</button>
+        <div class="collapse" id="collapseExample">
+            <pre>{{mainCtrl.items.events | json}}</pre>
         </div>
     </div>
 </div>

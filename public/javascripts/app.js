@@ -8,7 +8,10 @@
  *
  * Main module of the application.
  */
-angular.module('ngSimulation', ['ngRoute'])
+angular.module('ngSimulation', [
+    'ngRoute',
+    'ngAnimate',
+    ])
     .config(['$routeProvider',function ($routeProvider) {
         $routeProvider
             .when('/', {

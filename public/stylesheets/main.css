@@ -1,0 +1,24 @@
+.left-positioned {
+    float: left;
+    font-size: 2em;
+    margin-right: -2em;
+}
+.left-positioned:hover{
+    text-decoration: none;
+    -webkit-transform:rotate(360deg);
+    transform:rotate(360deg);
+}
+#simulation {
+    min-height: 97vh;
+    overflow:hidden;
+}
+
+.animate-hide {
+    -webkit-transition: all ease-in-out 0.3s;
+    transition: all ease-in-out 0.3s;
+    opacity: 1;
+}
+
+.animate-hide.ng-hide {
+    opacity: 0;
+}

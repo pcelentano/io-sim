@@ -19,11 +19,11 @@ import static model.simulation.Event.EventType.ARRIVAL;
 public class Simulation {
 
 
-    private static final double clientsPerHourA = 3;
-    private static final double clientsPerHourB = 10;
-    private static final double muA = 12;
-    private static final double muB = 20;
-    public static final int MAX_TIME = 20;
+    private final double clientsPerHourA;
+    private final double clientsPerHourB;
+    private final double muA;
+    private final double muB;
+    public final int MAX_TIME;
 
     public final SimulationStrategy simulationStrategy;
 
@@ -33,7 +33,12 @@ public class Simulation {
 
 
     /** Creates a Simulation with given Strategy. */
-    public Simulation(SimulationStrategy simulationStrategy) {
+    public Simulation(SimulationStrategy simulationStrategy, double clientsPerHourA, double clientsPerHourB, double muA, double muB, int max_time) {
+        this.clientsPerHourA = clientsPerHourA;
+        this.clientsPerHourB = clientsPerHourB;
+        this.muA = muA;
+        this.muB = muB;
+        MAX_TIME = max_time;
         customerQueue = new LinkedList<Customer>();
         events = new ArrayList<>();
         currentCustomer = null;
