@@ -12,7 +12,7 @@
     <img src="/assets/images/hex-loader.gif" >
 </div>
 
-<div class="container animate-hide" ng-show="mainCtrl.editing" name="simForm">
+<div class="container animate-hide" ng-show="mainCtrl.editing" name="simForm" ng-class="!mainCtrl.editing ? 'no-transition' : 'delay-transition'">
     <form ng-submit="mainCtrl.submit()" ng-disabled="simForm.$invalid">
         <div class="row">
             <div class="form-group col-sm-6">
@@ -49,11 +49,10 @@
             <input type="submit" class="btn btn-default btn-xl" value="Submit"/>
         </div>
     </form>
-
     <pre> {{mainCtrl.formData | json}}</pre>
 </div>
 
-<div class="container animate-hide" ng-show="!mainCtrl.editing && !mainCtrl.loading" >
+<div class="container animate-hide" ng-show="!mainCtrl.editing && !mainCtrl.loading"  ng-class="!mainCtrl.editing ? 'delay-transition' : 'no-transition' " >
     <div class="row">
         <div class="col-md-3 col-xs-4 text-center" ng-repeat="(key, value) in mainCtrl.items.results">
             <div class="service-box">

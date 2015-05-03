@@ -22,3 +22,10 @@
 .animate-hide.ng-hide {
     opacity: 0;
 }
+
+.delay-transition {
+    -webkit-transition-delay: 0.5s; /* Safari */
+    transition-delay: 0.5s;
+}
+
+.no-transition { transition: none; }
