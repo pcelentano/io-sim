@@ -1,9 +1,12 @@
 package controllers;
 
-import model.Data;
+import model.*;
+import model.simulation.Simulation;
+import model.simulation.strategies.RelativePriorityTotalAbandonmentStrategy;
 import play.*;
 import play.mvc.*;
 
+import play.mvc.Result;
 import views.html.*;
 
 import java.util.ArrayList;
@@ -23,6 +26,13 @@ public class Application extends Controller {
             data.add(new Data("Name #" + i));
         }
         return ok(toJson(data));
+
+    }
+
+    public static Result simulation() {
+        final Simulation simulation = new Simulation(new RelativePriorityTotalAbandonmentStrategy());
+        final model.Result run = simulation.run();
+        return ok(toJson(run));
 
     }
 }
