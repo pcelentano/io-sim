@@ -16,9 +16,8 @@ public class Result {
     public Result() {
         events = new ArrayList<>();
         results = new NumericResults();
-        results.setResultA(2.64);
-        results.setResultB(3.14);
     }
+
     public void addEvent(Event e) {
         events.add(e);
     }
@@ -30,4 +29,6 @@ public class Result {
     public NumericResults getResults(){
         return results;
     }
+
+
 }

@@ -1,5 +1,6 @@
 package model.simulation;
 
+import model.NumericResults;
 import model.Result;
 import model.simulation.mathematics.Mathematics;
 import model.simulation.strategies.SimulationStrategy;
@@ -69,6 +70,18 @@ public class Simulation {
 
 
         System.out.println("done!");
+
+        final NumericResults results = result.getResults();
+        results.setLcA(Math.pow(clientsPerHourA, 2) / ((muA - clientsPerHourA) * muA));
+        results.setLcB(Math.pow(clientsPerHourB, 2) / ((muB - clientsPerHourB) * muB));
+        results.setLa(clientsPerHourA / (muA - clientsPerHourA));
+        results.setLb(clientsPerHourB / (muB - clientsPerHourB));
+        results.setWcA(results.getLcA()/clientsPerHourA);
+        results.setWcB(results.getLcB()/clientsPerHourB);
+        results.setWa(results.getLa()/clientsPerHourA);
+        results.setWb(results.getLb()/clientsPerHourB);
+        results.setHa(results.getLcA()-results.getLa());
+        results.setHb(results.getLcB()-results.getLb());
 
         return result;
 
