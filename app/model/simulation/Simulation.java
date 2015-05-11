@@ -1,7 +1,5 @@
 package model.simulation;
 
-import model.NumericResults;
-import model.Result;
 import model.simulation.mathematics.Mathematics;
 import model.simulation.strategies.SimulationStrategy;
 

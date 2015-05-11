@@ -11,6 +11,7 @@
 #simulation {
     min-height: 97vh;
     overflow:hidden;
+    position: relative;
 }
 
 .animate-hide {
@@ -29,3 +30,12 @@
 }
 
 .no-transition { transition: none; }
+
+.top-positioned {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 40vw;
+    margin-left: -20vw;
+    text-align: center;
+}

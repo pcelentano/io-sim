@@ -1,9 +1,12 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import model.*;
+import model.simulation.Data;
+import model.simulation.InputData;
 import model.simulation.Simulation;
+import model.simulation.SimulationParameters;
 import model.simulation.strategies.RelativePriorityTotalAbandonmentStrategy;
+import model.simulation.strategies.SimulationStrategy;
 import play.libs.Json;
 import play.mvc.*;
 
@@ -13,6 +16,7 @@ import views.html.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static model.simulation.SimulationFactory.getStrategy;
 import static play.libs.Json.toJson;
 
 public class Application extends Controller {
@@ -21,21 +25,15 @@ public class Application extends Controller {
         return ok(index.render());
     }
 
-    public static Result data() {
-        final List<Data> data = new ArrayList<Data>();
-        for (int i = 0; i < 5; i++) {
-            data.add(new Data("Name #" + i));
-        }
-        try { Thread.sleep(5000); } catch (InterruptedException e) { e.printStackTrace(); }
-        return ok(toJson(data));
-
-    }
-
     public static Result simulation() {
         try { Thread.sleep(3000); } catch (InterruptedException e) { e.printStackTrace(); }
-        final InputData data = Json.fromJson(request().body().asJson(), InputData.class);
-        final Simulation simulation = new Simulation(new RelativePriorityTotalAbandonmentStrategy(), data.getClientsHourA(), data.getClientsHourB(), data.getMuA(), data.getMuB(), data.getTime());
-        final model.Result run = simulation.run();
+        final JsonNode json = request().body().asJson();
+        final InputData data = Json.fromJson(json.get("simData"), InputData.class);
+//        final SimulationParameters parameters = Json.fromJson(json.get("simParam"), SimulationParameters.class);
+        final SimulationStrategy strategy = getStrategy(new SimulationParameters());
+        if (strategy == null) return internalServerError("Strategy not present");
+        final Simulation simulation = new Simulation(strategy, data.getClientsHourA(), data.getClientsHourB(), data.getMuA(), data.getMuB(), data.getTime());
+        final model.simulation.Result run = simulation.run();
         return ok(toJson(run));
 
     }

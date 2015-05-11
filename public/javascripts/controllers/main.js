@@ -10,17 +10,37 @@
 angular.module('ngSimulation')
     .controller('MainCtrl', ['$http' , function ($http) {
         var self = this;
-        self.members = ['Pablo Celentano','Nicolas Schejktman', 'Juan Perez' , 'Some Name'];
         self.items = {};
         self.editing = true;
         self.loading = false;
-        self.formData = {};
+        self.error = false;
+        self.formData = {
+            simParam: self.simulation
+        };
+
+        self.simulations = [
+            {
+                name : 'Pablo Celentano',
+                priority : "Relative",
+                tolerance : "Intolerant",
+                intolerance : "Total"
+            },
+            {
+                name : 'Juan Perez',
+                priority : "Relative",
+                tolerance : "Tolerant",
+                resumption : "Resumption"
+            }
+        ];
+
+        self.simulation = self.simulations[0];
 
 
         self.submit = function() {
 
             self.editing = false;
             self.loading = true;
+            self.error = false;
 
             console.log(self.formData);
 
@@ -37,9 +57,11 @@ angular.module('ngSimulation')
                 self.items = response.data;
                 console.log(response.data);
                 self.loading = false;
+                self.error = false;
             }, function(errResponse) {
                 console.error('Error while fetching data');
-                self.loading = false;
+                self.reset();
+                self.error = true;
             });
 
         };
@@ -48,5 +70,7 @@ angular.module('ngSimulation')
             self.editing = true;
             self.loading = false;
             self.formData = {};
+            self.error = false;
+
         };
     }]);

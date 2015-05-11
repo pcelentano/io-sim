@@ -1,12 +1,28 @@
-package model;
+package model.simulation;
 
-/**
- * Created by chelen on 03/05/15.
- */
+/** Created by chelen on 03/05/15. */
 public class NumericResults {
     private double lcA;
     private double lcB;
     private double lc;
+    private double la;
+    private double lb;
+    private double l;
+    private double wcA;
+    private double wcB;
+    private double wc;
+    private double wa;
+    private double wb;
+    private double w;
+    private double ha;
+    private double hb;
+    private double h;
+    private double porcentajeBInterrumpido;
+    private double porcentajeBAbandono;
+    private double porcentajeBNoIngresa;
+    private double bArrivals;
+    private double aArrivals;
+
 
     public double getLcA() { return lcA; }
 
@@ -139,22 +155,6 @@ public class NumericResults {
     public void setPorcentajeBNoIngresa(double porcentajeBNoIngresa) {
         this.porcentajeBNoIngresa = porcentajeBNoIngresa;
     }
-
-    private double la;
-    private double lb;
-    private double l;
-    private double wcA;
-    private double wcB;
-    private double wc;
-    private double wa;
-    private double wb;
-    private double w;
-    private double ha;
-    private double hb;
-    private double h;
-    private double porcentajeBInterrumpido;
-    private double porcentajeBAbandono;
-    private double porcentajeBNoIngresa;
 
 
 }

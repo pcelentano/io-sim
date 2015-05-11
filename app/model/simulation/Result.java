@@ -1,6 +1,4 @@
-package model;
-
-import model.simulation.Event;
+package model.simulation;
 
 import java.util.ArrayList;
 import java.util.List;

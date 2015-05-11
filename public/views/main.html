@@ -8,6 +8,12 @@
         </div>
     </div>
 </div>
+
+<div class="alert alert-warning alert-dismissible fade top-positioned" role="alert" ng-class="mainCtrl.error ? 'in' : ''">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+    <strong>Holy guacamole!</strong> Best check yo self, you're not looking too good.
+</div>
+
 <div class="row text-center animate-hide" ng-show="mainCtrl.loading">
     <img src="/assets/images/hex-loader.gif" >
 </div>
@@ -15,40 +21,67 @@
 <div class="container animate-hide" ng-show="mainCtrl.editing" name="simForm" ng-class="!mainCtrl.editing ? 'no-transition' : 'delay-transition'">
     <form ng-submit="mainCtrl.submit()" ng-disabled="simForm.$invalid">
         <div class="row">
-            <div class="form-group col-sm-6">
-                <label for="straT"> Simulation Strategy</label>
-                <input type="text" class="form-control" id="straT" placeholder="Rate" disabled value="RelativePriorityTotalAbandonment">
+            <div class="form-group col-sm-4">
+                <label for="priority"> Priority</label>
+                <select class="form-control" id="priority">
+                    <option>Relative</option>
+                    <option>Total</option>
+                </select>
             </div>
+            <div class="form-group col-sm-4">
+                <label for="tolerance"> Tolerance</label>
+                <select class="form-control" id="tolerance">
+                    <option>Tolerant</option>
+                    <option>Intolerant</option>
+                </select>
+            </div>
+            <div class="form-group col-sm-4" ng-show="mainCtrl.simulation.tolerance == 'Tolerant'">
+                <label for="reanudacion"> Resumption</label>
+                <select class="form-control" id="reanudacion" >
+                    <option>Resumption</option>
+                    <option>Reinitiation</option>
+                </select>
+            </div>
+            <div class="form-group col-sm-4" ng-show="mainCtrl.simulation.tolerance == 'Intolerant'">
+                <label for="intolerance"> Intolerance</label>
+                <select class="form-control" id="intolerance" >
+                    <option>Partial</option>
+                    <option>Total</option>
+                </select>
+            </div>
+            </div>
+        <div class="row">
             <div class="form-group col-sm-6">
                 <label for="cliB">Time</label>
-                <input type="number" class="form-control" id="time" placeholder="Time" ng-model="mainCtrl.formData.time">
+                <input type="number" class="form-control" id="time" placeholder="Time" ng-model="mainCtrl.formData.simData.time">
             </div>
         </div>
         <div class="row">
             <div class="form-group col-sm-6">
                 <label for="cliA">Clients <strong>A</strong> Per Hour</label>
-                <input type="number" class="form-control" id="cliA" placeholder="Rate" ng-model="mainCtrl.formData.clientsHourA">
+                <input type="number" class="form-control" id="cliA" placeholder="Rate" ng-model="mainCtrl.formData.simData.clientsHourA">
             </div>
             <div class="form-group col-sm-6">
                 <label for="cliB">Clients <strong>B</strong> Per Hour</label>
-                <input type="number" class="form-control" id="cliB" placeholder="Rate" ng-model="mainCtrl.formData.clientsHourB">
+                <input type="number" class="form-control" id="cliB" placeholder="Rate" ng-model="mainCtrl.formData.simData.clientsHourB">
             </div>
         </div>
 
         <div class="row">
             <div class="form-group col-sm-6">
                 <label for="muA">Attention <strong>A</strong> Per Hour</label>
-                <input type="number" class="form-control" id="muA" placeholder="Rate" ng-model="mainCtrl.formData.muA">
+                <input type="number" class="form-control" id="muA" placeholder="Rate" ng-model="mainCtrl.formData.simData.muA">
             </div>
             <div class="form-group col-sm-6">
                 <label for="muB">Attention <strong>B</strong> Per Hour</label>
-                <input type="number" class="form-control" id="muB" placeholder="Rate" ng-model="mainCtrl.formData.muB">
+                <input type="number" class="form-control" id="muB" placeholder="Rate" ng-model="mainCtrl.formData.simData.muB">
             </div>
         </div>
         <div class="row text-center">
             <input type="submit" class="btn btn-default btn-xl" value="Submit"/>
         </div>
     </form>
+    <p> {{mainCtrl.simulation.name}} </p>
     <pre> {{mainCtrl.formData | json}}</pre>
 </div>
 

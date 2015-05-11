@@ -1,4 +1,4 @@
-package model;
+package model.simulation;
 
 /**
  * Created by chelen on 02/05/15.
