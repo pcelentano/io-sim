@@ -54,7 +54,7 @@ public class Simulation {
         double time = 0 ;
 
 //        addEventAndSort(new Event(Event.EventType.INITIATION, null, time, queueLength, attentionChanelStatus, deltaTime));
-        addEventAndSort(new Event(Event.EventType.INITIATION, null, time, 0, Event.Status.OCCUPIED, 0));
+        addEventAndSort(new Event(Event.EventType.INITIATION, null, time, false));
 
         int eventPosition = 0;
 
@@ -95,7 +95,6 @@ public class Simulation {
 
     /** Delegates Event Handling to SimulationStrategy. */
     private void handleEvent(Event event) {
-        System.out.println("event = " + event);
         switch (event.getType()){
 
             case ARRIVAL:
@@ -108,6 +107,7 @@ public class Simulation {
                 simulationStrategy.handleInitiation(event, this);
                 break;
         }
+        System.out.println("event = " + event);
     }
 
 
@@ -122,7 +122,7 @@ public class Simulation {
         int customerNumber = 0;
         while (time < MAX_TIME){
             final double iaca = Mathematics.getClientArrivalInterval(clientsPerHourA);
-            events.add(new Event(ARRIVAL, new Customer(A, customerNumber++), time + iaca, 0, Event.Status.EMPTY, 0));
+            events.add(new Event(ARRIVAL, new Customer(A, customerNumber++), time + iaca, false));
             time = time + iaca;
         }
     }
@@ -132,7 +132,7 @@ public class Simulation {
         int customerNumber = 0;
         while (time < MAX_TIME){
             final double iacb = Mathematics.getClientArrivalInterval(clientsPerHourB);
-            events.add(new Event(ARRIVAL, new Customer(B, customerNumber++), time + iacb, 0, Event.Status.EMPTY, 0));
+            events.add(new Event(ARRIVAL, new Customer(B, customerNumber++), time + iacb, false));
             time = time + iacb;
         }
     }
@@ -168,4 +168,8 @@ public class Simulation {
 
     /** Removes all matching customers from queue. */
     public void removeFromQueue(Predicate<Customer> predicate) { customerQueue.removeIf(predicate); }
+
+    public int getQueueLength() {
+        return customerQueue.size();
+    }
 }

@@ -11,6 +11,8 @@ import java.util.function.Predicate;
 import static model.simulation.Customer.CustomerType.A;
 import static model.simulation.Customer.CustomerType.B;
 import static model.simulation.Event.EventType.DEPARTURE;
+import static model.simulation.Event.Status.EMPTY;
+import static model.simulation.Event.Status.OCCUPIED;
 
 /**
  * Relative Priority, Total Abandonment Simulation Strategy by: Pablo Celentano.
@@ -71,7 +73,8 @@ public class RelativePriorityTotalAbandonmentStrategy implements SimulationStrat
         } else {
             if (currentCustomer.getType() == A){
                 // bLeftBecauseACurrent
-                bLeftBecauseACurrent ++;
+                customer.setPermanence(0).attended(false);
+                simulation.addEventAndSort(new Event(DEPARTURE, customer, event.getInitTime(), true));
                 System.out.println("B left because A current");
             }
             else {
@@ -85,12 +88,20 @@ public class RelativePriorityTotalAbandonmentStrategy implements SimulationStrat
             }
         }
 
+        event.queueLength(simulation.getQueueLength()).attentionChanelStatus(OCCUPIED);
 
     }
 
-    @Override public void handleDeparture(@NotNull Event event, @NotNull Simulation simulation) { attendNext(event, simulation); }
+    @Override public void handleDeparture(@NotNull Event event, @NotNull Simulation simulation) {
 
-    @Override public void handleInitiation(@NotNull Event event, @NotNull Simulation simulation) { }
+        if (!event.isSilent()) attendNext(event, simulation);
+        event.queueLength(simulation.getQueueLength()).attentionChanelStatus(simulation.getCurrentCustomer() == null ? EMPTY : OCCUPIED);
+
+    }
+
+    @Override public void handleInitiation(@NotNull Event event, @NotNull Simulation simulation) {
+        event.queueLength(0).attentionChanelStatus(EMPTY);
+    }
 
 
     private void attendNext(Event event, Simulation simulation) {
@@ -100,12 +111,11 @@ public class RelativePriorityTotalAbandonmentStrategy implements SimulationStrat
         if (customer != null){
             final Customer.CustomerType type = customer.getType();
             System.out.println("Atendiendo a " + type.toString());
-
-            if (type == A) aAttendance ++;
-            else if (type == B) bAttendance++;
-
+            event.attentionChanelStatus(OCCUPIED);
             final double mu = Mathematics.getDurationChannel(type == A ? simulation.getMuA() : simulation.getMuB());
-            simulation.addEventAndSort(new Event(DEPARTURE, customer, event.getInitTime() + mu, 0, Event.Status.EMPTY, 0));
+            simulation.addEventAndSort(new Event(DEPARTURE, customer, event.getInitTime() + mu, false));
+        } else {
+            event.attentionChanelStatus(EMPTY);
         }
     }
 

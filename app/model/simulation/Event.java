@@ -8,9 +8,10 @@ public class Event implements Comparable<Event> {
     private final EventType type;
     private final Customer customer;
     private final double initTime;
-    private final int queueLength;
-    private final Status attentionChanelStatus;
-    private final double deltaTime;
+    private int queueLength;
+    private Status attentionChanelStatus;
+    private  double deltaTime;
+    private final boolean silent;
 
     /** Event Type. */
     public EventType getType() { return type; }
@@ -22,13 +23,11 @@ public class Event implements Comparable<Event> {
     public double getInitTime() { return initTime; }
 
     /** Event for type customer and start initTime. */
-    public Event(EventType t, Customer c, double time, int queueLength, Status attentionChanelStatus, double deltaTime) {
+    public Event(EventType t, Customer c, double time, boolean silent) {
         type = t;
         customer = c;
         initTime = time;
-        this.queueLength = queueLength;
-        this.attentionChanelStatus = attentionChanelStatus;
-        this.deltaTime = deltaTime;
+        this.silent = silent;
     }
 
     @Override public int compareTo(Event o) {
@@ -38,7 +37,7 @@ public class Event implements Comparable<Event> {
     }
 
     @Override public String toString() {
-        return type.name + "  " + (customer != null ? customer.getType().toString()  : "none" ) + "  :  " + initTime;
+        return initTime + " : " + type.name + "  " + (customer != null ? customer.getType().toString()  : "none" ) + " L(n) : " + queueLength + " Status : " + attentionChanelStatus;
     }
 
     public int getQueueLength() {
@@ -53,7 +52,23 @@ public class Event implements Comparable<Event> {
         return deltaTime;
     }
 
+    public Event queueLength(int queueLength) {
+        this.queueLength = queueLength;
+        return this;
+    }
 
+    public Event attentionChanelStatus(Status attentionChanelStatus) {
+        this.attentionChanelStatus = attentionChanelStatus;
+        return this;
+
+    }
+
+    public Event deltaTime(double deltaTime) {
+        this.deltaTime = deltaTime;
+        return this;
+    }
+
+    public boolean isSilent() { return silent; }
 
     public enum EventType {
 
