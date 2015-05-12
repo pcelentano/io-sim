@@ -105,7 +105,7 @@ public class RelativePriorityTotalAbandonmentStrategy implements SimulationStrat
             else if (type == B) bAttendance++;
 
             final double mu = Mathematics.getDurationChannel(type == A ? simulation.getMuA() : simulation.getMuB());
-            simulation.addEventAndSort(new Event(DEPARTURE, customer, event.getTime() + mu));
+            simulation.addEventAndSort(new Event(DEPARTURE, customer, event.getInitTime() + mu, 0, Event.Status.EMPTY, 0));
         }
     }
 

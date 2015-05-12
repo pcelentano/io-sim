@@ -53,7 +53,8 @@ public class Simulation {
 
         double time = 0 ;
 
-        addEventAndSort(new Event(Event.EventType.INITIATION, null, time));
+//        addEventAndSort(new Event(Event.EventType.INITIATION, null, time, queueLength, attentionChanelStatus, deltaTime));
+        addEventAndSort(new Event(Event.EventType.INITIATION, null, time, 0, Event.Status.OCCUPIED, 0));
 
         int eventPosition = 0;
 
@@ -63,7 +64,7 @@ public class Simulation {
             handleEvent(event);
             result.addEvent(event);
             eventPosition++;
-            time = event.getTime();
+            time = event.getInitTime();
         }
 
 
@@ -118,18 +119,20 @@ public class Simulation {
 
     private void addArrivalsA() {
         double time = 0;
+        int customerNumber = 0;
         while (time < MAX_TIME){
             final double iaca = Mathematics.getClientArrivalInterval(clientsPerHourA);
-            events.add(new Event(ARRIVAL, new Customer(A), time + iaca));
+            events.add(new Event(ARRIVAL, new Customer(A, customerNumber++), time + iaca, 0, Event.Status.EMPTY, 0));
             time = time + iaca;
         }
     }
 
     private  void addArivalsB() {
         double time = 0;
+        int customerNumber = 0;
         while (time < MAX_TIME){
             final double iacb = Mathematics.getClientArrivalInterval(clientsPerHourB);
-            events.add(new Event(ARRIVAL, new Customer(B), time + iacb));
+            events.add(new Event(ARRIVAL, new Customer(B, customerNumber++), time + iacb, 0, Event.Status.EMPTY, 0));
             time = time + iacb;
         }
     }
