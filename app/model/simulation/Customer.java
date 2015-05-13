@@ -10,7 +10,10 @@ public class Customer {
     private final CustomerType type;
     private double permanence;
     private final int customerNumber;
-    private boolean attended;
+    private boolean interrupted;
+
+
+    public boolean isInterrupted() { return interrupted; }
 
     /** Customer priority type. */
     public CustomerType getType() { return type; }
@@ -19,6 +22,7 @@ public class Customer {
     public Customer(CustomerType type, int customerNumber) {
         this.type = type;
         this.customerNumber = customerNumber;
+        interrupted = false;
     }
 
     public double getPermanence() { return permanence; }
@@ -30,8 +34,8 @@ public class Customer {
 
     public int getCustomerNumber() { return customerNumber; }
 
-    public Customer attended(boolean attended) {
-        this.attended = attended;
+    public Customer interrupted() {
+        interrupted = true;
         return this;
 
     }

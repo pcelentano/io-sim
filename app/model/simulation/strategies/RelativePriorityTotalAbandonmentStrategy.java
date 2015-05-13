@@ -64,8 +64,19 @@ public class RelativePriorityTotalAbandonmentStrategy implements SimulationStrat
                 if (queueType(simulation) != B) simulation.addCustomertoQueue(customer);
                 else {
                     // bLeftBecauseAArrival ++
+
+                    for (int i = 0; i < simulation.getQueueLength(); i++) {
+                        final Customer c = simulation.pollCustomerQueue();
+                        if (c != null) {
+                            c.interrupted();
+                            simulation.addEventAndSort(new Event(DEPARTURE, c, event.getInitTime(), true).comment("Left because A entered"));
+                        }
+                    }
+
+
                     simulation.removeFromQueue(ALL_CUSTOMERS);
 //                    customerQueue.clear(); // limpio la cola tengo que generar eventos de que se fueron y los por ques
+
                     System.out.println("removed all B from queue");
                     simulation.addCustomertoQueue(customer);
                 }
@@ -73,14 +84,15 @@ public class RelativePriorityTotalAbandonmentStrategy implements SimulationStrat
         } else {
             if (currentCustomer.getType() == A){
                 // bLeftBecauseACurrent
-                customer.setPermanence(0).attended(false);
-                simulation.addEventAndSort(new Event(DEPARTURE, customer, event.getInitTime(), true));
+                customer.setPermanence(0).interrupted();
+                simulation.addEventAndSort(new Event(DEPARTURE, customer, event.getInitTime(), true).comment("Left Because A current"));
                 System.out.println("B left because A current");
             }
             else {
                 if (queueType(simulation) == A){
                     // bLeftBeacuaseAinQueue
-                    bLeftBecauseAInQueue ++;
+                    customer.interrupted();
+                    simulation.addEventAndSort(new Event(DEPARTURE, customer, event.getInitTime(), true).comment("Left because A in queue"));
                     System.out.println("B left because A in queue");
                 }
 
@@ -93,8 +105,10 @@ public class RelativePriorityTotalAbandonmentStrategy implements SimulationStrat
     }
 
     @Override public void handleDeparture(@NotNull Event event, @NotNull Simulation simulation) {
-
-        if (!event.isSilent()) attendNext(event, simulation);
+        if (!event.isSilent()){
+            event.comment("Attended Client");
+            attendNext(event, simulation);
+        }
         event.queueLength(simulation.getQueueLength()).attentionChanelStatus(simulation.getCurrentCustomer() == null ? EMPTY : OCCUPIED);
 
     }

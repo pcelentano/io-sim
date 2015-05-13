@@ -12,6 +12,7 @@ public class Event implements Comparable<Event> {
     private Status attentionChanelStatus;
     private  double deltaTime;
     private final boolean silent;
+    private String comment;
 
     /** Event Type. */
     public EventType getType() { return type; }
@@ -69,6 +70,15 @@ public class Event implements Comparable<Event> {
     }
 
     public boolean isSilent() { return silent; }
+
+
+    public String getComment() { return comment; }
+
+    public Event comment(String comment) {
+        this.comment = comment;
+        return this;
+    }
+
 
     public enum EventType {
 
