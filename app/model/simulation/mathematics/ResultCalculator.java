@@ -31,7 +31,7 @@ public class ResultCalculator {
         for (Event event : events) {
             final Customer customer = event.getCustomer();
             lcT += event.getQueueLength() * event.getDeltaTime();
-            lT  += event.getQueueLength() + (event.getAttentionChanelStatus() == OCCUPIED ? 1 : 0);
+            lT  += (event.getQueueLength() + (event.getAttentionChanelStatus() == OCCUPIED ? 1 : 0)) * event.getDeltaTime();
 
 
             if (customer != null && event.getType() == DEPARTURE){
