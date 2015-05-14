@@ -11,6 +11,7 @@
 angular.module('ngSimulation', [
     'ngRoute',
     'ngAnimate',
+    'angular-flot'
     ])
     .config(['$routeProvider',function ($routeProvider) {
         $routeProvider

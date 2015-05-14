@@ -119,6 +119,7 @@ public class RelativePriorityTotalAbandonmentStrategy implements SimulationStrat
         simulation.setCurrentCusomer(customer);
 
         if (customer != null){
+            customer.waitTime(event.getInitTime() - customer.getArrivalTime());
             final Customer.CustomerType type = customer.getType();
             System.out.println("Atendiendo a " + type.toString());
             event.attentionChanelStatus(OCCUPIED);

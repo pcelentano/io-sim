@@ -18,6 +18,15 @@ angular.module('ngSimulation')
             simParam: self.simulation
         };
 
+        self.chartData = [{ data: [], yaxis: 1, label: "Queue Length" }];
+        self.myChartOptions = {
+
+            lines: {
+                show: true,
+                steps: true
+            }
+        };
+
         self.simulations = [
             {
                 name : 'Pablo Celentano',
@@ -34,6 +43,12 @@ angular.module('ngSimulation')
         ];
 
         self.simulation = self.simulations[0];
+
+        self.populateChats = function(){
+            angular.forEach(self.items.events , function(e){
+                self.chartData[0].data.push([e.initTime , e.queueLength]);
+            });
+        };
 
 
         self.submit = function() {
@@ -58,6 +73,7 @@ angular.module('ngSimulation')
                 console.log(response.data);
                 self.loading = false;
                 self.error = false;
+                self.populateChats();
             }, function(errResponse) {
                 console.error('Error while fetching data');
                 self.reset();
@@ -73,4 +89,7 @@ angular.module('ngSimulation')
             self.error = false;
 
         };
+
     }]);
+
+

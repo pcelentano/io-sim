@@ -115,18 +115,7 @@
 
 
     <div class="row">
-        <div class="col-sm-4">
-            <div id="chart1"></div>
-        </div>
-
-        <div class="col-sm-4">
-            <div id="chart2"></div>
-        </div>
-
-        <div class="col-sm-4">
-            <div id="chart3"></div>
-        </div>
-
+        <flot dataset="mainCtrl.chartData" options="mainCtrl.myChartOptions" height="300px" width="100%"></flot>
     </div>
 
 
@@ -148,6 +137,7 @@
                     <th>Queue Size</th>
                     <th>Status</th>
                     <th>W</th>
+                    <th>Wc</th>
                     <th>Comment</th>
                     <th>deltaTime</th>
                 </tr>
@@ -161,6 +151,7 @@
                     <td>{{event.queueLength}}</td>
                     <td>{{event.attentionChanelStatus}}</td>
                     <td>{{event.type == 'DEPARTURE' ? event.customer.permanence : ""}}</td>
+                    <td>{{event.type == 'DEPARTURE' ? event.customer.waitTime : ""}}</td>
                     <td>{{event.comment}}</td>
                     <td>{{event.deltaTime}}</td>
                 </tr>

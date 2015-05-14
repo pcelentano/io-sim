@@ -9,16 +9,13 @@ public class Customer {
 
     private final CustomerType type;
     private double permanence;
+    private double waitTime;
     private final int customerNumber;
     private boolean interrupted;
-
-    public double getArrivalTime() {
-        return arrivalTime;
-    }
-
     private final double arrivalTime;
 
 
+    /** Set Customer interrupted. */
     public boolean isInterrupted() { return interrupted; }
 
     /** Customer priority type. */
@@ -39,14 +36,23 @@ public class Customer {
         return this;
     }
 
+    public double getWaitTime() { return waitTime; }
+
     public int getCustomerNumber() { return customerNumber; }
 
     public Customer interrupted() {
         interrupted = true;
         return this;
-
     }
 
+    public Customer waitTime(double waitTime) {
+        this.waitTime = waitTime;
+        return this;
+    }
+
+    public double getArrivalTime() {
+        return arrivalTime;
+    }
 
     public enum CustomerType {
         A, B
