@@ -12,6 +12,12 @@ public class Customer {
     private final int customerNumber;
     private boolean interrupted;
 
+    public double getArrivalTime() {
+        return arrivalTime;
+    }
+
+    private final double arrivalTime;
+
 
     public boolean isInterrupted() { return interrupted; }
 
@@ -19,9 +25,10 @@ public class Customer {
     public CustomerType getType() { return type; }
 
     /** Customer with given priority. */
-    public Customer(CustomerType type, int customerNumber) {
+    public Customer(CustomerType type, int customerNumber, double arrivalTime) {
         this.type = type;
         this.customerNumber = customerNumber;
+        this.arrivalTime = arrivalTime;
         interrupted = false;
     }
 

@@ -11,6 +11,7 @@ import java.util.function.Predicate;
 import static model.simulation.Customer.CustomerType.A;
 import static model.simulation.Customer.CustomerType.B;
 import static model.simulation.Event.EventType.ARRIVAL;
+import static model.simulation.Event.EventType.INITIATION;
 
 /**
  * Simulation.
@@ -44,8 +45,8 @@ public class Simulation {
         this.simulationStrategy = simulationStrategy;
     }
 
-    /** Run Simulation. */
-    public Result run () {
+    /** Run Simulation.*/
+    public Result run() {
 
         final Result result = new Result();
 
@@ -53,7 +54,6 @@ public class Simulation {
 
         double time = 0 ;
 
-//        addEventAndSort(new Event(Event.EventType.INITIATION, null, time, queueLength, attentionChanelStatus, deltaTime));
         addEventAndSort(new Event(Event.EventType.INITIATION, null, time, false));
 
         int eventPosition = 0;
@@ -70,6 +70,7 @@ public class Simulation {
 
         System.out.println("done!");
 
+
         final NumericResults results = result.getResults();
         results.setLcA(Math.pow(clientsPerHourA, 2) / ((muA - clientsPerHourA) * muA));
         results.setLcB(Math.pow(clientsPerHourB, 2) / ((muB - clientsPerHourB) * muB));
@@ -81,6 +82,8 @@ public class Simulation {
         results.setWb(results.getLb()/clientsPerHourB);
         results.setHa(results.getLcA()-results.getLa());
         results.setHb(results.getLcB()-results.getLb());
+
+//        if (! withEvents) result.getEvents().clear();
 
         return result;
 
@@ -107,7 +110,15 @@ public class Simulation {
                 simulationStrategy.handleInitiation(event, this);
                 break;
         }
+
+        // Set delta time
+        if (event.getType() != INITIATION){
+            final Event previousEvent = events.get(events.indexOf(event) - 1);
+            previousEvent.deltaTime(event.getInitTime() - previousEvent.getInitTime());
+        }
+
         System.out.println("event = " + event);
+
     }
 
 
@@ -122,7 +133,7 @@ public class Simulation {
         int customerNumber = 0;
         while (time < MAX_TIME){
             final double iaca = Mathematics.getClientArrivalInterval(clientsPerHourA);
-            events.add(new Event(ARRIVAL, new Customer(A, customerNumber++), time + iaca, false));
+            events.add(new Event(ARRIVAL, new Customer(A, customerNumber++, time + iaca), time + iaca, false));
             time = time + iaca;
         }
     }
@@ -132,7 +143,7 @@ public class Simulation {
         int customerNumber = 0;
         while (time < MAX_TIME){
             final double iacb = Mathematics.getClientArrivalInterval(clientsPerHourB);
-            events.add(new Event(ARRIVAL, new Customer(B, customerNumber++), time + iacb, false));
+            events.add(new Event(ARRIVAL, new Customer(B, customerNumber++, time + iacb), time + iacb, false));
             time = time + iacb;
         }
     }
@@ -169,6 +180,7 @@ public class Simulation {
     /** Removes all matching customers from queue. */
     public void removeFromQueue(Predicate<Customer> predicate) { customerQueue.removeIf(predicate); }
 
+    /** Queue size. */
     public int getQueueLength() {
         return customerQueue.size();
     }

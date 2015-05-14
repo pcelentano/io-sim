@@ -77,12 +77,29 @@
                 <input type="number" class="form-control" id="muB" placeholder="Rate" ng-model="mainCtrl.formData.simData.muB">
             </div>
         </div>
+
+        <a class="btn" type="button" data-toggle="collapse" data-target="#advanced" aria-expanded="false" aria-controls="collapseExample"> Advanced Options </a>
+
+        <div class="collapse" id="advanced">
+                <div class="checkbox">
+                    <label> <input type="checkbox"> Show Table </label>
+                </div>
+                <div class="checkbox">
+                    <label> <input type="checkbox"> Show Graphs </label>
+                </div>
+
+            <pre> {{mainCtrl.formData | json}}</pre>
+
+        </div>
+
+
+
+
         <div class="row text-center">
             <input type="submit" class="btn btn-default btn-xl" value="Submit"/>
         </div>
     </form>
-    <p> {{mainCtrl.simulation.name}} </p>
-    <pre> {{mainCtrl.formData | json}}</pre>
+    <p> Simulation by :  {{mainCtrl.simulation.name}} </p>
 </div>
 
 <div class="container animate-hide" ng-show="!mainCtrl.editing && !mainCtrl.loading"  ng-class="!mainCtrl.editing ? 'delay-transition' : 'no-transition' " >
@@ -95,10 +112,62 @@
             </div>
         </div>
     </div>
+
+
+    <div class="row">
+        <div class="col-sm-4">
+            <div id="chart1"></div>
+        </div>
+
+        <div class="col-sm-4">
+            <div id="chart2"></div>
+        </div>
+
+        <div class="col-sm-4">
+            <div id="chart3"></div>
+        </div>
+
+    </div>
+
+
+
+
+
+
     <div class="row">
         <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"> View Events</button>
         <div class="collapse" id="collapseExample">
-            <pre>{{mainCtrl.items.events | json}}</pre>
+            <!--<pre>{{mainCtrl.items.events | json}}</pre>-->
+            <table class="table table-condensed table-hover">
+                <thead>
+                <tr>
+                    <th>t</th>
+                    <th>Event</th>
+                    <th>Client Type</th>
+                    <th>Client Number</th>
+                    <th>Queue Size</th>
+                    <th>Status</th>
+                    <th>W</th>
+                    <th>Comment</th>
+                    <th>deltaTime</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="event in mainCtrl.items.events">
+                    <td>{{event.initTime}}</td>
+                    <td>{{event.type}}</td>
+                    <td>{{event.customer.type}}</td>
+                    <td>{{event.customer.customerNumber}}</td>
+                    <td>{{event.queueLength}}</td>
+                    <td>{{event.attentionChanelStatus}}</td>
+                    <td>{{event.type == 'DEPARTURE' ? event.customer.permanence : ""}}</td>
+                    <td>{{event.comment}}</td>
+                    <td>{{event.deltaTime}}</td>
+                </tr>
+
+                </tbody>
+            </table>
+
         </div>
     </div>
 </div>

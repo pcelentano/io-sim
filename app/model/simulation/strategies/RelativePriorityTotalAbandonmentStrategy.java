@@ -19,15 +19,9 @@ import static model.simulation.Event.Status.OCCUPIED;
  */
 public class RelativePriorityTotalAbandonmentStrategy implements SimulationStrategy {
 
-    private int bLeftBecauseACurrent = 0;
-    private int bLeftBecauseAInQueue = 0;
-    private int bLeftBecauseAArrival = 0;
-    private int bAttendance = 0;
-    private int aAttendance = 0;
 
     private final Predicate<Customer> ALL_CUSTOMERS = new Predicate<Customer>() {
         @Override public boolean test(Customer customer) {
-            bLeftBecauseAArrival++;
             return true;
         }
     };
@@ -73,8 +67,7 @@ public class RelativePriorityTotalAbandonmentStrategy implements SimulationStrat
                         }
                     }
 
-
-                    simulation.removeFromQueue(ALL_CUSTOMERS);
+//                    simulation.removeFromQueue(ALL_CUSTOMERS);
 //                    customerQueue.clear(); // limpio la cola tengo que generar eventos de que se fueron y los por ques
 
                     System.out.println("removed all B from queue");
@@ -109,8 +102,11 @@ public class RelativePriorityTotalAbandonmentStrategy implements SimulationStrat
             event.comment("Attended Client");
             attendNext(event, simulation);
         }
-        event.queueLength(simulation.getQueueLength()).attentionChanelStatus(simulation.getCurrentCustomer() == null ? EMPTY : OCCUPIED);
 
+        final Customer customer = event.getCustomer();
+        customer.setPermanence(event.getInitTime() - customer.getArrivalTime());
+
+        event.queueLength(simulation.getQueueLength()).attentionChanelStatus(simulation.getCurrentCustomer() == null ? EMPTY : OCCUPIED);
     }
 
     @Override public void handleInitiation(@NotNull Event event, @NotNull Simulation simulation) {
