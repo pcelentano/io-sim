@@ -1,6 +1,7 @@
 package model.simulation;
 
 import model.simulation.mathematics.Mathematics;
+import model.simulation.mathematics.ResultCalculator;
 import model.simulation.strategies.SimulationStrategy;
 
 import javax.annotation.Nullable;
@@ -30,6 +31,7 @@ public class Simulation {
     private final Queue<Customer> customerQueue;
     private final List<Event> events;
     private Customer currentCustomer;
+    private final Result result;
 
 
     /** Creates a Simulation with given Strategy. */
@@ -43,12 +45,13 @@ public class Simulation {
         events = new ArrayList<>();
         currentCustomer = null;
         this.simulationStrategy = simulationStrategy;
+        result = new Result();
     }
 
     /** Run Simulation.*/
     public Result run() {
 
-        final Result result = new Result();
+
 
         addArrivalEvents();
 
@@ -72,17 +75,19 @@ public class Simulation {
 
 
         final NumericResults results = result.getResults();
-        results.setLcA(Math.pow(clientsPerHourA, 2) / ((muA - clientsPerHourA) * muA));
-        results.setLcB(Math.pow(clientsPerHourB, 2) / ((muB - clientsPerHourB) * muB));
-        results.setLa(clientsPerHourA / (muA - clientsPerHourA));
-        results.setLb(clientsPerHourB / (muB - clientsPerHourB));
-        results.setWcA(results.getLcA()/clientsPerHourA);
-        results.setWcB(results.getLcB()/clientsPerHourB);
-        results.setWa(results.getLa()/clientsPerHourA);
-        results.setWb(results.getLb()/clientsPerHourB);
-        results.setHa(results.getLcA()-results.getLa());
-        results.setHb(results.getLcB()-results.getLb());
+//        results.setLcA(Math.pow(clientsPerHourA, 2) / ((muA - clientsPerHourA) * muA));
+//        results.setLcB(Math.pow(clientsPerHourB, 2) / ((muB - clientsPerHourB) * muB));
+//        results.setLa(clientsPerHourA / (muA - clientsPerHourA));
+//        results.setLb(clientsPerHourB / (muB - clientsPerHourB));
+//        results.setWcA(results.getLcA()/clientsPerHourA);
+//        results.setWcB(results.getLcB()/clientsPerHourB);
+//        results.setWa(results.getLa()/clientsPerHourA);
+//        results.setWb(results.getLb()/clientsPerHourB);
+//        results.setHa(results.getLcA()-results.getLa());
+//        results.setHb(results.getLcB()-results.getLb());
 
+        final ResultCalculator resultCalculator = new ResultCalculator();
+        resultCalculator.calculate(events, results);
 //        if (! withEvents) result.getEvents().clear();
 
         return result;
@@ -136,6 +141,7 @@ public class Simulation {
             events.add(new Event(ARRIVAL, new Customer(A, customerNumber++, time + iaca), time + iaca, false));
             time = time + iaca;
         }
+        result.getResults().setAcustomers(customerNumber);
     }
 
     private  void addArivalsB() {
@@ -146,6 +152,7 @@ public class Simulation {
             events.add(new Event(ARRIVAL, new Customer(B, customerNumber++, time + iacb), time + iacb, false));
             time = time + iacb;
         }
+        result.getResults().setBcustomers(customerNumber);
     }
 
 

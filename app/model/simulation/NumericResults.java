@@ -20,8 +20,8 @@ public class NumericResults {
     private double porcentajeBInterrumpido;
     private double porcentajeBAbandono;
     private double porcentajeBNoIngresa;
-    private double bArrivals;
-    private double aArrivals;
+    private int bCustomers;
+    private int aCustomers;
 
 
     public double getLcA() { return lcA; }
@@ -156,5 +156,21 @@ public class NumericResults {
         this.porcentajeBNoIngresa = porcentajeBNoIngresa;
     }
 
+
+    public void setBcustomers(int bcustomers) {
+        bCustomers = bcustomers;
+    }
+
+    public int getBcustomers() {
+        return bCustomers;
+    }
+
+    public void setAcustomers(int acustomers) {
+        aCustomers = acustomers;
+    }
+
+    public int getAcustomers() {
+        return aCustomers;
+    }
 
 }
