@@ -21,11 +21,15 @@ public class ResultCalculator {
 //        double lcaT = 0;
 //        double lcbT = 0;
         double lT = 0;
-//        double laT = 0;
-//        double lbT = 0;
+        double laT = 0;
+        double lbT = 0;
         double wN  = 0;
         double wcN = 0;
-        double H   = 0;
+        double h   = 0;
+        double ha   = 0;
+        double hb   = 0;
+        int abandonment = 0;
+        int notEnter = 0;
 
 
         for (Event event : events) {
@@ -37,6 +41,19 @@ public class ResultCalculator {
             if (customer != null && event.getType() == DEPARTURE){
                     wN  += customer.getPermanence();
                     wcN  += customer.getWaitTime();
+                    if (!event.getCustomer().isInterrupted()){
+//                        user finished service
+
+                        if (customer.getType() == Customer.CustomerType.B) hb++;
+                        else ha++;
+                        h++;
+                    } else {
+//                        user was interrupted
+//                        check if abandonment or notEnter by testing permanence time
+                        if (customer.getPermanence() > 0 ) abandonment++;
+                        else notEnter++;
+
+                    }
             }
 
 
@@ -50,6 +67,12 @@ public class ResultCalculator {
         results.setL(lT / totalTime);
         results.setW(wN / totalCustomers);
         results.setWc(wcN / totalCustomers);
+        results.setH(h/totalCustomers);
+        results.setHa(ha/results.getAcustomers());
+        results.setHb(hb/results.getBcustomers());
+        results.setPorcentajeBAbandono((float)abandonment / results.getBcustomers());
+        results.setPorcentajeBNoIngresa((float)notEnter / results.getBcustomers());
+
 
 
     }
