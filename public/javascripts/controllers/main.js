@@ -45,6 +45,7 @@ angular.module('ngSimulation')
         self.simulation = self.simulations[0];
 
         self.populateChats = function(){
+            self.chartData[0].data = [];
             angular.forEach(self.items.events , function(e){
                 self.chartData[0].data.push([e.initTime , e.queueLength]);
             });
