@@ -13,6 +13,11 @@ angular.module('ngSimulation', [
     'ngAnimate',
     'angular-flot'
     ])
+    .filter('percentage', ['$filter', function ($filter) {
+        return function (input, decimals) {
+            return $filter('number')(input * 100, decimals) + '%';
+        };
+    }])
     .config(['$routeProvider',function ($routeProvider) {
         $routeProvider
             .when('/', {

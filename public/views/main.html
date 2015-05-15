@@ -104,13 +104,145 @@
 
 <div class="container animate-hide" ng-show="!mainCtrl.editing && !mainCtrl.loading"  ng-class="!mainCtrl.editing ? 'delay-transition' : 'no-transition' " >
     <div class="row">
-        <div class="col-md-3 col-xs-4 text-center" ng-repeat="(key, value) in mainCtrl.items.results">
+
+        <!--mainCtrl.items.results-->
+        <div class="col-sm-4 text-center">
+            <h2 class="section-heading text-primary">A</h2>
+
             <div class="service-box">
-                <i class="glyphicon glyphicon-ok text-primary"></i>
-                <h3>{{value}}</h3>
-                <p class="text-muted">{{key}}</p>
+                <h3>{{ mainCtrl.items.results.acustomers}}</h3>
+                <p class="text-muted">Total</p>
+            </div>
+
+            <div class="service-box">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-success" style="width:{{mainCtrl.items.results.ha | percentage:3}}">
+                        {{mainCtrl.items.results.ha | percentage:3}}
+                    </div>
+                </div>
+                <p class="text-muted">Porcentaje Atencion</p>
+            </div>
+
+            <div class="service-box">
+                <div class="col-md-6">
+                    <h3>{{ mainCtrl.items.results.lcA | number:8}}</h3>
+                    <p class="text-muted">Longitud Cola</p>
+                </div>
+
+                <div class="col-md-6">
+                    <h3>{{ mainCtrl.items.results.la | number:8}}</h3>
+                    <p class="text-muted">Longitud Sistema</p>
+                </div>
+            </div>
+
+            <div class="service-box">
+                <div class="col-md-6">
+                    <h3>{{ mainCtrl.items.results.wcA | number:8}}</h3>
+                    <p class="text-muted">Tiempo Espera</p>
+                </div>
+
+                <div class="col-md-6">
+                    <h3>{{ mainCtrl.items.results.wa | number:8}}</h3>
+                    <p class="text-muted">Tiempo Permanencia</p>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="col-sm-4 text-center">
+            <h2 class="section-heading text-primary">B</h2>
+
+            <div class="service-box">
+                <h3>{{ mainCtrl.items.results.bcustomers}}</h3>
+                <p class="text-muted">Total</p>
+            </div>
+
+            <div class="service-box">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-success" style="width:{{mainCtrl.items.results.hb | percentage:3}}">
+                        {{mainCtrl.items.results.hb | percentage:3}}
+                    </div>
+                    <div class="progress-bar progress-bar-warning" style="width:{{mainCtrl.items.results.porcentajeBNoIngresa | percentage:3}}">
+                        {{mainCtrl.items.results.porcentajeBNoIngresa | percentage:3}}
+                    </div>
+                    <div class="progress-bar progress-bar-danger" style="width:{{mainCtrl.items.results.porcentajeBAbandono | percentage:3}}">
+                        {{mainCtrl.items.results.porcentajeBAbandono | percentage:3}}
+                    </div>
+                </div>
+                <p class="text-muted">Porcentaje <span class="text-success">Atencion</span>, <span class="text-warning">No Ingreso</span>, <span class="text-danger">Abandono</span></p>
+            </div>
+
+            <div class="service-box">
+                <div class="col-md-6">
+                    <h3>{{ mainCtrl.items.results.lcB | number:8}}</h3>
+                    <p class="text-muted">Longitud Cola</p>
+                </div>
+
+                <div class="col-md-6">
+                    <h3>{{ mainCtrl.items.results.lb | number:8}}</h3>
+                    <p class="text-muted">Longitud Sistema</p>
+                </div>
+            </div>
+
+            <div class="service-box">
+                <div class="col-md-6">
+                    <h3>{{ mainCtrl.items.results.wcB | number:8}}</h3>
+                    <p class="text-muted">Tiempo Espera</p>
+                </div>
+
+                <div class="col-md-6">
+                    <h3>{{ mainCtrl.items.results.wb | number:8}}</h3>
+                    <p class="text-muted">Tiempo Permanencia</p>
+                </div>
             </div>
         </div>
+
+        <div class="col-sm-4 text-center">
+            <h2 class="section-heading text-primary">Total </h2>
+
+            <div class="service-box">
+                <h3>{{ mainCtrl.items.results.acustomers + mainCtrl.items.results.bcustomers}}</h3>
+                <p class="text-muted">Total Customers</p>
+            </div>
+
+            <div class="service-box">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-success" style="width:{{mainCtrl.items.results.h | percentage:3}}">
+                        {{mainCtrl.items.results.h | percentage:3}}
+                    </div>
+                </div>
+                <p class="text-muted">Porcentaje Atencion</p>
+            </div>
+
+            <div class="service-box">
+                <div class="col-md-6">
+                    <h3>{{ mainCtrl.items.results.lc | number:8}}</h3>
+                    <p class="text-muted">Longitud Cola</p>
+                </div>
+
+                <div class="col-md-6">
+                    <h3>{{ mainCtrl.items.results.l | number:8}}</h3>
+                    <p class="text-muted">Longitud Sistema</p>
+                </div>
+            </div>
+
+            <div class="service-box">
+                <div class="col-md-6">
+                    <h3>{{ mainCtrl.items.results.wc | number:8}}</h3>
+                    <p class="text-muted">Tiempo Espera</p>
+                </div>
+
+                <div class="col-md-6">
+                    <h3>{{ mainCtrl.items.results.w | number:8}}</h3>
+                    <p class="text-muted">Tiempo Permanencia</p>
+                </div>
+            </div>
+
+
+        </div>
+
+
     </div>
 
 
