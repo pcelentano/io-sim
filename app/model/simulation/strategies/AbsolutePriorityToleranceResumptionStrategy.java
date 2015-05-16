@@ -105,7 +105,7 @@ public class AbsolutePriorityToleranceResumptionStrategy implements SimulationSt
 
             //Meter el nuevo evento del encarcelado
 
-            possibleBExit = new Event(DEPARTURE, customer, event.getInitTime() + possibleBExit.getRemainingTime(), false);
+            possibleBExit = new Event(DEPARTURE, possibleBExit.getCustomer(), event.getInitTime() + possibleBExit.getRemainingTime(), false);
             simulation.addEventAndSort(possibleBExit);
         } else {
             //Sacar al primero de la cola

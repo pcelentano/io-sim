@@ -97,12 +97,24 @@ angular.module('ngSimulation')
         };
 
         self.selectSim = function(){
-            for (i=0; i<self.simulations.length; i++){
-                var sim = simulations[i];
-                if (sim.priority == self.simulation.priority
+            if(self.simulation.tolerance == 'Tolerant') self.simulation.intolerance = undefined;
+            else if(self.simulation.tolerance == 'Intolerant') self.simulation.resumption = undefined;
+
+
+            for (var i = 0; i < self.simulations.length; i++){
+                var sim = self.simulations[i];
+                if (checkEquals(sim)){
+                    self.simulation = sim;
+                }
             }
         };
 
+        function checkEquals(simulation) {
+            var b = simulation.priority == self.simulation.priority && simulation.tolerance == self.simulation.tolerance &&
+                simulation.intolerance == self.simulation.intolerance && simulation.resumption == self.simulation.resumption;
+            console.log(b);
+            return b;
+        }
     }]);
 
 

@@ -1,5 +1,6 @@
 package model.simulation;
 
+import model.simulation.strategies.AbsolutePriorityToleranceResumptionStrategy;
 import model.simulation.strategies.RelativePriorityTotalAbandonmentStrategy;
 import model.simulation.strategies.SimulationStrategy;
 
@@ -11,7 +12,8 @@ public class SimulationFactory {
     public static SimulationStrategy getStrategy(final SimulationParameters parameters){
 //        if (parameters.getPriority().equals("Relative") && parameters.getTolerance().equals("Intolerant")
 //                && parameters.getIntolerance().equals("Total"))
-            return new RelativePriorityTotalAbandonmentStrategy();
+//            return new RelativePriorityTotalAbandonmentStrategy();
+            return new AbsolutePriorityToleranceResumptionStrategy();
 
 //        else return null;
     }
