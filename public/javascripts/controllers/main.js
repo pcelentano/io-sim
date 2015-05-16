@@ -32,13 +32,18 @@ angular.module('ngSimulation')
                 name : 'Pablo Celentano',
                 priority : "Relative",
                 tolerance : "Intolerant",
-                intolerance : "Total"
+                intolerance : "Total",
+                resumption : undefined,
+                url : "chelenSimulation"
+
             },
             {
-                name : 'Juan Perez',
-                priority : "Relative",
+                name : 'Martin Gutierrez',
+                priority : "Total",
                 tolerance : "Tolerant",
-                resumption : "Resumption"
+                resumption : "Resumption",
+                intolerance : undefined,
+                url : "guteSimulation"
             }
         ];
 
@@ -62,7 +67,7 @@ angular.module('ngSimulation')
 
             var req = {
                 method: 'POST',
-                url: '/api/simulation',
+                url: '/api/simulation' + self.simulation.url,
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -89,6 +94,13 @@ angular.module('ngSimulation')
             self.formData = {};
             self.error = false;
 
+        };
+
+        self.selectSim = function(){
+            for (i=0; i<self.simulations.length; i++){
+                var sim = simulations[i];
+                if (sim.priority == self.simulation.priority
+            }
         };
 
     }]);

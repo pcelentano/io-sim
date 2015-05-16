@@ -23,33 +23,33 @@
         <div class="row">
             <div class="form-group col-sm-4">
                 <label for="priority"> Priority</label>
-                <select class="form-control" id="priority">
-                    <option>Relative</option>
-                    <option>Total</option>
+                <select class="form-control" id="priority" ng-model="mainCtrl.simulation.priority" ng-change="mainCtrl.selectSim()">
                 </select>
             </div>
             <div class="form-group col-sm-4">
                 <label for="tolerance"> Tolerance</label>
-                <select class="form-control" id="tolerance">
+                <select class="form-control" id="tolerance" ng-model="mainCtrl.simulation.tolerance" ng-change="mainCtrl.selectSim()">
                     <option>Tolerant</option>
                     <option>Intolerant</option>
                 </select>
             </div>
             <div class="form-group col-sm-4" ng-show="mainCtrl.simulation.tolerance == 'Tolerant'">
                 <label for="reanudacion"> Resumption</label>
-                <select class="form-control" id="reanudacion" >
+                <select class="form-control" id="reanudacion" ng-model="mainCtrl.simulation.resumption" ng-change="mainCtrl.selectSim()">
                     <option>Resumption</option>
                     <option>Reinitiation</option>
                 </select>
             </div>
             <div class="form-group col-sm-4" ng-show="mainCtrl.simulation.tolerance == 'Intolerant'">
                 <label for="intolerance"> Intolerance</label>
-                <select class="form-control" id="intolerance" >
+                <select class="form-control" id="intolerance" ng-model="mainCtrl.simulation.intolerance" ng-change="mainCtrl.selectSim()">
                     <option>Partial</option>
                     <option>Total</option>
                 </select>
             </div>
             </div>
+
+        <pre>{{mainCtrl.simulation | json}}</pre>
         <div class="row">
             <div class="form-group col-sm-6">
                 <label for="cliB">Time</label>
