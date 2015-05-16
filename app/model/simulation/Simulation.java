@@ -31,6 +31,8 @@ public class Simulation {
     private final Queue<Customer> customerQueue;
     private final List<Event> events;
     private Customer currentCustomer;
+    /* when resumption is needed */
+    private Customer cagedCustomer;
     private final Result result;
 
 
@@ -44,6 +46,7 @@ public class Simulation {
         customerQueue = new LinkedList<Customer>();
         events = new ArrayList<>();
         currentCustomer = null;
+        cagedCustomer = null;
         this.simulationStrategy = simulationStrategy;
         result = new Result();
     }
@@ -98,6 +101,11 @@ public class Simulation {
     public void addEventAndSort(@NotNull Event event) {
         events.add(event);
         Collections.sort(events);
+    }
+
+    /** Remove event from event list */
+    public void removeEvent(@NotNull Event event){
+        if(events.contains(event)) events.remove(event);
     }
 
 
@@ -163,8 +171,9 @@ public class Simulation {
     public double getMuA() { return muA; }
 
 
+    public Customer getCagedCustomer() { return cagedCustomer; }
 
-
+    public void setCagedCustomer(Customer cagedCustomer) { this.cagedCustomer = cagedCustomer; }
 
     /** Current customer being attended. */
     @Nullable public Customer getCurrentCustomer() { return currentCustomer; }

@@ -13,6 +13,7 @@ public class Event implements Comparable<Event> {
     private  double deltaTime;
     private final boolean silent;
     private String comment;
+    private double remainingTime;
 
     /** Event Type. */
     public EventType getType() { return type; }
@@ -29,6 +30,7 @@ public class Event implements Comparable<Event> {
         customer = c;
         initTime = time;
         this.silent = silent;
+        remainingTime = 0.0;
     }
 
     @Override public int compareTo(Event o) {
@@ -79,6 +81,9 @@ public class Event implements Comparable<Event> {
         return this;
     }
 
+    public double getRemainingTime() { return remainingTime; }
+
+    public void setRemainingTime(double remainingTime) { this.remainingTime = remainingTime; }
 
     public enum EventType {
 
@@ -98,6 +103,6 @@ public class Event implements Comparable<Event> {
 
 
     public enum Status {
-        EMPTY, OCCUPIED;
+        EMPTY, OCCUPIED
     }
 }
