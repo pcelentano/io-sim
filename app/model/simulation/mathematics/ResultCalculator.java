@@ -24,7 +24,11 @@ public class ResultCalculator {
         double laT = 0;
         double lbT = 0;
         double wN  = 0;
+        double waN  = 0;
+        double wbN  = 0;
         double wcN = 0;
+        double wcaN = 0;
+        double wcbN = 0;
         double h   = 0;
         double ha   = 0;
         double hb   = 0;
@@ -32,7 +36,7 @@ public class ResultCalculator {
         int notEnter = 0;
 
 
-        for (Event event : events) {
+        for (final Event event : events) {
             final Customer customer = event.getCustomer();
             lcT += event.getQueueLength() * event.getDeltaTime();
             lT  += (event.getQueueLength() + (event.getAttentionChanelStatus() == OCCUPIED ? 1 : 0)) * event.getDeltaTime();
@@ -41,6 +45,14 @@ public class ResultCalculator {
             if (customer != null && event.getType() == DEPARTURE){
                     wN  += customer.getPermanence();
                     wcN  += customer.getWaitTime();
+
+                if (customer.getType() == Customer.CustomerType.A){
+                    waN  += customer.getPermanence();
+                    wcaN += customer.getWaitTime();
+                } else {
+                    wbN  += customer.getPermanence();
+                    wcbN += customer.getWaitTime();
+                }
                     if (!event.getCustomer().isInterrupted()){
 //                        user finished service
 
@@ -61,17 +73,23 @@ public class ResultCalculator {
 
 
         final double totalTime = events.get(events.size()-1).getInitTime();
-        final int totalCustomers = results.getAcustomers() + results.getBcustomers();
+        final int customersA = results.getAcustomers();
+        final int customersB = results.getBcustomers();
+        final int totalCustomers = customersA + customersB;
 
         results.setLc(lcT / totalTime);
         results.setL(lT / totalTime);
         results.setW(wN / totalCustomers);
+        results.setWa(waN / customersA);
+        results.setWb(wbN / customersB);
         results.setWc(wcN / totalCustomers);
+        results.setWcA(wcaN / customersA);
+        results.setWcB(wcbN / customersB);
         results.setH(h/totalCustomers);
-        results.setHa(ha/results.getAcustomers());
-        results.setHb(hb/results.getBcustomers());
-        results.setPorcentajeBAbandono((float)abandonment / results.getBcustomers());
-        results.setPorcentajeBNoIngresa((float)notEnter / results.getBcustomers());
+        results.setHa(ha/ customersA);
+        results.setHb(hb/ customersB);
+        results.setPorcentajeBAbandono((float)abandonment / customersB);
+        results.setPorcentajeBNoIngresa((float)notEnter / customersB);
 
 
 
