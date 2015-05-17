@@ -67,7 +67,7 @@ angular.module('ngSimulation')
 
             var req = {
                 method: 'POST',
-                url: '/api/simulation' + self.simulation.url,
+                url: '/api/simulation/' + self.simulation.url,
                 headers: {
                     'Content-Type': 'application/json'
                 },
