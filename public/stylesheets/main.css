@@ -39,3 +39,22 @@
     margin-left: -20vw;
     text-align: center;
 }
+
+/*slider style*/
+
+rzslider span.bar {
+    background-color: rgb(190, 190, 190) !important;
+}
+
+rzslider span.bubble.limit {
+    color: gray !important;
+    padding-top:10px;
+}
+
+rzslider span.bubble {
+    color: black !important;
+}
+
+rzslider span.pointer:hover:after {
+    background-color: #f05f40 !important;
+}

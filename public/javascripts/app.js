@@ -11,7 +11,8 @@
 angular.module('ngSimulation', [
     'ngRoute',
     'ngAnimate',
-    'angular-flot'
+    'angular-flot',
+    'rzModule'
     ])
     .filter('percentage', ['$filter', function ($filter) {
         return function (input, decimals) {
