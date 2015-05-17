@@ -15,7 +15,10 @@ angular.module('ngSimulation')
         self.loading = false;
         self.error = false;
         self.formData = {
-            simParam: self.simulation
+            simParam: self.simulation,
+            simData : {
+                time : 130
+            }
         };
 
         self.chartData = [{ data: [], yaxis: 1, label: "Queue Length" }];
@@ -24,6 +27,14 @@ angular.module('ngSimulation')
             lines: {
                 show: true,
                 steps: true
+            }
+        };
+
+        self.eventsToggle = function(){
+            if(self.formData.simData.withEvents){
+                self.formData.simData.time = 10;
+            } else {
+                self.formData.simData.time = 145;
             }
         };
 

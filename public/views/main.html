@@ -64,7 +64,10 @@
 
             <div class="form-group col-sm-6">
                 <div class="checkbox">
-                    <label> <input type="checkbox" ng-model="mainCtrl.formData.simData.withEvents"> Show Table & Graphs </label>
+                    <label>
+                        <input type="checkbox" ng-model="mainCtrl.formData.simData.withEvents"
+                                ng-change="mainCtrl.eventsToggle()">
+                        Show Table & Graphs </label>
                 </div>
             </div>
         </div>
