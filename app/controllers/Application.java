@@ -5,6 +5,7 @@ import model.simulation.Data;
 import model.simulation.InputData;
 import model.simulation.Simulation;
 import model.simulation.SimulationParameters;
+import model.simulation.strategies.AbsolutePriorityToleranceResumptionStrategy;
 import model.simulation.strategies.RelativePriorityTotalAbandonmentStrategy;
 import model.simulation.strategies.SimulationStrategy;
 import play.libs.Json;
@@ -30,11 +31,15 @@ public class Application extends Controller {
         return runSimulationWithStrategy(new RelativePriorityTotalAbandonmentStrategy());
     }
 
-    @NotNull private static Result runSimulationWithStrategy(RelativePriorityTotalAbandonmentStrategy strategy) {
+    @NotNull private static Result runSimulationWithStrategy(SimulationStrategy strategy) {
         final JsonNode json = request().body().asJson();
         final InputData data = Json.fromJson(json.get("simData"), InputData.class);
         final Simulation simulation = new Simulation(strategy, data.getClientsHourA(), data.getClientsHourB(), data.getMuA(), data.getMuB(), data.getTime());
         final model.simulation.Result run = simulation.run();
         return ok(toJson(run));
+    }
+
+    public static Result guteSimulation() {
+        return runSimulationWithStrategy(new AbsolutePriorityToleranceResumptionStrategy());
     }
 }
