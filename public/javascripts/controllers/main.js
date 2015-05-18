@@ -60,6 +60,7 @@ angular.module('ngSimulation')
 
         self.simulation = {};
         angular.copy(self.simulations[1], self.simulation);
+        self.disableSubmit = false;
 
         self.populateChats = function(){
             self.chartData[0].data = [];
@@ -120,9 +121,11 @@ angular.module('ngSimulation')
                 var sim = self.simulations[i];
                 if (checkEquals(sim)){
                     angular.copy(sim, self.simulation);
+                    self.disableSubmit = false;
                     return;
                 }
             }
+            self.disableSubmit = true;
         };
 
         function checkEquals(simulation) {
