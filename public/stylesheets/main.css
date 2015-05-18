@@ -58,3 +58,5 @@ rzslider span.bubble {
 rzslider span.pointer:hover:after {
     background-color: #f05f40 !important;
 }
+
+.small-help { font-size: 13px; }
