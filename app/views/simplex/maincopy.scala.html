@@ -1,0 +1,73 @@
+@(title: String)(content: Html)
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" media="screen" href='@routes.Assets.at("stylesheets/bootstrap.css")'>
+    <link rel="stylesheet" media="screen" href='@routes.Assets.at("stylesheets/smoke.css")'>
+    <link rel="stylesheet" media="screen" href='@routes.Assets.at("stylesheets/dark.css")'>
+    <link rel="stylesheet" media="screen" href='@routes.Assets.at("stylesheets/simplex.css")'>
+    <link rel="shortcut icon" type="image/png" href='@routes.Assets.at("images/favicon.ico")'>
+    <title>@title</title>
+
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-33549044-1']);
+        _gaq.push(['_setDomainName', 'simplex.dyndns.biz']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+
+</head>
+
+
+<body>
+<!--[if IE]><h3 class=chromeframe>Your browser can't render this site. <a
+        href="http://www.google.com/chromeframe/?redirect=true">Click to Fix it!</a></h3><![endif]-->
+<header>
+    <a style="text-align: center;">@title</a>
+</header>
+
+
+<section>
+    @content
+</section>
+
+<footer>
+    <div style="text-align: left; margin-left: 20px; float:left;">
+        <p style="font-size: 18px;">Final Investigación Operativa </p>
+
+        <p>Universidad Austal</p>
+
+        <p>16/12/2013</p>
+    </div>
+    <div style="text-align: left; margin-right: 25px; float: right;">
+        <p  style="font-size: 15px; margin-top: 55px;">Laura López Bukovac - Damián Roque Minniti </p>
+    </div>
+
+
+</footer>
+
+</body>
+
+<script src='@routes.Assets.at("javascripts/smoke.js")' type="text/javascript"></script>
+<script src='@routes.Assets.at("javascripts/jquery-1.6.4.min.js")' type="text/javascript"></script>
+<script src='@routes.Assets.at("javascripts/simplexController.js")' type="text/javascript"></script>
+<script src='@routes.Assets.at("javascripts/webSocket.js")' type="text/javascript"></script>
+<script type="text/javascript">
+    $(function() {
+        initWebSocket("@routes.AppController.socket().webSocketURL(request)");
+    });
+</script>
+</html>

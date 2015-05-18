@@ -59,7 +59,7 @@ angular.module('ngSimulation')
         ];
 
         self.simulation = {};
-        angular.copy(self.simulations[0], self.simulation);
+        angular.copy(self.simulations[1], self.simulation);
 
         self.populateChats = function(){
             self.chartData[0].data = [];

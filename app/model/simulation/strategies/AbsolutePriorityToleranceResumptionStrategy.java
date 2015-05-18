@@ -50,6 +50,9 @@ public class AbsolutePriorityToleranceResumptionStrategy implements SimulationSt
             //Si la cola tiene gente, solo encolo
             simulation.addCustomertoQueue(event.getCustomer());
         }
+
+        //Settear la longitud de la cola en este evento de entrada
+        event.queueLength(simulation.getQueueLength()).attentionChanelStatus(OCCUPIED);
     }
 
     private void cageCustomer(Event event, Simulation simulation) {
@@ -92,6 +95,12 @@ public class AbsolutePriorityToleranceResumptionStrategy implements SimulationSt
                 attendNext(event, simulation, true);
             }
         }
+
+        //Settear permanencia del cliente en el sistema
+        event.getCustomer().setPermanence(event.getInitTime() - event.getCustomer().getArrivalTime());
+
+        //Settear la longitud de la cola en este evento de salida
+        event.queueLength(simulation.getQueueLength()).attentionChanelStatus(simulation.getCurrentCustomer() == null ? EMPTY : OCCUPIED);
     }
 
     private void attendNext(Event event, Simulation simulation, boolean attendCaged) {
@@ -129,6 +138,7 @@ public class AbsolutePriorityToleranceResumptionStrategy implements SimulationSt
         simulation.setCurrentCusomer(customer);
 
         if (customer != null){
+            customer.waitTime(event.getInitTime() - customer.getArrivalTime());
             final Customer.CustomerType type = customer.getType();
             System.out.println("Atendiendo a " + type.toString());
             event.attentionChanelStatus(OCCUPIED);

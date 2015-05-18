@@ -1,24 +1,18 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import model.simulation.Data;
 import model.simulation.InputData;
 import model.simulation.Simulation;
-import model.simulation.SimulationParameters;
 import model.simulation.strategies.AbsolutePriorityToleranceResumptionStrategy;
 import model.simulation.strategies.RelativePriorityTotalAbandonmentStrategy;
 import model.simulation.strategies.SimulationStrategy;
 import play.libs.Json;
-import play.mvc.*;
-
+import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.*;
+import views.html.index;
 
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
 
-import static model.simulation.SimulationFactory.getStrategy;
 import static play.libs.Json.toJson;
 
 public class Application extends Controller {
