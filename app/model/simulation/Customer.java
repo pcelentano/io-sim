@@ -13,6 +13,7 @@ public class Customer {
     private final int customerNumber;
     private boolean interrupted;
     private final double arrivalTime;
+    private boolean wasCaged;
 
 
     /** Set Customer interrupted. */
@@ -58,4 +59,8 @@ public class Customer {
         A, B
     }
 
+    public boolean wasCaged() { return wasCaged; }
+
+    /** For tolerance option set that the customer was caged for future metrics */
+    public void caged() { wasCaged = true; }
 }

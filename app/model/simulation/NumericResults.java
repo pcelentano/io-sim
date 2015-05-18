@@ -22,6 +22,7 @@ public class NumericResults {
     private double porcentajeBNoIngresa;
     private int bCustomers;
     private int aCustomers;
+    private float porcentajeBEnjaulado;
 
 
     public double getLcA() { return lcA; }
@@ -173,4 +174,7 @@ public class NumericResults {
         return aCustomers;
     }
 
+    public void setPorcentajeBEnjaulado(float porcentajeBEnjaulado) { this.porcentajeBEnjaulado = porcentajeBEnjaulado; }
+
+    public float getPorcentajeBEnjaulado() { return porcentajeBEnjaulado; }
 }

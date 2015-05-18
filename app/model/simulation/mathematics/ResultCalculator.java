@@ -34,6 +34,7 @@ public class ResultCalculator {
         double hb   = 0;
         int abandonment = 0;
         int notEnter = 0;
+        int cagedTotal = 0;
 
 
         for (final Event event : events) {
@@ -45,6 +46,7 @@ public class ResultCalculator {
             if (customer != null && event.getType() == DEPARTURE){
                     wN  += customer.getPermanence();
                     wcN  += customer.getWaitTime();
+                if(customer.wasCaged()) cagedTotal++;
 
                 if (customer.getType() == Customer.CustomerType.A){
                     waN  += customer.getPermanence();
@@ -90,6 +92,7 @@ public class ResultCalculator {
         results.setHb(hb/ customersB);
         results.setPorcentajeBAbandono((float)abandonment / customersB);
         results.setPorcentajeBNoIngresa((float)notEnter / customersB);
+        results.setPorcentajeBEnjaulado((float)cagedTotal/customersB);
 
 
 

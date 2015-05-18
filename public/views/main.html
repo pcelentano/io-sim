@@ -126,7 +126,7 @@
                         {{mainCtrl.items.results.ha | percentage:3}}
                     </div>
                 </div>
-                <p class="text-muted">Porcentaje Atencion</p>
+                <p class="text-muted">Porcentaje Atención</p>
             </div>
 
             <div class="service-box">
@@ -176,7 +176,15 @@
                         {{mainCtrl.items.results.porcentajeBAbandono | percentage:3}}
                     </div>
                 </div>
-                <p class="text-muted">Porcentaje <span class="text-success">Atencion</span>, <span class="text-warning">No Ingreso</span>, <span class="text-danger">Abandono</span></p>
+                <p class="text-muted">Porcentaje <span class="text-success">Atención</span>, <span class="text-warning">No Ingreso</span>, <span class="text-danger">Abandono</span></p>
+            </div>
+            <div class="service-box" ng-show="mainCtrl.items.results.porcentajeBEnjaulado > 0">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-danger" style="width:{{mainCtrl.items.results.porcentajeBEnjaulado | percentage:3}}">
+                        {{mainCtrl.items.results.porcentajeBEnjaulado | percentage:3}}
+                    </div>
+                </div>
+                <p class="text-muted">Porcentaje <span class="text-danger">Desplazados</span></p>
             </div>
 
             <div class="service-box">
@@ -218,7 +226,7 @@
                         {{mainCtrl.items.results.h | percentage:3}}
                     </div>
                 </div>
-                <p class="text-muted">Porcentaje Atencion</p>
+                <p class="text-muted">Porcentaje Atención</p>
             </div>
 
             <div class="service-box">
