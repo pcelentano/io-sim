@@ -51,8 +51,8 @@ public class Simulation {
         result = new Result();
     }
 
-    /** Run Simulation.*/
-    public Result run() {
+    /** Run Simulation. @param withEvents*/
+    public Result run(boolean withEvents) {
 
 
 
@@ -74,24 +74,17 @@ public class Simulation {
         }
 
 
-        System.out.println("done!");
+//        System.out.println("done!");
 
 
         final NumericResults results = result.getResults();
-//        results.setLcA(Math.pow(clientsPerHourA, 2) / ((muA - clientsPerHourA) * muA));
-//        results.setLcB(Math.pow(clientsPerHourB, 2) / ((muB - clientsPerHourB) * muB));
-//        results.setLa(clientsPerHourA / (muA - clientsPerHourA));
-//        results.setLb(clientsPerHourB / (muB - clientsPerHourB));
-//        results.setWcA(results.getLcA()/clientsPerHourA);
-//        results.setWcB(results.getLcB()/clientsPerHourB);
-//        results.setWa(results.getLa()/clientsPerHourA);
-//        results.setWb(results.getLb()/clientsPerHourB);
-//        results.setHa(results.getLcA()-results.getLa());
-//        results.setHb(results.getLcB()-results.getLb());
 
         final ResultCalculator resultCalculator = new ResultCalculator();
         resultCalculator.calculate(events, results);
-//        if (! withEvents) result.getEvents().clear();
+
+//        remove events if not needed
+        if (!withEvents) result.getEvents().clear();
+
 
         return result;
 
@@ -130,7 +123,8 @@ public class Simulation {
             previousEvent.deltaTime(event.getInitTime() - previousEvent.getInitTime());
         }
 
-        System.out.println("event = " + event);
+        final Customer customer = event.getCustomer();
+        if (customer != null && customer.getCustomerNumber() % 4000 == 0 && customer.getType() == B) System.out.println("Still working.. " + event.getInitTime());
 
     }
 

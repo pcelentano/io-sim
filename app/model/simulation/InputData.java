@@ -9,6 +9,7 @@ public class InputData {
     private double muA;
     private double muB;
     private int time;
+    private boolean withEvents;
     private String priority;
     private String tolerance;
     private String resumption;
@@ -17,6 +18,8 @@ public class InputData {
     public String getPriority() { return priority; }
 
     public void setPriority(String priority) { this.priority = priority; }
+
+    public boolean isWithEvents() { return withEvents; }
 
     public String getTolerance() { return tolerance; }
 

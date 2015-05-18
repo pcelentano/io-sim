@@ -70,7 +70,7 @@ public class RelativePriorityTotalAbandonmentStrategy implements SimulationStrat
 //                    simulation.removeFromQueue(ALL_CUSTOMERS);
 //                    customerQueue.clear(); // limpio la cola tengo que generar eventos de que se fueron y los por ques
 
-                    System.out.println("removed all B from queue");
+//                    System.out.println("removed all B from queue");
                     simulation.addCustomertoQueue(customer);
                 }
             }
@@ -79,14 +79,14 @@ public class RelativePriorityTotalAbandonmentStrategy implements SimulationStrat
                 // bLeftBecauseACurrent
                 customer.setPermanence(0).interrupted();
                 simulation.addEventAndSort(new Event(DEPARTURE, customer, event.getInitTime(), true).comment("Left Because A current"));
-                System.out.println("B left because A current");
+//                System.out.println("B left because A current");
             }
             else {
                 if (queueType(simulation) == A){
                     // bLeftBeacuaseAinQueue
                     customer.interrupted();
                     simulation.addEventAndSort(new Event(DEPARTURE, customer, event.getInitTime(), true).comment("Left because A in queue"));
-                    System.out.println("B left because A in queue");
+//                    System.out.println("B left because A in queue");
                 }
 
                 else simulation.addCustomertoQueue(customer);
@@ -121,7 +121,7 @@ public class RelativePriorityTotalAbandonmentStrategy implements SimulationStrat
         if (customer != null){
             customer.waitTime(event.getInitTime() - customer.getArrivalTime());
             final Customer.CustomerType type = customer.getType();
-            System.out.println("Atendiendo a " + type.toString());
+//            System.out.println("Atendiendo a " + type.toString());
             event.attentionChanelStatus(OCCUPIED);
             final double mu = Mathematics.getDurationChannel(type == A ? simulation.getMuA() : simulation.getMuB());
             simulation.addEventAndSort(new Event(DEPARTURE, customer, event.getInitTime() + mu, false));

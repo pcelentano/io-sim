@@ -35,7 +35,7 @@ public class Application extends Controller {
         final JsonNode json = request().body().asJson();
         final InputData data = Json.fromJson(json.get("simData"), InputData.class);
         final Simulation simulation = new Simulation(strategy, data.getClientsHourA(), data.getClientsHourB(), data.getMuA(), data.getMuB(), data.getTime());
-        final model.simulation.Result run = simulation.run();
+        final model.simulation.Result run = simulation.run(data.isWithEvents());
         return ok(toJson(run));
     }
 

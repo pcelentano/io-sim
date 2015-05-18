@@ -17,7 +17,7 @@ angular.module('ngSimulation')
         self.formData = {
             simParam: self.simulation,
             simData : {
-                time : 130
+                time : 3000
             }
         };
 
@@ -34,7 +34,7 @@ angular.module('ngSimulation')
             if(self.formData.simData.withEvents){
                 self.formData.simData.time = 10;
             } else {
-                self.formData.simData.time = 145;
+                self.formData.simData.time = 3000;
             }
         };
 
@@ -103,7 +103,11 @@ angular.module('ngSimulation')
         self.reset = function() {
             self.editing = true;
             self.loading = false;
-            self.formData = {};
+            self.formData = {
+                simData : {
+                    time : 3000
+                }
+            };
             self.error = false;
 
         };
