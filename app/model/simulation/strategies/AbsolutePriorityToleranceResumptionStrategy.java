@@ -122,7 +122,7 @@ public class AbsolutePriorityToleranceResumptionStrategy implements SimulationSt
 
                 cageCustomer(event, simulation);
 
-                customer = checkPeek;
+                customer = simulation.pollCustomerQueue();
             }
         }
 
