@@ -1,7 +1,7 @@
 package model.simplex;
 
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.node.ObjectNode;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import play.libs.F;
 import play.libs.Json;
 import play.mvc.WebSocket;

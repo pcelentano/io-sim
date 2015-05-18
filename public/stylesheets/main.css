@@ -60,3 +60,5 @@ rzslider span.pointer:hover:after {
 }
 
 .small-help { font-size: 13px; }
+
+section#simplex input { color: gray; }

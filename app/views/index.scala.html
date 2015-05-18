@@ -78,6 +78,131 @@
                         <a href="#" class="btn btn-default btn-xl">Get Started!</a>
                     </div>
                 </div>
+
+
+                <div id="panels">
+
+                    <div id="panelPaso1">
+                        <h3>Seleccionar Cantidad</h3>
+                        <form accept-charset="UTF-8" action="/players" class="form-horizontal" id="new_player" method="post" style="display: inline-block;">
+                            <div id="a-div">
+                                <input name="utf8" type="hidden" value="✓">
+                                <input name="authenticity_token" type="hidden" value="CMXrI0MGkDWKu9011hx6zN5orQYzuoee7760PGr78YA=">
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="variables" style="margin-right:2px;"> Variables: </label>
+                                <div class="col-md-4">
+                                    <input autofocus="autofocus" class="form-control number" id="variables" required="required" type="text">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="restricciones" style="margin-right:2px;">Restricciones: </label>
+                                <div class="col-md-4">
+                                    <input autofocus="autofocus" class="form-control number" id="restricciones" required="required" type="text">
+                                </div>
+                            </div>
+                        </form>
+                        <div class="b-div">
+                            <button type="button" class="btn btn-success" onclick="nextStep()">></button>
+                        </div>
+                    </div>
+
+                    <div id="panelPaso2">
+                        <h3>Definir Objetivo</h3>
+                        <div id="panelDeFuncional">
+                            <p id="funcional">
+            </p>
+                        </div>
+                        <p>
+                            <input type="radio" name="obj" value="MAX" id="max" checked="true">MAX
+                            <input type="radio" name="obj" value="MIN" id="min">MIN
+                        </p>
+                        <h3>Definir Restricciones</h3>
+                        <div id="panelDeRestricciones">
+        </div>
+                        </br>
+                        <div>
+                            <div class="b-div" style="display: inline-block; float: left;">
+                                <button type="button" class="btn btn-success" onclick="previousStep()"><</button>
+                            </div>
+                            <div class="b-div">
+                                <button type="button" class="btn btn-success" onclick="nextStep()">></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="panelEstandar">
+                        <div id="panelDeFuncionalEstandar">
+                            <h3>Funcional</h3>
+                            <p id="funcionalEstandar">
+            </p>
+                        </div>
+                        <h3>Restricciones Estandar</h3>
+                        <div id="panelDeRestriccionesEstandar">
+        </div>
+                        <h3>Condiciones</h3>
+                        <div id="condiciones">
+                            <p>Se asumen variables reales y no negativas</p>
+                            <p id="valorM"></p>
+                        </div>
+                    </div>
+
+                    <div id="panelPaso3">
+                        <h3><span id="iterationNumber"></span></h3>
+                        <div id="panelDeTabla">
+        </div>
+                        <div id="loadingPanel">
+                            <p>
+                                <img id="loadingGif" src='"""),_display_(Seq[Any](/*103.44*/routes/*103.50*/.Assets.at("images/ajax-loader.gif"))),format.raw/*103.86*/("""'>
+                            </p>
+                        </div>
+                        </br>
+                        <div>
+                            <div id="prev-1" class="b-div" style="display: none; float: left">
+                                <button type="button" class="btn btn-success" onclick="sendMessage('previous')"><</button>
+                            </div>
+                            <div class="b-div">
+                                <button type="button" class="btn btn-success" onclick="sendMessage('next')">></button>
+                            </div>
+                            <div class="b-div" style="text-align: center">
+                                <button type="button" class="btn btn-success" onclick="nextStep()">Resultados</button>
+                            </div>
+                            <div id="prev-2" style="text-align: center">
+                                <button type="button" class="btn btn-default" onclick="previousStep()">Volver a Definición</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="panelPaso4">
+                        <h3>Resultados </h3>
+                        <div id="resultados">
+        </div>
+                        <div id="funcionalPaso4">
+        </div>
+                        <div id="valorFuncional">
+        </div>
+                        </br>
+                        <div>
+                            <div class="b-div" style="display: inline-block; float: left">
+                                <button type="button" class="btn btn-success" onclick="previousStep()"><</button>
+                            </div>
+                            <div class="b-div">
+                                <button type="button" class="btn btn-success" onclick="firstStep()">Nuevo Problema</button>
+                            </div>
+                            <div class="b-div">
+                                <button type="button" class="btn btn-default" onclick="previousStep2()">Volver a Definición</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+
+
+
+
             </div>
         </section>
 
@@ -123,6 +248,9 @@
         <script src="@routes.Assets.at("javascripts/bower_components/angular-animate/angular-animate.js")" type="text/javascript"></script>
         <script src="@routes.Assets.at("javascripts/bower_components/angular-flot/angular-flot.js")" type="text/javascript"></script>
         <script src="@routes.Assets.at("javascripts/bower_components/angularjs-slider/rzslider.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("simplex/javascripts/simplexController.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("simplex/javascripts/webSocket.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("simplex/javascripts/smoke.js")" type="text/javascript"></script>
 
         <!--<script src="javascripts/angular-animate/angular-animate.js"></script>-->
             <!--<script src="javascripts/angular-cookies/angular-cookies.js"></script>-->
@@ -141,5 +269,9 @@
         <script src="@routes.Assets.at("theme/js/jquery.fittext.js")" type="text/javascript"></script>
         <script src="@routes.Assets.at("theme/js/creative.js")" type="text/javascript"></script>
             <!-- endbuild -->
+
+        <script type="text/javascript">
+    $(function() { initWebSocket("@routes.Application.socket().webSocketURL(request)" )}) ;
+</script>
     </body>
 </html>

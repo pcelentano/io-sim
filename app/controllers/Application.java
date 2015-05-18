@@ -1,6 +1,7 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import model.simplex.WebConnection;
 import model.simulation.InputData;
 import model.simulation.Simulation;
 import model.simulation.strategies.AbsolutePriorityToleranceResumptionStrategy;
@@ -9,9 +10,12 @@ import model.simulation.strategies.SimulationStrategy;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.WebSocket;
 import views.html.index;
 
 import javax.validation.constraints.NotNull;
+
+import java.util.UUID;
 
 import static play.libs.Json.toJson;
 
@@ -35,5 +39,24 @@ public class Application extends Controller {
 
     public static Result guteSimulation() {
         return runSimulationWithStrategy(new AbsolutePriorityToleranceResumptionStrategy());
+    }
+
+
+    /**
+     * Handle the game webSocket.
+     */
+    public static WebSocket<JsonNode> socket() {
+        final String id = UUID.randomUUID().toString();
+        return new WebSocket<JsonNode>() {
+            // Called when the WebSocket Handshake is done.
+            public void onReady(WebSocket.In<JsonNode> in, WebSocket.Out<JsonNode> out) {
+                // Join the user to the page.
+                try {
+                    WebConnection.join(id, in, out);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        };
     }
 }
