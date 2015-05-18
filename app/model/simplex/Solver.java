@@ -350,8 +350,8 @@ public class Solver {
         }
 
         String result = formula.replace("M", "*" + mValue);
-        ScriptEngineManager mgr = new ScriptEngineManager();
-        ScriptEngine engine = mgr.getEngineByName("JavaScript");
+        ScriptEngineManager mgr = new ScriptEngineManager(null);
+        ScriptEngine engine = mgr.getEngineByName("nashorn");
         try {
             Object aux = engine.eval(result);
             System.out.println(Double.parseDouble(aux.toString()));

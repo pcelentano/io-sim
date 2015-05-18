@@ -6,6 +6,8 @@ import model.simulation.NumericResults;
 
 import java.util.List;
 
+import static model.simulation.Customer.CustomerType.A;
+import static model.simulation.Customer.CustomerType.B;
 import static model.simulation.Event.EventType.DEPARTURE;
 import static model.simulation.Event.Status.OCCUPIED;
 
@@ -18,8 +20,8 @@ public class ResultCalculator {
     public void calculate(final List<Event> events, final NumericResults results) {
 
         double lcT = 0;
-//        double lcaT = 0;
-//        double lcbT = 0;
+        double lcaT = 0;
+        double lcbT = 0;
         double lT = 0;
         double laT = 0;
         double lbT = 0;
@@ -42,13 +44,18 @@ public class ResultCalculator {
             lcT += event.getQueueLength() * event.getDeltaTime();
             lT  += (event.getQueueLength() + (event.getAttentionChanelStatus() == OCCUPIED ? 1 : 0)) * event.getDeltaTime();
 
+            lcaT += event.getQueueALength() * event.getDeltaTime();
+            laT  += (event.getQueueALength() + (event.getAttentionChanelStatus() == OCCUPIED && event.getAttentionChannelCustomer() == A ? 1 : 0)) * event.getDeltaTime();
+
+            lcbT += (event.getQueueLength() - event.getQueueALength()) * event.getDeltaTime();
+            lbT  += (event.getQueueLength() - event.getQueueALength() + (event.getAttentionChanelStatus() == OCCUPIED && event.getAttentionChannelCustomer() == B ? 1 : 0)) * event.getDeltaTime();
 
             if (customer != null && event.getType() == DEPARTURE){
                     wN  += customer.getPermanence();
                     wcN  += customer.getWaitTime();
                 if(customer.wasCaged()) cagedTotal++;
 
-                if (customer.getType() == Customer.CustomerType.A){
+                if (customer.getType() == A){
                     waN  += customer.getPermanence();
                     wcaN += customer.getWaitTime();
                 } else {
@@ -58,7 +65,7 @@ public class ResultCalculator {
                     if (!event.getCustomer().isInterrupted()){
 //                        user finished service
 
-                        if (customer.getType() == Customer.CustomerType.B) hb++;
+                        if (customer.getType() == B) hb++;
                         else ha++;
                         h++;
                     } else {
@@ -80,7 +87,11 @@ public class ResultCalculator {
         final int totalCustomers = customersA + customersB;
 
         results.setLc(lcT / totalTime);
+        results.setLcA(lcaT / totalTime);
+        results.setLcB(lcbT / totalTime);
         results.setL(lT / totalTime);
+        results.setLa(laT / totalTime);
+        results.setLb(lbT / totalTime);
         results.setW(wN / totalCustomers);
         results.setWa(waN / customersA);
         results.setWb(wbN / customersB);

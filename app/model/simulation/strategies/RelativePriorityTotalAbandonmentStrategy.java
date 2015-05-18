@@ -93,7 +93,8 @@ public class RelativePriorityTotalAbandonmentStrategy implements SimulationStrat
             }
         }
 
-        event.queueLength(simulation.getQueueLength()).attentionChanelStatus(OCCUPIED);
+        event.queueLength(simulation.getQueueLength()).attentionChanelStatus(OCCUPIED).setQueueALength(simulation.getALength());
+        if (currentCustomer != null) event.setAttentionChannelCustomer(currentCustomer.getType());
 
     }
 
@@ -106,11 +107,13 @@ public class RelativePriorityTotalAbandonmentStrategy implements SimulationStrat
         final Customer customer = event.getCustomer();
         customer.setPermanence(event.getInitTime() - customer.getArrivalTime());
 
-        event.queueLength(simulation.getQueueLength()).attentionChanelStatus(simulation.getCurrentCustomer() == null ? EMPTY : OCCUPIED);
+        event.queueLength(simulation.getQueueLength()).attentionChanelStatus(simulation.getCurrentCustomer() == null ? EMPTY : OCCUPIED).setQueueALength(simulation.getALength());
+        if (simulation.getCurrentCustomer() != null) event.setAttentionChannelCustomer(simulation.getCurrentCustomer().getType());
+
     }
 
     @Override public void handleInitiation(@NotNull Event event, @NotNull Simulation simulation) {
-        event.queueLength(0).attentionChanelStatus(EMPTY);
+        event.queueLength(0).attentionChanelStatus(EMPTY).setQueueALength(simulation.getALength());
     }
 
 

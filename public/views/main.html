@@ -276,6 +276,7 @@
                         <th>Client Type</th>
                         <th>Client Number</th>
                         <th>Queue Size</th>
+                        <th>Queue A Size</th>
                         <th>Status</th>
                         <th>W</th>
                         <th>Wc</th>
@@ -290,6 +291,7 @@
                         <td>{{event.customer.type}}</td>
                         <td>{{event.customer.customerNumber}}</td>
                         <td>{{event.queueLength}}</td>
+                        <td>{{event.queueALength}}</td>
                         <td>{{event.attentionChanelStatus}}</td>
                         <td>{{event.type == 'DEPARTURE' ? event.customer.permanence : ""}}</td>
                         <td>{{event.type == 'DEPARTURE' ? event.customer.waitTime : ""}}</td>

@@ -194,4 +194,12 @@ public class Simulation {
     public int getQueueLength() {
         return customerQueue.size();
     }
+
+    public int getALength() {
+        int aux = 0;
+        for (final Customer customer : customerQueue) {
+            if (customer.getType() == A) aux++;
+        }
+        return aux;
+    }
 }

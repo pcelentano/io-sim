@@ -62,3 +62,31 @@ rzslider span.pointer:hover:after {
 .small-help { font-size: 13px; }
 
 section#simplex input { color: gray; }
+
+#simplex select {
+    margin-left : 5px;
+    margin-right : 5px;
+    color: gray;
+}
+
+.form-control-2, .inputError { width: 3em; }
+
+p#funcional, #panelDeRestricciones > p{
+    display: flex;
+    justify-content: center ;
+    align-content: center;
+    align-items: center ;
+}
+
+.flex-me {
+    display: flex;
+    justify-content: center;
+}
+
+.inputError {
+    background-color: rgb(199, 199, 199);
+}
+
+table#tablaDeSimplex {
+    width: 100%;
+}
