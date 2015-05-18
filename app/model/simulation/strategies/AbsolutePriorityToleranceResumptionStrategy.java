@@ -58,7 +58,9 @@ public class AbsolutePriorityToleranceResumptionStrategy implements SimulationSt
     private void cageCustomer(Event event, Simulation simulation) {
         simulation.setCagedCustomer(simulation.getCurrentCustomer());
 
-        if(simulation.getCagedCustomer() != null) simulation.getCagedCustomer().caged();
+        simulation.getCagedCustomer().caged();
+
+        event.comment("CAGED!");
 
         simulation.removeEvent(possibleBExit);
 
@@ -131,6 +133,7 @@ public class AbsolutePriorityToleranceResumptionStrategy implements SimulationSt
                 final double mu = Mathematics.getDurationChannel(simulation.getMuB());
                 possibleBExit = new Event(DEPARTURE, customer, event.getInitTime() + mu, false);
 
+                simulation.setCurrentCusomer(customer);
                 cageCustomer(event, simulation);
 
                 customer = simulation.pollCustomerQueue();
