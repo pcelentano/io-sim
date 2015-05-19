@@ -25,6 +25,10 @@ public class Event implements Comparable<Event> {
         return attentionChannelCustomer;
     }
 
+    @Override public boolean equals(Object obj) {
+        return false;
+    }
+
     public void setAttentionChannelCustomer(Customer.CustomerType attentionChannelCustomer) {
         this.attentionChannelCustomer = attentionChannelCustomer;
     }
@@ -54,8 +58,8 @@ public class Event implements Comparable<Event> {
     }
 
     @Override public int compareTo(Event o) {
-        if (initTime > o.getInitTime()) return 1;
-        else if (initTime == o.getInitTime()) return 0;
+        if (initTime > o.getInitTime()) return 2;
+        else if (initTime == o.getInitTime()) return 1;
         else return -1;
     }
 

@@ -24,7 +24,6 @@ function initSimplexController() {
     setOnMessageCallback(simplexEvent);
     actualStep = 0;
     artVariables = 0;
-    if ($("#slideFrame")) $("#slideFrame").focus();
     nextStep();
 }
 

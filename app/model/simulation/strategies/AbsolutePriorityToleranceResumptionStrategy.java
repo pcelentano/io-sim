@@ -149,7 +149,7 @@ public class AbsolutePriorityToleranceResumptionStrategy implements SimulationSt
         if (customer != null){
             customer.waitTime(event.getInitTime() - customer.getArrivalTime());
             final Customer.CustomerType type = customer.getType();
-            System.out.println("Atendiendo a " + type.toString());
+//            System.out.println("Atendiendo a " + type.toString());
             event.attentionChanelStatus(OCCUPIED);
             if (!attendCaged) {
                 final double mu = Mathematics.getDurationChannel(type == A ? simulation.getMuA() : simulation.getMuB());
