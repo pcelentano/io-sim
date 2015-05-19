@@ -126,6 +126,7 @@ angular.module('ngSimulation')
                 }
             }
             self.disableSubmit = true;
+            self.simulation.name = " No one yet !";
         };
 
         function checkEquals(simulation) {

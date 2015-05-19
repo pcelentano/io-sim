@@ -29,7 +29,7 @@ public class Simulation {
     public final SimulationStrategy simulationStrategy;
 
     private final Queue<Customer> customerQueue;
-    private final List<Event> events;
+    private final TreeSet<Event> events;
     private Customer currentCustomer;
     /* when resumption is needed */
     private Customer cagedCustomer;
@@ -44,7 +44,11 @@ public class Simulation {
         this.muB = muB;
         MAX_TIME = max_time;
         customerQueue = new LinkedList<Customer>();
-        events = new ArrayList<>();
+        events = new TreeSet<Event>(new Comparator<Event>() {
+            @Override public int compare(Event o1, Event o2) {
+                return o1.compareTo(o2);
+            }
+        });
         currentCustomer = null;
         cagedCustomer = null;
         this.simulationStrategy = simulationStrategy;
@@ -62,14 +66,11 @@ public class Simulation {
 
         addEventAndSort(new Event(Event.EventType.INITIATION, null, time, false));
 
-        int eventPosition = 0;
-
-
         while (time < MAX_TIME) {
-            final Event event = events.get(eventPosition);
+            final Event event = events.pollFirst();
             handleEvent(event);
             result.addEvent(event);
-            eventPosition++;
+//            eventPosition++;
             time = event.getInitTime();
         }
 
@@ -80,7 +81,7 @@ public class Simulation {
         final NumericResults results = result.getResults();
 
         final ResultCalculator resultCalculator = new ResultCalculator();
-        resultCalculator.calculate(events, results);
+        resultCalculator.calculate(result.getEvents(), results);
 
 //        remove events if not needed
         if (!withEvents) result.getEvents().clear();
@@ -93,7 +94,6 @@ public class Simulation {
     /** Adds event to list and sorts list by time. */
     public void addEventAndSort(@NotNull Event event) {
         events.add(event);
-        Collections.sort(events);
     }
 
     /** Remove event from event list */
@@ -119,7 +119,7 @@ public class Simulation {
 
         // Set delta time
         if (event.getType() != INITIATION){
-            final Event previousEvent = events.get(events.indexOf(event) - 1);
+            final Event previousEvent = result.getEvents().get(result.getEvents().size()-1);
             previousEvent.deltaTime(event.getInitTime() - previousEvent.getInitTime());
         }
 
@@ -132,7 +132,7 @@ public class Simulation {
     private void addArrivalEvents() {
         addArrivalsA();
         addArivalsB();
-        Collections.sort(events);
+//        Collections.sort(events);
     }
 
     private void addArrivalsA() {

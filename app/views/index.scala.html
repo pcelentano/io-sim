@@ -46,9 +46,6 @@
                         <li>
                             <a class="page-scroll" href="#about">About</a>
                         </li>
-                        <li>
-                            <a class="page-scroll" href="#contact">Contact</a>
-                        </li>
                     </ul>
                 </div>
                     <!-- /.navbar-collapse -->
@@ -70,20 +67,21 @@
 
         <section class="bg-primary" id="simplex">
             <div class="container">
-                <div class="row">
+                <div class="row" ng-show="!mainCtrl.showingSimplex">
                     <div class="col-lg-8 col-lg-offset-2 text-center">
                         <h2 class="section-heading">Simplex!</h2>
                         <hr class="light">
                         <p class="text-faded">Explicacion del simplex</p>
-                        <a href="#" class="btn btn-default btn-xl">Get Started!</a>
+                        <a href="#" class="btn btn-default btn-xl" ng-click="mainCtrl.showingSimplex = true">Get Started!</a>
                     </div>
                 </div>
 
 
-                <div id="panels">
+                <div id="panels" ng-show="mainCtrl.showingSimplex">
 
                     <div id="panelPaso1">
-                        <h3>Seleccionar Cantidad</h3>
+                        <h2 class="section-heading">Seleccionar Cantidad!</h2>
+                        <hr class="light">
                         <form accept-charset="UTF-8" action="/players" class="form-horizontal" id="new_player" method="post" style="display: inline-block;">
                             <div id="a-div">
                                 <input name="utf8" type="hidden" value="✓">
@@ -92,13 +90,13 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="variables" style="margin-right:2px;"> Variables: </label>
                                 <div class="col-md-4">
-                                    <input autofocus="autofocus" class="form-control number" id="variables" required="required" type="text">
+                                    <input class="form-control number" id="variables" required="required" type="text">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="restricciones" style="margin-right:2px;">Restricciones: </label>
                                 <div class="col-md-4">
-                                    <input autofocus="autofocus" class="form-control number" id="restricciones" required="required" type="text">
+                                    <input class="form-control number" id="restricciones" required="required" type="text">
                                 </div>
                             </div>
                         </form>
@@ -108,7 +106,8 @@
                     </div>
 
                     <div id="panelPaso2">
-                        <h3>Definir Objetivo</h3>
+                        <h2 class="section-heading">Objetivo</h2>
+                        <hr class="light">
                         <div id="panelDeFuncional">
                             <p id="funcional">
             </p>
@@ -117,7 +116,9 @@
                             <input type="radio" name="obj" value="MAX" id="max" checked="true">  MAX
                             <input type="radio" name="obj" value="MIN" id="min">  MIN
                         </p>
-                        <h3>Definir Restricciones</h3>
+                        <h2 class="section-heading">Restricciones</h2>
+                        <hr class="light">
+
                         <div id="panelDeRestricciones">
         </div>
                         </br>
@@ -133,15 +134,18 @@
 
                     <div id="panelEstandar">
                         <div id="panelDeFuncionalEstandar">
-                            <h3>Funcional</h3>
+                            <h2 class="section-heading">Funcional</h2>
+                            <hr class="light">
                             <p id="funcionalEstandar">
             </p>
                         </div>
-                        <h3>Restricciones Estandar</h3>
+                        <h2 class="section-heading">Restricciones Estandar</h2>
+                        <hr class="light">
                         <div id="panelDeRestriccionesEstandar">
         </div>
-                        <h3>Condiciones</h3>
-                        <div id="condiciones">
+                        <h2 class="section-heading">Condiciones</h2>
+                        <hr class="light">
+                        <h3></h3>
                             <p>Se asumen variables reales y no negativas</p>
                             <p id="valorM"></p>
                         </div>
@@ -153,7 +157,8 @@
         </div>
                         <div id="loadingPanel">
                             <p>
-                                <img id="loadingGif" src='"""),_display_(Seq[Any](/*103.44*/routes/*103.50*/.Assets.at("images/ajax-loader.gif"))),format.raw/*103.86*/("""'>
+                                <img id="loadingGif" src="/assets/images/hex-loader.gif">
+
                             </p>
                         </div>
                         </br>
@@ -174,7 +179,8 @@
                     </div>
 
                     <div id="panelPaso4">
-                        <h3>Resultados </h3>
+                        <h2 class="section-heading">Resultados</h2>
+                        <hr class="light">
                         <div id="resultados">
         </div>
                         <div id="funcionalPaso4">
@@ -214,6 +220,11 @@
                 <div class="container text-center">
                     <div class="call-to-action">
                         <h2>About</h2>
+
+                        <p>Final Investigacion Operativa cursada 2014.</p>
+                        <p>Simplex permite hasta 5 variables</p>
+                        <p>Simulacion permite ver la tabla de estados y grafico de tamanio de cola (Restringido a tiempo < 20).</p>
+
                     </div>
                 </div>
             </aside>
@@ -223,7 +234,11 @@
                     <div class="col-lg-8 col-lg-offset-2 text-center">
                         <h2 class="section-heading">Integrantes</h2>
                         <hr class="primary">
-                        <p>Ready to start your next project with us? That's great! Give us a call or send us an email and we will get back to you as soon as possible!</p>
+                        <p>Pablo Celentano (Prioridad Relativa, Intolerancia, Abandono Total)</p>
+                        <p>Martin Gutierrez (Prioridad Absoluta, Tolerancia, Reanudacion)</p>
+                        <p>Juan Llorente (Sin Prioridades)</p>
+                        <p>Nicolas Schejtman (Prioridad Absoluta, Intolerancia, Abandono Parcial)</p>
+                        <p>Florencia Velarde (Integracion y Parametrizacion de las Simulaciones)</p>
                     </div>
                 </div>
 
