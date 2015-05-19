@@ -59,9 +59,9 @@
                 <!--<input type="number" class="form-control" id="time" placeholder="Time" ng-model="mainCtrl.formData.simData.time">-->
                 <rzslider id="time"
                         rz-slider-floor="0"
-                        rz-slider-ceil="mainCtrl.formData.simData.withEvents ? 20 : 100000"
+                        rz-slider-ceil="mainCtrl.formData.simData.withEvents ? 20 : mainCtrl.simulation.maxTime"
                         rz-slider-model="mainCtrl.formData.simData.time"></rzslider>
-                <p class="help-block small-help" ng-show="mainCtrl.formData.simData.time > 50000">May take up to 5 min.</p>
+                <!--<p class="help-block small-help" ng-show="mainCtrl.formData.simData.time > 50000">May take up to 5 min.</p>-->
 
             </div>
 

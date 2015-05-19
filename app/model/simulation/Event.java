@@ -59,7 +59,10 @@ public class Event implements Comparable<Event> {
 
     @Override public int compareTo(Event o) {
         if (initTime > o.getInitTime()) return 2;
-        else if (initTime == o.getInitTime()) return 1;
+        else if (initTime == o.getInitTime()) {
+            if (getType() == o.getType() && getCustomer().equals(o.customer)) return 0;
+            else return 1;
+        }
         else return -1;
     }
 

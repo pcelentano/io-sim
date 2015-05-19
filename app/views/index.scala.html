@@ -67,21 +67,18 @@
 
         <section class="bg-primary" id="simplex">
             <div class="container">
-                <div class="row" ng-show="!mainCtrl.showingSimplex">
+                <div class="row">
                     <div class="col-lg-8 col-lg-offset-2 text-center">
                         <h2 class="section-heading">Simplex!</h2>
                         <hr class="light">
-                        <p class="text-faded">Explicacion del simplex</p>
-                        <a href="#" class="btn btn-default btn-xl" ng-click="mainCtrl.showingSimplex = true">Get Started!</a>
                     </div>
                 </div>
 
 
-                <div id="panels" ng-show="mainCtrl.showingSimplex">
+                <div id="panels">
 
                     <div id="panelPaso1">
-                        <h2 class="section-heading">Seleccionar Cantidad!</h2>
-                        <hr class="light">
+                        <h3>Seleccionar Cantidad</h3>
                         <form accept-charset="UTF-8" action="/players" class="form-horizontal" id="new_player" method="post" style="display: inline-block;">
                             <div id="a-div">
                                 <input name="utf8" type="hidden" value="✓">
@@ -106,8 +103,7 @@
                     </div>
 
                     <div id="panelPaso2">
-                        <h2 class="section-heading">Objetivo</h2>
-                        <hr class="light">
+                        <h3>Objetivo</h3>
                         <div id="panelDeFuncional">
                             <p id="funcional">
             </p>
@@ -116,9 +112,7 @@
                             <input type="radio" name="obj" value="MAX" id="max" checked="true">  MAX
                             <input type="radio" name="obj" value="MIN" id="min">  MIN
                         </p>
-                        <h2 class="section-heading">Restricciones</h2>
-                        <hr class="light">
-
+                        <h3>Restricciones</h3>
                         <div id="panelDeRestricciones">
         </div>
                         </br>
@@ -134,18 +128,15 @@
 
                     <div id="panelEstandar">
                         <div id="panelDeFuncionalEstandar">
-                            <h2 class="section-heading">Funcional</h2>
-                            <hr class="light">
+                            <h3>Funcional</h3>
                             <p id="funcionalEstandar">
             </p>
                         </div>
-                        <h2 class="section-heading">Restricciones Estandar</h2>
-                        <hr class="light">
+                        <h3>Restricciones Estandar</h3>
                         <div id="panelDeRestriccionesEstandar">
         </div>
-                        <h2 class="section-heading">Condiciones</h2>
-                        <hr class="light">
-                        <h3></h3>
+                        <h3>Condiciones</h3>
+                        <div id="condiciones">
                             <p>Se asumen variables reales y no negativas</p>
                             <p id="valorM"></p>
                         </div>
@@ -179,8 +170,7 @@
                     </div>
 
                     <div id="panelPaso4">
-                        <h2 class="section-heading">Resultados</h2>
-                        <hr class="light">
+                        <h3>Resultados </h3>
                         <div id="resultados">
         </div>
                         <div id="funcionalPaso4">
