@@ -98,7 +98,7 @@ public class Simulation {
 
     /** Remove event from event list */
     public void removeEvent(@NotNull Event event){
-        if(events.contains(event)) events.remove(event);
+        events.remove(event);
     }
 
 

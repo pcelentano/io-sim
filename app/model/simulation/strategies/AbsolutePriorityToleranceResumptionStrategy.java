@@ -62,7 +62,7 @@ public class AbsolutePriorityToleranceResumptionStrategy implements SimulationSt
 
         simulation.getCagedCustomer().caged();
 
-        event.comment("CAGED!");
+//        event.comment("CAGED!");
 
         simulation.removeEvent(possibleBExit);
 
