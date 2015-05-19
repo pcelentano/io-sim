@@ -123,14 +123,14 @@ angular.module('ngSimulation')
 
         self.selectSim = function(){
             if(self.simulation.priority=='None'){
-                self.simulation.intolerance = undefined;
-                self.simulation.resumption = undefined;
                 self.simulation.tolerance = undefined;
-
+                self.simulation.resumption = undefined;
+                self.simulation.intolerance = undefined;
+                self.formData.simData.muB = undefined;
+                self.formData.simData.clientsHourB = undefined;
             }
             if(self.simulation.tolerance == 'Tolerant') self.simulation.intolerance = undefined;
             else if(self.simulation.tolerance == 'Intolerant') self.simulation.resumption = undefined;
-
 
             for (var i = 0; i < self.simulations.length; i++){
                 var sim = self.simulations[i];
