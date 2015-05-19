@@ -34,6 +34,7 @@ public class Simulation {
     /* when resumption is needed */
     private Customer cagedCustomer;
     private final Result result;
+    private int aInQueue;
 
 
     /** Creates a Simulation with given Strategy. */
@@ -43,6 +44,7 @@ public class Simulation {
         this.muA = muA;
         this.muB = muB;
         MAX_TIME = max_time;
+        aInQueue = 0;
         customerQueue = new LinkedList<Customer>();
         events = new TreeSet<Event>(new Comparator<Event>() {
             @Override public int compare(Event o1, Event o2) {
@@ -178,10 +180,17 @@ public class Simulation {
     public void setCurrentCusomer(@Nullable Customer currentCustomer) { this.currentCustomer = currentCustomer; }
 
     /** Returns First queued Customer, and removes it from queue, null if queue isEmpty(). */
-    @Nullable public Customer pollCustomerQueue() { return customerQueue.poll(); }
+    @Nullable public Customer pollCustomerQueue() {
+        final Customer poll = customerQueue.poll();
+        if (poll != null && poll.getType() == A) aInQueue --;
+        return poll;
+    }
 
     /** Add customer to customerQueue. */
-    public void addCustomertoQueue(Customer customer) { customerQueue.add(customer); }
+    public void addCustomertoQueue(Customer customer) {
+        customerQueue.add(customer);
+        if (customer.getType() == A) aInQueue++;
+    }
 
     /** Customer queue empty */
     public boolean isQueueEmpty() { return customerQueue.isEmpty(); }
@@ -198,10 +207,9 @@ public class Simulation {
     }
 
     public int getALength() {
-        int aux = 0;
-        for (final Customer customer : customerQueue) {
-            if (customer.getType() == A) aux++;
-        }
-        return aux;
+//        for (final Customer customer : customerQueue) {
+//            if (customer.getType() == A) aux++;
+//        }
+        return aInQueue;
     }
 }

@@ -56,7 +56,7 @@ angular.module('ngSimulation')
                 resumption : "Resumption",
                 intolerance : undefined,
                 url : "guteSimulation",
-                maxTime : 20000
+                maxTime : 100000
             },
             {
                 name: 'Juan D. Llorente',
