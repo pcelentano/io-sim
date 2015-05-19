@@ -8,7 +8,8 @@ import model.simulation.mathematics.Mathematics;
 import javax.validation.constraints.NotNull;
 
 import static model.simulation.Event.EventType.DEPARTURE;
-import static model.simulation.Event.Status.*;
+import static model.simulation.Event.Status.EMPTY;
+import static model.simulation.Event.Status.OCCUPIED;
 
 /**
  * Created by Megamingus on 16/5/2015.
@@ -24,8 +25,11 @@ public class FIFONoPriorityStrategy implements SimulationStrategy {
         if (currentCustomer == null) {
             attendNext(event, simulation);
         }
-        event.queueLength(simulation.getQueueLength()).attentionChanelStatus(OCCUPIED);
-
+        //if(customer.getType()==A)
+            //event.setQueueALength();
+//        event.queueLength(simulation.getQueueLength()).attentionChanelStatus(OCCUPIED);
+        event.queueLength(simulation.getQueueLength()).attentionChanelStatus(OCCUPIED).setQueueALength(simulation.getALength());
+        if (currentCustomer != null) event.setAttentionChannelCustomer(currentCustomer.getType());
     }
 
     @Override public void handleDeparture(@NotNull Event event, @NotNull Simulation simulation){
@@ -37,11 +41,13 @@ public class FIFONoPriorityStrategy implements SimulationStrategy {
         final Customer customer = event.getCustomer();
         customer.setPermanence(event.getInitTime() - customer.getArrivalTime());
 
-        event.queueLength(simulation.getQueueLength()).attentionChanelStatus(simulation.getCurrentCustomer() == null ? EMPTY : OCCUPIED);
+        event.queueLength(simulation.getQueueLength()).attentionChanelStatus(simulation.getCurrentCustomer() == null ? EMPTY : OCCUPIED).setQueueALength(simulation.getALength());
+        if (simulation.getCurrentCustomer() != null) event.setAttentionChannelCustomer(simulation.getCurrentCustomer().getType());
+
     }
 
     @Override public void handleInitiation(@NotNull Event event, @NotNull Simulation simulation){
-        event.queueLength(0).attentionChanelStatus(EMPTY);
+        event.queueLength(0).attentionChanelStatus(EMPTY).setQueueALength(simulation.getALength());
     }
 
 
