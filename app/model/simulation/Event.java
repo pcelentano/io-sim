@@ -67,7 +67,7 @@ public class Event implements Comparable<Event> {
     }
 
     @Override public String toString() {
-        return initTime + " : " + type.name + "  " + (customer != null ? customer.getType().toString()  : "none" ) + " L(n) : " + queueLength + " Status : " + attentionChanelStatus;
+        return initTime + " : " + type.name + "  " + (customer != null ? customer.getType().toString() + customer.getCustomerNumber() : "none" ) + " L(n) : " + queueLength + " Status : " + attentionChanelStatus;
     }
 
     public int getQueueLength() {

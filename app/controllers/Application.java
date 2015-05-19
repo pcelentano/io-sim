@@ -8,6 +8,7 @@ import model.simulation.strategies.AbsolutePriorityToleranceResumptionStrategy;
 import model.simulation.strategies.FIFONoPriorityStrategy;
 import model.simulation.strategies.RelativePriorityTotalAbandonmentStrategy;
 import model.simulation.strategies.SimulationStrategy;
+import model.simulation.strategies.*;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -62,5 +63,9 @@ public class Application extends Controller {
                 }
             }
         };
+    }
+
+    public static Result schejtmanSimulation(){
+        return runSimulationWithStrategy(new AbsolutePriorityPartialIntoleranceStrategy());
     }
 }

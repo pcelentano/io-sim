@@ -64,7 +64,16 @@ angular.module('ngSimulation')
                 tolerance : undefined,
                 resumption : undefined,
                 intolerance : undefined,
-                url : "mingoSimulation",
+                maxTime : 100000,
+                url : "mingoSimulation"
+            },
+            {
+                name: 'Nicolas Schejtman',
+                priority : "Total",
+                tolerance : "Intolerant",
+                intolerance : "Partial",
+                resumption : undefined,
+                url : "schejtmanSimulation",
                 maxTime : 100000
             }
         ];
