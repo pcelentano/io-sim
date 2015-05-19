@@ -25,9 +25,7 @@ public class FIFONoPriorityStrategy implements SimulationStrategy {
         if (currentCustomer == null) {
             attendNext(event, simulation);
         }
-        //if(customer.getType()==A)
-            //event.setQueueALength();
-//        event.queueLength(simulation.getQueueLength()).attentionChanelStatus(OCCUPIED);
+
         event.queueLength(simulation.getQueueLength()).attentionChanelStatus(OCCUPIED).setQueueALength(simulation.getALength());
         if (currentCustomer != null) event.setAttentionChannelCustomer(currentCustomer.getType());
     }
@@ -57,8 +55,6 @@ public class FIFONoPriorityStrategy implements SimulationStrategy {
 
         if (customer != null){
             customer.waitTime(event.getInitTime() - customer.getArrivalTime());
-            final Customer.CustomerType type = customer.getType();
-            System.out.println("Atendiendo a " + type.toString());
             event.attentionChanelStatus(OCCUPIED);
             final double mu = Mathematics.getDurationChannel(simulation.getMuA());
             simulation.addEventAndSort(new Event(DEPARTURE, customer, event.getInitTime() + mu, false));
