@@ -66,7 +66,7 @@ public class Simulation {
 
         addEventAndSort(new Event(Event.EventType.INITIATION, null, time, false));
 
-        while (time < MAX_TIME) {
+        while (time < MAX_TIME && !events.isEmpty()) {
             final Event event = events.pollFirst();
             handleEvent(event);
             result.addEvent(event);
