@@ -11,6 +11,7 @@ angular.module('ngSimulation')
     .controller('MainCtrl', ['$http' , function ($http) {
         var self = this;
         self.items = {};
+                                                                                             // r
         self.editing = true;
         self.loading = false;
         self.error = false;
@@ -82,6 +83,7 @@ angular.module('ngSimulation')
         angular.copy(self.simulations[1], self.simulation);
         self.disableSubmit = false;
 
+        //¿Alguno vio a r? Se escapó r ...
         self.populateChats = function(){
             self.chartData[0].data = [];
             angular.forEach(self.items.events , function(e){

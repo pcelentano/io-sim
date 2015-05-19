@@ -7,9 +7,9 @@ import model.simulation.mathematics.Mathematics;
 
 import javax.validation.constraints.NotNull;
 
-import static model.simulation.Event.EventType.DEPARTURE;
-import static model.simulation.Event.Status.EMPTY;
-import static model.simulation.Event.Status.OCCUPIED;
+import static model.simulation.Event.EventType.SALIDA;
+import static model.simulation.Event.Status.VACIO;
+import static model.simulation.Event.Status.OCUPADO;
 
 /**
  * Created by Megamingus on 16/5/2015.
@@ -26,7 +26,7 @@ public class FIFONoPriorityStrategy implements SimulationStrategy {
             attendNext(event, simulation);
         }
 
-        event.queueLength(simulation.getQueueLength()).attentionChanelStatus(OCCUPIED).setQueueALength(simulation.getALength());
+        event.queueLength(simulation.getQueueLength()).attentionChanelStatus(OCUPADO).setQueueALength(simulation.getALength());
         if (currentCustomer != null) event.setAttentionChannelCustomer(currentCustomer.getType());
     }
 
@@ -39,13 +39,13 @@ public class FIFONoPriorityStrategy implements SimulationStrategy {
         final Customer customer = event.getCustomer();
         customer.setPermanence(event.getInitTime() - customer.getArrivalTime());
 
-        event.queueLength(simulation.getQueueLength()).attentionChanelStatus(simulation.getCurrentCustomer() == null ? EMPTY : OCCUPIED).setQueueALength(simulation.getALength());
+        event.queueLength(simulation.getQueueLength()).attentionChanelStatus(simulation.getCurrentCustomer() == null ? VACIO : OCUPADO).setQueueALength(simulation.getALength());
         if (simulation.getCurrentCustomer() != null) event.setAttentionChannelCustomer(simulation.getCurrentCustomer().getType());
 
     }
 
     @Override public void handleInitiation(@NotNull Event event, @NotNull Simulation simulation){
-        event.queueLength(0).attentionChanelStatus(EMPTY).setQueueALength(simulation.getALength());
+        event.queueLength(0).attentionChanelStatus(VACIO).setQueueALength(simulation.getALength());
     }
 
 
@@ -55,11 +55,11 @@ public class FIFONoPriorityStrategy implements SimulationStrategy {
 
         if (customer != null){
             customer.waitTime(event.getInitTime() - customer.getArrivalTime());
-            event.attentionChanelStatus(OCCUPIED);
+            event.attentionChanelStatus(OCUPADO);
             final double mu = Mathematics.getDurationChannel(simulation.getMuA());
-            simulation.addEventAndSort(new Event(DEPARTURE, customer, event.getInitTime() + mu, false));
+            simulation.addEventAndSort(new Event(SALIDA, customer, event.getInitTime() + mu, false));
         } else {
-            event.attentionChanelStatus(EMPTY);
+            event.attentionChanelStatus(VACIO);
         }
     }
 }

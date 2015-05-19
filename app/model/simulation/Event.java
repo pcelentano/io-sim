@@ -114,9 +114,9 @@ public class Event implements Comparable<Event> {
 
     public enum EventType {
 
-        INITIATION("INICIO"), ARRIVAL("ARRIBO"), DEPARTURE("SALIDA");
+        INICIO("INICIO"), ARRIBO("ARRIBO"), SALIDA("SALIDA");
 
-        private final String name;
+        public final String name;
 
         EventType(String name) {
             this.name = name;
@@ -126,10 +126,20 @@ public class Event implements Comparable<Event> {
             return name;
         }
 
+        public String getName() {
+            return name;
+        }
     }
 
 
     public enum Status {
-        EMPTY, OCCUPIED
+        VACIO("VACÍO"), OCUPADO("OCUPADO");
+        public final String name;
+        Status(String name) {
+            this.name = name;
+        }
+        public String getName() {
+            return name;
+        }
     }
 }

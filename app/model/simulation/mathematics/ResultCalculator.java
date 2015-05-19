@@ -8,8 +8,8 @@ import java.util.List;
 
 import static model.simulation.Customer.CustomerType.A;
 import static model.simulation.Customer.CustomerType.B;
-import static model.simulation.Event.EventType.DEPARTURE;
-import static model.simulation.Event.Status.OCCUPIED;
+import static model.simulation.Event.EventType.SALIDA;
+import static model.simulation.Event.Status.OCUPADO;
 
 /**
  * Created by pablo on 5/14/15.
@@ -42,15 +42,15 @@ public class ResultCalculator {
         for (final Event event : events) {
             final Customer customer = event.getCustomer();
             lcT += event.getQueueLength() * event.getDeltaTime();
-            lT  += (event.getQueueLength() + (event.getAttentionChanelStatus() == OCCUPIED ? 1 : 0)) * event.getDeltaTime();
+            lT  += (event.getQueueLength() + (event.getAttentionChanelStatus() == OCUPADO ? 1 : 0)) * event.getDeltaTime();
 
             lcaT += event.getQueueALength() * event.getDeltaTime();
-            laT  += (event.getQueueALength() + (event.getAttentionChanelStatus() == OCCUPIED && event.getAttentionChannelCustomer() == A ? 1 : 0)) * event.getDeltaTime();
+            laT  += (event.getQueueALength() + (event.getAttentionChanelStatus() == OCUPADO && event.getAttentionChannelCustomer() == A ? 1 : 0)) * event.getDeltaTime();
 
             lcbT += (event.getQueueLength() - event.getQueueALength()) * event.getDeltaTime();
-            lbT  += (event.getQueueLength() - event.getQueueALength() + (event.getAttentionChanelStatus() == OCCUPIED && event.getAttentionChannelCustomer() == B ? 1 : 0)) * event.getDeltaTime();
+            lbT  += (event.getQueueLength() - event.getQueueALength() + (event.getAttentionChanelStatus() == OCUPADO && event.getAttentionChannelCustomer() == B ? 1 : 0)) * event.getDeltaTime();
 
-            if (customer != null && event.getType() == DEPARTURE){
+            if (customer != null && event.getType() == SALIDA){
                     wN  += customer.getPermanence();
                     wcN  += customer.getWaitTime();
                 if(customer.wasCaged()) cagedTotal++;

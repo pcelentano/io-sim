@@ -9,9 +9,9 @@ import javax.validation.constraints.NotNull;
 
 import static model.simulation.Customer.CustomerType.A;
 import static model.simulation.Customer.CustomerType.B;
-import static model.simulation.Event.EventType.DEPARTURE;
-import static model.simulation.Event.Status.EMPTY;
-import static model.simulation.Event.Status.OCCUPIED;
+import static model.simulation.Event.EventType.SALIDA;
+import static model.simulation.Event.Status.VACIO;
+import static model.simulation.Event.Status.OCUPADO;
 
 public class AbsolutePriorityPartialIntoleranceStrategy implements SimulationStrategy {
     private Event possibleBExit;
@@ -24,7 +24,7 @@ public class AbsolutePriorityPartialIntoleranceStrategy implements SimulationStr
                 if (event.getCustomer().getType() == A && currentCustomer.getType() == B) {
                     simulation.removeEvent(possibleBExit);
                     currentCustomer.setPermanence(event.getInitTime() - currentCustomer.getArrivalTime()).interrupted();
-                    simulation.addEventAndSort(new Event(DEPARTURE, simulation.getCurrentCustomer(), event.getInitTime(), true));
+                    simulation.addEventAndSort(new Event(SALIDA, simulation.getCurrentCustomer(), event.getInitTime(), true));
                     simulation.addCustomertoQueue(event.getCustomer());
                     attendNext(event, simulation);
                 } else {
@@ -37,7 +37,7 @@ public class AbsolutePriorityPartialIntoleranceStrategy implements SimulationStr
         } else {
             simulation.addCustomertoQueue(event.getCustomer());
         }
-        event.queueLength(simulation.getQueueLength()).attentionChanelStatus(OCCUPIED).setQueueALength(simulation.getALength());
+        event.queueLength(simulation.getQueueLength()).attentionChanelStatus(OCUPADO).setQueueALength(simulation.getALength());
         if (simulation.getCurrentCustomer() != null)
             event.setAttentionChannelCustomer(simulation.getCurrentCustomer().getType());
 
@@ -48,7 +48,7 @@ public class AbsolutePriorityPartialIntoleranceStrategy implements SimulationStr
         simulation.setCurrentCusomer(null);
         attendNext(event, simulation);
         event.getCustomer().setPermanence(event.getInitTime() - event.getCustomer().getArrivalTime());
-        event.queueLength(simulation.getQueueLength()).attentionChanelStatus(simulation.getCurrentCustomer() == null ? EMPTY : OCCUPIED).setQueueALength(simulation.getALength());
+        event.queueLength(simulation.getQueueLength()).attentionChanelStatus(simulation.getCurrentCustomer() == null ? VACIO : OCUPADO).setQueueALength(simulation.getALength());
         if (simulation.getCurrentCustomer() != null)
             event.setAttentionChannelCustomer(simulation.getCurrentCustomer().getType());
 
@@ -60,7 +60,7 @@ public class AbsolutePriorityPartialIntoleranceStrategy implements SimulationStr
 
         if (checkPeek != null && checkPeek.getType() == A && customer != null && customer.getType() == B) {
             customer.waitTime(event.getInitTime() - customer.getArrivalTime()).setPermanence(event.getInitTime() - customer.getArrivalTime()).interrupted();
-            simulation.addEventAndSort(new Event(DEPARTURE, customer, event.getInitTime(), false));
+            simulation.addEventAndSort(new Event(SALIDA, customer, event.getInitTime(), false));
             simulation.setCurrentCusomer(customer);
             customer = simulation.pollCustomerQueue();
         }
@@ -70,18 +70,18 @@ public class AbsolutePriorityPartialIntoleranceStrategy implements SimulationStr
         if (customer != null) {
             customer.waitTime(event.getInitTime() - customer.getArrivalTime());
             final Customer.CustomerType type = customer.getType();
-            event.attentionChanelStatus(OCCUPIED);
+            event.attentionChanelStatus(OCUPADO);
             final double mu = Mathematics.getDurationChannel(type == A ? simulation.getMuA() : simulation.getMuB());
-            final Event bExit = new Event(DEPARTURE, customer, event.getInitTime() + mu, false);
+            final Event bExit = new Event(SALIDA, customer, event.getInitTime() + mu, false);
             if (customer.getType() == B) possibleBExit = bExit;
             simulation.addEventAndSort(bExit);
         } else {
-            event.attentionChanelStatus(EMPTY);
+            event.attentionChanelStatus(VACIO);
         }
     }
 
     @Override
     public void handleInitiation(@NotNull Event event, @NotNull Simulation simulation) {
-        event.queueLength(0).attentionChanelStatus(EMPTY);
+        event.queueLength(0).attentionChanelStatus(VACIO);
     }
 }

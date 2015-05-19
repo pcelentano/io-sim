@@ -11,8 +11,8 @@ import java.util.function.Predicate;
 
 import static model.simulation.Customer.CustomerType.A;
 import static model.simulation.Customer.CustomerType.B;
-import static model.simulation.Event.EventType.ARRIVAL;
-import static model.simulation.Event.EventType.INITIATION;
+import static model.simulation.Event.EventType.ARRIBO;
+import static model.simulation.Event.EventType.INICIO;
 
 /**
  * Simulation.
@@ -66,7 +66,7 @@ public class Simulation {
 
         double time = 0 ;
 
-        addEventAndSort(new Event(Event.EventType.INITIATION, null, time, false));
+        addEventAndSort(new Event(Event.EventType.INICIO, null, time, false));
 
         while (time < MAX_TIME && !events.isEmpty()) {
             final Event event = events.pollFirst();
@@ -108,19 +108,19 @@ public class Simulation {
     private void handleEvent(Event event) {
         switch (event.getType()){
 
-            case ARRIVAL:
+            case ARRIBO:
                 simulationStrategy.handleArrival(event, this);
                 break;
-            case DEPARTURE:
+            case SALIDA:
                 simulationStrategy.handleDeparture(event, this);
                 break;
-            case INITIATION:
+            case INICIO:
                 simulationStrategy.handleInitiation(event, this);
                 break;
         }
 
         // Set delta time
-        if (event.getType() != INITIATION){
+        if (event.getType() != INICIO){
             final Event previousEvent = result.getEvents().get(result.getEvents().size()-1);
             previousEvent.deltaTime(event.getInitTime() - previousEvent.getInitTime());
         }
@@ -144,7 +144,7 @@ public class Simulation {
             final double iaca = Mathematics.getClientArrivalInterval(clientsPerHourA);
             time = time + iaca;
             if(time < MAX_TIME)
-            events.add(new Event(ARRIVAL, new Customer(A, customerNumber++, time), time, false));
+            events.add(new Event(ARRIBO, new Customer(A, customerNumber++, time), time, false));
         }
         result.getResults().setAcustomers(customerNumber);
     }
@@ -156,7 +156,7 @@ public class Simulation {
             final double iacb = Mathematics.getClientArrivalInterval(clientsPerHourB);
             time = time + iacb;
             if(time < MAX_TIME)
-                events.add(new Event(ARRIVAL, new Customer(B, customerNumber++, time), time, false));
+                events.add(new Event(ARRIBO, new Customer(B, customerNumber++, time), time, false));
         }
         result.getResults().setBcustomers(customerNumber);
     }

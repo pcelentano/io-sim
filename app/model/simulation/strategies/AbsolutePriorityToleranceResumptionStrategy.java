@@ -9,9 +9,9 @@ import javax.validation.constraints.NotNull;
 
 import static model.simulation.Customer.CustomerType.A;
 import static model.simulation.Customer.CustomerType.B;
-import static model.simulation.Event.EventType.DEPARTURE;
-import static model.simulation.Event.Status.EMPTY;
-import static model.simulation.Event.Status.OCCUPIED;
+import static model.simulation.Event.EventType.SALIDA;
+import static model.simulation.Event.Status.VACIO;
+import static model.simulation.Event.Status.OCUPADO;
 
 /**
  * Created by mgutierrez on 15/5/15.
@@ -52,7 +52,7 @@ public class AbsolutePriorityToleranceResumptionStrategy implements SimulationSt
         }
 
         //Settear la longitud de la cola en este evento de entrada
-        event.queueLength(simulation.getQueueLength()).attentionChanelStatus(OCCUPIED).setQueueALength(simulation.getALength());
+        event.queueLength(simulation.getQueueLength()).attentionChanelStatus(OCUPADO).setQueueALength(simulation.getALength());
         if (simulation.getCurrentCustomer() != null) event.setAttentionChannelCustomer(simulation.getCurrentCustomer().getType());
 
     }
@@ -106,7 +106,7 @@ public class AbsolutePriorityToleranceResumptionStrategy implements SimulationSt
         event.getCustomer().setPermanence(event.getInitTime() - event.getCustomer().getArrivalTime());
 
         //Settear la longitud de la cola en este evento de salida
-        event.queueLength(simulation.getQueueLength()).attentionChanelStatus(simulation.getCurrentCustomer() == null ? EMPTY : OCCUPIED).setQueueALength(simulation.getALength());
+        event.queueLength(simulation.getQueueLength()).attentionChanelStatus(simulation.getCurrentCustomer() == null ? VACIO : OCUPADO).setQueueALength(simulation.getALength());
         if (simulation.getCurrentCustomer() != null) event.setAttentionChannelCustomer(simulation.getCurrentCustomer().getType());
 
     }
@@ -122,7 +122,7 @@ public class AbsolutePriorityToleranceResumptionStrategy implements SimulationSt
 
             //Meter el nuevo evento del encarcelado
 
-            possibleBExit = new Event(DEPARTURE, possibleBExit.getCustomer(), event.getInitTime() + possibleBExit.getRemainingTime(), false);
+            possibleBExit = new Event(SALIDA, possibleBExit.getCustomer(), event.getInitTime() + possibleBExit.getRemainingTime(), false);
             simulation.addEventAndSort(possibleBExit);
         } else {
             //Sacar al primero de la cola
@@ -135,7 +135,7 @@ public class AbsolutePriorityToleranceResumptionStrategy implements SimulationSt
                 assert simulation.getCagedCustomer() == null;
 
                 final double mu = Mathematics.getDurationChannel(simulation.getMuB());
-                possibleBExit = new Event(DEPARTURE, customer, event.getInitTime() + mu, false);
+                possibleBExit = new Event(SALIDA, customer, event.getInitTime() + mu, false);
 
                 simulation.setCurrentCusomer(customer);
                 cageCustomer(event, simulation);
@@ -150,19 +150,19 @@ public class AbsolutePriorityToleranceResumptionStrategy implements SimulationSt
             customer.waitTime(event.getInitTime() - customer.getArrivalTime());
             final Customer.CustomerType type = customer.getType();
 //            System.out.println("Atendiendo a " + type.toString());
-            event.attentionChanelStatus(OCCUPIED);
+            event.attentionChanelStatus(OCUPADO);
             if (!attendCaged) {
                 final double mu = Mathematics.getDurationChannel(type == A ? simulation.getMuA() : simulation.getMuB());
-                final Event bExit = new Event(DEPARTURE, customer, event.getInitTime() + mu, false);
+                final Event bExit = new Event(SALIDA, customer, event.getInitTime() + mu, false);
                 if(customer.getType() == B) possibleBExit = bExit;
                 simulation.addEventAndSort(bExit);
             }
         } else {
-            event.attentionChanelStatus(EMPTY);
+            event.attentionChanelStatus(VACIO);
         }
     }
 
     @Override public void handleInitiation(@NotNull Event event, @NotNull Simulation simulation) {
-        event.queueLength(0).attentionChanelStatus(EMPTY);
+        event.queueLength(0).attentionChanelStatus(VACIO);
     }
 }

@@ -3,7 +3,7 @@
         <div class="col-lg-12 text-center">
             <a class="glyphicon glyphicon-arrow-left left-positioned text-primary animate-hide"
                aria-hidden="true" ng-click="mainCtrl.reset()" ng-show="!mainCtrl.editing && !mainCtrl.loading"></a>
-            <h2 class="section-heading">Simulation</h2>
+            <h2 class="section-heading">Simulación</h2>
             <hr class="primary">
         </div>
     </div>
@@ -11,7 +11,7 @@
 
 <div class="alert alert-warning alert-dismissible fade top-positioned" role="alert" ng-class="mainCtrl.error ? 'in' : ''">
     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-    <strong>Holy guacamole!</strong> Best check yo self, you're not looking too good.
+    <strong>Error!</strong> Asegurate de completar los campos requeridos.
 </div>
 
 <div class="row text-center animate-hide" ng-show="mainCtrl.loading">
@@ -22,32 +22,32 @@
     <form ng-submit="mainCtrl.submit()" ng-disabled="simForm.$invalid">
         <div class="row">
             <div class="form-group col-sm-4">
-                <label for="priority"> Priority</label>
+                <label for="priority"> Prioridad</label>
                 <select class="form-control" id="priority" ng-model="mainCtrl.simulation.priority" ng-change="mainCtrl.selectSim()">
-                    <option>Total</option>
-                    <option>Relative</option>
-                    <option>None</option>
+                    <option value="Total">Absoluta</option>
+                    <option value="Relative">Relativa</option>
+                    <option value="None">Ninguna</option>
                 </select>
             </div>
             <div class="form-group col-sm-4" ng-show="mainCtrl.simulation.priority != 'None'">
-                <label for="tolerance"> Tolerance</label>
+                <label for="tolerance"> Tolerancia</label>
                 <select class="form-control" id="tolerance" ng-model="mainCtrl.simulation.tolerance" ng-change="mainCtrl.selectSim()">
-                    <option>Tolerant</option>
-                    <option>Intolerant</option>
+                    <option value="Tolerant">Sí (Tolerancia)</option>
+                    <option value="Intolerant">No (Intolerancia)</option>
                 </select>
             </div>
             <div class="form-group col-sm-4" ng-show="mainCtrl.simulation.tolerance == 'Tolerant'">
-                <label for="reanudacion"> Resumption</label>
+                <label for="reanudacion"> Reanudación</label>
                 <select class="form-control" id="reanudacion" ng-model="mainCtrl.simulation.resumption" ng-change="mainCtrl.selectSim()">
-                    <option>Resumption</option>
-                    <option>Reinitiation</option>
+                    <option value="Resumption">Sí (Reanudación)</option>
+                    <option value="Reinitiation">No (Reiniciación)</option>
                 </select>
             </div>
             <div class="form-group col-sm-4" ng-show="mainCtrl.simulation.tolerance == 'Intolerant'">
-                <label for="intolerance"> Intolerance</label>
+                <label for="intolerance"> Intolerancia</label>
                 <select class="form-control" id="intolerance" ng-model="mainCtrl.simulation.intolerance" ng-change="mainCtrl.selectSim()">
-                    <option>Partial</option>
-                    <option>Total</option>
+                    <option value="Partial">Parcial</option>
+                    <option value="Total">Total</option>
                 </select>
             </div>
             </div>
@@ -55,7 +55,7 @@
         <!--<pre>{{mainCtrl.simulation | json}}</pre>-->
         <div class="row">
             <div class="form-group col-sm-6 has-error">
-                <label for="time">Time</label>
+                <label for="time">Tiempo</label>
                 <!--<input type="number" class="form-control" id="time" placeholder="Time" ng-model="mainCtrl.formData.simData.time">-->
                 <rzslider id="time"
                         rz-slider-floor="0"
@@ -70,42 +70,41 @@
                     <label>
                         <input type="checkbox" ng-model="mainCtrl.formData.simData.withEvents"
                                 ng-change="mainCtrl.eventsToggle()">
-                        Show Table & Graphs </label>
-                    <p class="help-block small-help">Shows all events and graphs statistics. Requires time < 20.</p>
-
+                        Mostrar tabla y gráficos </label>
+                    <p class="help-block small-help">Muestra eventos, gráficos y estadísticas. Requiere tiempo < 20.</p>
                 </div>
             </div>
         </div>
 
         <div class="row">
             <div class="form-group col-sm-6">
-                <label for="cliA">Clients <strong>A</strong> Per Hour</label>
-                <input type="number" class="form-control" id="cliA" placeholder="Rate" ng-model="mainCtrl.formData.simData.clientsHourA">
+                <label for="cliA">Clientes <strong>A</strong> Por Hora</label>
+                <input type="number" class="form-control" id="cliA" placeholder="#" ng-model="mainCtrl.formData.simData.clientsHourA">
             </div>
             <div class="form-group col-sm-6">
-                <label for="cliB">Clients <strong>B</strong> Per Hour</label>
-                <input type="number" class="form-control" id="cliB" placeholder="Rate" ng-model="mainCtrl.formData.simData.clientsHourB">
+                <label for="cliB">Clientes <strong>B</strong> Por Hora</label>
+                <input type="number" class="form-control" id="cliB" placeholder="#" ng-model="mainCtrl.formData.simData.clientsHourB">
             </div>
         </div>
 
         <div class="row">
             <div class="form-group col-sm-6">
-                <label for="muA">Attention <strong>A</strong> Per Hour</label>
-                <input type="number" class="form-control" id="muA" placeholder="Rate" ng-model="mainCtrl.formData.simData.muA">
+                <label for="muA">Atención de <strong>A</strong> Por Hora</label>
+                <input type="number" class="form-control" id="muA" placeholder="#" ng-model="mainCtrl.formData.simData.muA">
             </div>
             <div class="form-group col-sm-6">
-                <label for="muB">Attention <strong>B</strong> Per Hour</label>
-                <input type="number" class="form-control" id="muB" placeholder="Rate" ng-model="mainCtrl.formData.simData.muB">
+                <label for="muB">Atención de <strong>B</strong> Por Hora</label>
+                <input type="number" class="form-control" id="muB" placeholder="#" ng-model="mainCtrl.formData.simData.muB">
             </div>
         </div>
 
         <!--<a class="btn" type="button" data-toggle="collapse" data-target="#advanced" aria-expanded="false" aria-controls="collapseExample"> Advanced Options </a>-->
 
         <div class="row text-center">
-            <button type="submit" class="btn btn-default btn-xl" ng-disabled="mainCtrl.disableSubmit">Submit</button>
+            <button type="submit" class="btn btn-default btn-xl" ng-disabled="mainCtrl.disableSubmit">Aceptar</button>
         </div>
     </form>
-    <p> Simulation by :  {{mainCtrl.simulation.name}} </p>
+    <p> Simulación por :  {{mainCtrl.simulation.name}} </p>
 </div>
 
 <div class="container animate-hide" ng-show="!mainCtrl.editing && !mainCtrl.loading"  ng-class="!mainCtrl.editing ? 'delay-transition' : 'no-transition' " >
@@ -265,23 +264,23 @@
         </div>
 
         <div class="row">
-            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"> View Events</button>
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"> Ver eventos</button>
             <div class="collapse" id="collapseExample">
                 <!--<pre>{{mainCtrl.items.events | json}}</pre>-->
                 <table class="table table-condensed table-hover">
                     <thead>
                     <tr>
                         <th>t</th>
-                        <th>Event</th>
-                        <th>Client Type</th>
-                        <th>Client Number</th>
-                        <th>Queue Size</th>
-                        <th>Queue A Size</th>
-                        <th>Status</th>
+                        <th>Evento</th>
+                        <th>Tipo de cliente</th>
+                        <th>Número de cliente</th>
+                        <th>Largo de la cola</th>
+                        <th>Largo de cola de clientes A</th>
+                        <th>Estado</th>
                         <th>W</th>
                         <th>Wc</th>
-                        <th>Comment</th>
-                        <th>deltaTime</th>
+                        <th>Comentario</th>
+                        <th>delta Tiempo</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -293,8 +292,8 @@
                         <td>{{event.queueLength}}</td>
                         <td>{{event.queueALength}}</td>
                         <td>{{event.attentionChanelStatus}}</td>
-                        <td>{{event.type == 'DEPARTURE' ? event.customer.permanence : ""}}</td>
-                        <td>{{event.type == 'DEPARTURE' ? event.customer.waitTime : ""}}</td>
+                        <td>{{event.type == 'SALIDA' ? event.customer.permanence : ""}}</td>
+                        <td>{{event.type == 'SALIDA' ? event.customer.waitTime : ""}}</td>
                         <td>{{event.comment}}</td>
                         <td>{{event.deltaTime}}</td>
                     </tr>

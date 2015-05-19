@@ -10,9 +10,9 @@ import java.util.function.Predicate;
 
 import static model.simulation.Customer.CustomerType.A;
 import static model.simulation.Customer.CustomerType.B;
-import static model.simulation.Event.EventType.DEPARTURE;
-import static model.simulation.Event.Status.EMPTY;
-import static model.simulation.Event.Status.OCCUPIED;
+import static model.simulation.Event.EventType.SALIDA;
+import static model.simulation.Event.Status.VACIO;
+import static model.simulation.Event.Status.OCUPADO;
 
 /**
  * Relative Priority, Total Abandonment Simulation Strategy by: Pablo Celentano.
@@ -63,7 +63,7 @@ public class RelativePriorityTotalAbandonmentStrategy implements SimulationStrat
                         final Customer c = simulation.pollCustomerQueue();
                         if (c != null) {
                             c.interrupted();
-                            simulation.addEventAndSort(new Event(DEPARTURE, c, event.getInitTime(), true).comment("Left because A entered"));
+                            simulation.addEventAndSort(new Event(SALIDA, c, event.getInitTime(), true).comment("Left because A entered"));
                         }
                     }
 
@@ -78,14 +78,14 @@ public class RelativePriorityTotalAbandonmentStrategy implements SimulationStrat
             if (currentCustomer.getType() == A){
                 // bLeftBecauseACurrent
                 customer.setPermanence(0).interrupted();
-                simulation.addEventAndSort(new Event(DEPARTURE, customer, event.getInitTime(), true).comment("Left Because A current"));
+                simulation.addEventAndSort(new Event(SALIDA, customer, event.getInitTime(), true).comment("Left Because A current"));
 //                System.out.println("B left because A current");
             }
             else {
                 if (queueType(simulation) == A){
                     // bLeftBeacuaseAinQueue
                     customer.interrupted();
-                    simulation.addEventAndSort(new Event(DEPARTURE, customer, event.getInitTime(), true).comment("Left because A in queue"));
+                    simulation.addEventAndSort(new Event(SALIDA, customer, event.getInitTime(), true).comment("Left because A in queue"));
 //                    System.out.println("B left because A in queue");
                 }
 
@@ -93,7 +93,7 @@ public class RelativePriorityTotalAbandonmentStrategy implements SimulationStrat
             }
         }
 
-        event.queueLength(simulation.getQueueLength()).attentionChanelStatus(OCCUPIED).setQueueALength(simulation.getALength());
+        event.queueLength(simulation.getQueueLength()).attentionChanelStatus(OCUPADO).setQueueALength(simulation.getALength());
         if (currentCustomer != null) event.setAttentionChannelCustomer(currentCustomer.getType());
 
     }
@@ -107,13 +107,13 @@ public class RelativePriorityTotalAbandonmentStrategy implements SimulationStrat
         final Customer customer = event.getCustomer();
         customer.setPermanence(event.getInitTime() - customer.getArrivalTime());
 
-        event.queueLength(simulation.getQueueLength()).attentionChanelStatus(simulation.getCurrentCustomer() == null ? EMPTY : OCCUPIED).setQueueALength(simulation.getALength());
+        event.queueLength(simulation.getQueueLength()).attentionChanelStatus(simulation.getCurrentCustomer() == null ? VACIO : OCUPADO).setQueueALength(simulation.getALength());
         if (simulation.getCurrentCustomer() != null) event.setAttentionChannelCustomer(simulation.getCurrentCustomer().getType());
 
     }
 
     @Override public void handleInitiation(@NotNull Event event, @NotNull Simulation simulation) {
-        event.queueLength(0).attentionChanelStatus(EMPTY).setQueueALength(simulation.getALength());
+        event.queueLength(0).attentionChanelStatus(VACIO).setQueueALength(simulation.getALength());
     }
 
 
@@ -125,11 +125,11 @@ public class RelativePriorityTotalAbandonmentStrategy implements SimulationStrat
             customer.waitTime(event.getInitTime() - customer.getArrivalTime());
             final Customer.CustomerType type = customer.getType();
 //            System.out.println("Atendiendo a " + type.toString());
-            event.attentionChanelStatus(OCCUPIED);
+            event.attentionChanelStatus(OCUPADO);
             final double mu = Mathematics.getDurationChannel(type == A ? simulation.getMuA() : simulation.getMuB());
-            simulation.addEventAndSort(new Event(DEPARTURE, customer, event.getInitTime() + mu, false));
+            simulation.addEventAndSort(new Event(SALIDA, customer, event.getInitTime() + mu, false));
         } else {
-            event.attentionChanelStatus(EMPTY);
+            event.attentionChanelStatus(VACIO);
         }
     }
 
