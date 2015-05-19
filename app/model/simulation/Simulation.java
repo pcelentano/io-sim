@@ -65,7 +65,7 @@ public class Simulation {
         int eventPosition = 0;
 
 
-        while (time < MAX_TIME) {
+        while (time < MAX_TIME && events.size()>eventPosition) {
             final Event event = events.get(eventPosition);
             handleEvent(event);
             result.addEvent(event);

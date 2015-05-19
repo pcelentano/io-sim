@@ -126,8 +126,6 @@ angular.module('ngSimulation')
                 self.simulation.tolerance = undefined;
                 self.simulation.resumption = undefined;
                 self.simulation.intolerance = undefined;
-                self.formData.simData.muB = undefined;
-                self.formData.simData.clientsHourB = undefined;
             }
             if(self.simulation.tolerance == 'Tolerant') self.simulation.intolerance = undefined;
             else if(self.simulation.tolerance == 'Intolerant') self.simulation.resumption = undefined;
