@@ -94,16 +94,16 @@ public class ResultCalculator {
         results.setLb(lbT / totalTime);
         results.setW(wN / totalCustomers);
         results.setWa(waN / customersA);
-        results.setWb(wbN / customersB);
+        results.setWb(customersB!=0?wbN / customersB:0);
         results.setWc(wcN / totalCustomers);
         results.setWcA(wcaN / customersA);
-        results.setWcB(wcbN / customersB);
+        results.setWcB(customersB!=0?wcbN / customersB:0);
         results.setH(h/totalCustomers);
         results.setHa(ha/ customersA);
-        results.setHb(hb/ customersB);
-        results.setPorcentajeBAbandono((float)abandonment / customersB);
-        results.setPorcentajeBNoIngresa((float)notEnter / customersB);
-        results.setPorcentajeBEnjaulado((float)cagedTotal/customersB);
+        results.setHb(customersB!=0?hb/ customersB:0);
+        results.setPorcentajeBAbandono(customersB!=0?(float)abandonment / customersB:0);
+        results.setPorcentajeBNoIngresa(customersB!=0?(float)notEnter / customersB:0);
+        results.setPorcentajeBEnjaulado(customersB!=0?(float)cagedTotal/customersB:0);
 
 
 

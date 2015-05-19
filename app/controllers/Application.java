@@ -5,6 +5,7 @@ import model.simplex.WebConnection;
 import model.simulation.InputData;
 import model.simulation.Simulation;
 import model.simulation.strategies.AbsolutePriorityToleranceResumptionStrategy;
+import model.simulation.strategies.FIFONoPriorityStrategy;
 import model.simulation.strategies.RelativePriorityTotalAbandonmentStrategy;
 import model.simulation.strategies.SimulationStrategy;
 import play.libs.Json;
@@ -41,6 +42,9 @@ public class Application extends Controller {
         return runSimulationWithStrategy(new AbsolutePriorityToleranceResumptionStrategy());
     }
 
+    public static Result mingoSimulation() {
+        return runSimulationWithStrategy(new FIFONoPriorityStrategy());
+    }
 
     /**
      * Handle the game webSocket.

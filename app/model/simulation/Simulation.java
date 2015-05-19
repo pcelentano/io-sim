@@ -140,8 +140,9 @@ public class Simulation {
         int customerNumber = 0;
         while (time < MAX_TIME){
             final double iaca = Mathematics.getClientArrivalInterval(clientsPerHourA);
-            events.add(new Event(ARRIVAL, new Customer(A, customerNumber++, time + iaca), time + iaca, false));
             time = time + iaca;
+            if(time < MAX_TIME)
+            events.add(new Event(ARRIVAL, new Customer(A, customerNumber++, time), time, false));
         }
         result.getResults().setAcustomers(customerNumber);
     }
@@ -151,8 +152,9 @@ public class Simulation {
         int customerNumber = 0;
         while (time < MAX_TIME){
             final double iacb = Mathematics.getClientArrivalInterval(clientsPerHourB);
-            events.add(new Event(ARRIVAL, new Customer(B, customerNumber++, time + iacb), time + iacb, false));
             time = time + iacb;
+            if(time < MAX_TIME)
+                events.add(new Event(ARRIVAL, new Customer(B, customerNumber++, time), time, false));
         }
         result.getResults().setBcustomers(customerNumber);
     }

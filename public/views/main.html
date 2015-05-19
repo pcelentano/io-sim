@@ -26,9 +26,10 @@
                 <select class="form-control" id="priority" ng-model="mainCtrl.simulation.priority" ng-change="mainCtrl.selectSim()">
                     <option>Total</option>
                     <option>Relative</option>
+                    <option>None</option>
                 </select>
             </div>
-            <div class="form-group col-sm-4">
+            <div class="form-group col-sm-4" ng-show="mainCtrl.simulation.priority != 'None'">
                 <label for="tolerance"> Tolerance</label>
                 <select class="form-control" id="tolerance" ng-model="mainCtrl.simulation.tolerance" ng-change="mainCtrl.selectSim()">
                     <option>Tolerant</option>
@@ -82,7 +83,7 @@
                 <label for="cliA">Clients <strong>A</strong> Per Hour</label>
                 <input type="number" class="form-control" id="cliA" placeholder="Rate" ng-model="mainCtrl.formData.simData.clientsHourA">
             </div>
-            <div class="form-group col-sm-6">
+            <div class="form-group col-sm-6" ng-show="mainCtrl.simulation.priority != 'None'">
                 <label for="cliB">Clients <strong>B</strong> Per Hour</label>
                 <input type="number" class="form-control" id="cliB" placeholder="Rate" ng-model="mainCtrl.formData.simData.clientsHourB">
             </div>
@@ -93,7 +94,7 @@
                 <label for="muA">Attention <strong>A</strong> Per Hour</label>
                 <input type="number" class="form-control" id="muA" placeholder="Rate" ng-model="mainCtrl.formData.simData.muA">
             </div>
-            <div class="form-group col-sm-6">
+            <div class="form-group col-sm-6" ng-show="mainCtrl.simulation.priority != 'None'">
                 <label for="muB">Attention <strong>B</strong> Per Hour</label>
                 <input type="number" class="form-control" id="muB" placeholder="Rate" ng-model="mainCtrl.formData.simData.muB">
             </div>
@@ -156,7 +157,7 @@
 
         </div>
 
-        <div class="col-sm-4 text-center">
+        <div class="col-sm-4 text-center" ng-show="mainCtrl.simulation.priority != 'None'">
             <h2 class="section-heading text-primary">B</h2>
 
             <div class="service-box">
