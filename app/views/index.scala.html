@@ -148,7 +148,7 @@
         </div>
                         <div id="loadingPanel">
                             <p>
-                                <img id="loadingGif" src="/assets/images/hex-loader.gif">
+                                @*<img id="loadingGif" src="/assets/images/hex-loader.gif">*@
 
                             </p>
                         </div>
@@ -278,7 +278,7 @@
             <!-- endbuild -->
 
         <script type="text/javascript">
-    $(function() { initWebSocket("@routes.Application.socket().webSocketURL(request)" )}) ;
+    $(function() { initWebSocket("ws://io-final.ddns.net/simplex/" )}) ;
 </script>
     </body>
 </html>
