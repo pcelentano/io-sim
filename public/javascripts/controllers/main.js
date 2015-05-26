@@ -18,7 +18,11 @@ angular.module('ngSimulation')
         self.formData = {
             simParam: self.simulation,
             simData : {
-                time : 3000
+                time: 3000,
+                clientsHourA: 3,
+                clientsHourB: 10,
+                muA: 12,
+                muB: 20
             }
         };
 
@@ -47,7 +51,7 @@ angular.module('ngSimulation')
                 intolerance : "Total",
                 resumption : undefined,
                 url : "chelenSimulation",
-                maxTime : 100000
+                maxTime : 50000
 
             },
             {
@@ -57,7 +61,7 @@ angular.module('ngSimulation')
                 resumption : "Resumption",
                 intolerance : undefined,
                 url : "guteSimulation",
-                maxTime : 100000
+                maxTime : 50000
             },
             {
                 name: 'Juan D. Llorente',
@@ -65,7 +69,7 @@ angular.module('ngSimulation')
                 tolerance : undefined,
                 resumption : undefined,
                 intolerance : undefined,
-                maxTime : 100000,
+                maxTime : 50000,
                 url : "mingoSimulation"
             },
             {
@@ -75,7 +79,7 @@ angular.module('ngSimulation')
                 intolerance : "Partial",
                 resumption : undefined,
                 url : "schejtmanSimulation",
-                maxTime : 100000
+                maxTime : 50000
             }
         ];
 
@@ -128,7 +132,11 @@ angular.module('ngSimulation')
             self.loading = false;
             self.formData = {
                 simData : {
-                    time : 3000
+                    time: 3000,
+                    clientsHourA: 3,
+                    clientsHourB: 10,
+                    muA: 12,
+                    muB: 20
                 }
             };
             self.error = false;

@@ -278,7 +278,7 @@
             <!-- endbuild -->
 
         <script type="text/javascript">
-    $(function() { initWebSocket("ws://io-final.ddns.net/simplex/" )}) ;
+    $(function() { initWebSocket("@routes.Application.socket().webSocketURL(request)" )}) ;
 </script>
     </body>
 </html>
