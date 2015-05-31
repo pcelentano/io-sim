@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import java.util.*;
 import java.util.function.Predicate;
 
+import static java.util.Objects.*;
 import static model.simulation.Customer.CustomerType.A;
 import static model.simulation.Customer.CustomerType.B;
 import static model.simulation.Event.EventType.ARRIBO;
@@ -29,9 +30,11 @@ public class Simulation {
     public final SimulationStrategy simulationStrategy;
 
     private final Queue<Customer> customerQueue;
+    /** When absolute priority is on! */
+    private Queue<Customer> priorityQueue;
     private final TreeSet<Event> events;
     private Customer currentCustomer;
-    /* when resumption is needed */
+    /** When resumption is needed */
     private Customer cagedCustomer;
     private final Result result;
     private int aInQueue;
@@ -46,6 +49,7 @@ public class Simulation {
         MAX_TIME = max_time;
         aInQueue = 0;
         customerQueue = new LinkedList<Customer>();
+        priorityQueue = null;
         events = new TreeSet<Event>(new Comparator<Event>() {
             @Override public int compare(Event o1, Event o2) {
                 return o1.compareTo(o2);
@@ -211,5 +215,43 @@ public class Simulation {
 //            if (customer.getType() == A) aux++;
 //        }
         return aInQueue;
+    }
+
+    public void absolutePriority() { priorityQueue = new LinkedList<Customer>(); }
+
+    @Nullable public Customer peekPriorityQueue() {
+        checkValidPriorityQueue();
+        return priorityQueue.peek();
+    }
+
+    /** Add customer to priorityQueue. */
+    public void addCustomertoPriorityQueue(Customer customer) {
+        checkValidPriorityQueue();
+        priorityQueue.add(customer);
+        if (customer.getType() == A) aInQueue++;
+    }
+
+    /** Returns First queued Priority Customer, and removes it from queue, null if queue isEmpty(). */
+    @Nullable public Customer pollPriorityQueue() {
+        checkValidPriorityQueue();
+        final Customer poll = priorityQueue.poll();
+        if (poll != null && poll.getType() == A) aInQueue --;
+        return poll;
+    }
+
+    /** Priority Queue size. */
+    public int getPriorityQueueLength() {
+        checkValidPriorityQueue();
+        return priorityQueue.size();
+    }
+
+    /** Priority queue empty */
+    public boolean isPriorityQueueEmpty() {
+        checkValidPriorityQueue();
+        return priorityQueue.isEmpty();
+    }
+
+    private void checkValidPriorityQueue() {
+        if(isNull(priorityQueue)) throw new IllegalStateException("This is only for priority customers, and needs to be initialized in the strategy's initialization method.");
     }
 }
