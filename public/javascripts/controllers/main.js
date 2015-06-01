@@ -51,7 +51,7 @@ angular.module('ngSimulation')
                 intolerance : "Total",
                 resumption : undefined,
                 url : "chelenSimulation",
-                maxTime : 50000
+                maxTime : 100000
 
             },
             {
@@ -61,7 +61,7 @@ angular.module('ngSimulation')
                 resumption : "Resumption",
                 intolerance : undefined,
                 url : "guteSimulation",
-                maxTime : 50000
+                maxTime : 100000
             },
             {
                 name: 'Juan D. Llorente',
@@ -69,7 +69,7 @@ angular.module('ngSimulation')
                 tolerance : undefined,
                 resumption : undefined,
                 intolerance : undefined,
-                maxTime : 50000,
+                maxTime : 100000,
                 url : "mingoSimulation"
             },
             {
@@ -79,7 +79,7 @@ angular.module('ngSimulation')
                 intolerance : "Partial",
                 resumption : undefined,
                 url : "schejtmanSimulation",
-                maxTime : 50000
+                maxTime : 100000
             }
         ];
 
