@@ -24,7 +24,6 @@ function initSimplexController() {
     setOnMessageCallback(simplexEvent);
     actualStep = 0;
     artVariables = 0;
-    if ($("#slideFrame")) $("#slideFrame").focus();
     nextStep();
 }
 
@@ -283,7 +282,7 @@ function calculateStep3() {
     } else {
         var funcional = $("#funcionalEstandar");
         funcional.empty();
-        var max = document.getElementById('max').checked;
+        var max = document.getElementById('max').checked
         if (max) {
             objetivo = "MAX";
         } else {
@@ -561,7 +560,7 @@ function calculateStep5() {
     var resultsDiv = $("#resultados");
     resultsDiv.empty();
     var table = document.createElement("table");
-    table.className = "table table-striped";
+    table.className = "table";
     var row = table.insertRow(0);
     var cell1 = row.insertCell(0);
     var cell2 = row.insertCell(1);
@@ -985,10 +984,7 @@ function showTableau(matrix) {
     tablePanel.empty();
     var numberPattern = /(^[-+]?[0-9]*\.?[0-9]+$)/;
     var table = document.createElement("table");
-    var tableBody = document.createElement("tBody");
-    table.appendChild(tableBody);
     table.setAttribute("id", "tablaDeSimplex");
-    table.setAttribute("class", "table table-bordered");
     for (var i = 0; i < rows; i++) {
         var row = document.createElement("tr");
         for (var j = 0; j < columns; j++) {
@@ -1089,7 +1085,7 @@ function showTableau(matrix) {
             }
             row.appendChild(column);
         }
-        tableBody.appendChild(row);
+        table.appendChild(row);
     }
     tablePanel.append(table);
 }
@@ -1152,7 +1148,7 @@ function checkInputErrors(variables, restricciones) {
     for (var i = 0; i < variables; i++) {
         var n = i + 1;
         var coeficiente = $("#" + "f_x" + n);
-        if (!numberPattern.test(coeficiente.val()) && coeficiente.val() != "") {
+        if (!numberPattern.test(coeficiente.val())) {
             return coeficiente;
         }
     }
@@ -1161,31 +1157,14 @@ function checkInputErrors(variables, restricciones) {
         for (var j = 0; j < variables; j++) {
             var m = j + 1;
             var coeficiente = $("#" + "r" + (n) + "_" + "x" + m);
-            if (!numberPattern.test(coeficiente.val()) && coeficiente.val() != "") {
+            if (!numberPattern.test(coeficiente.val())) {
                 return coeficiente;
             }
         }
         var total = $("#" + "r" + (n) + "_" + "y");
-        if (!numberPattern.test(total.val()) && coeficiente.val() != "") {
+        if (!numberPattern.test(total.val())) {
             return total;
         }
-    }
-    //poner todos los blanks en 0.
-    for (var i = 0; i < variables; i++) {
-        var n = i + 1;
-        var coeficiente = $("#" + "f_x" + n);
-        if (coeficiente.val() == "") coeficiente.val(0);
-    }
-    for (var i = 0; i < restricciones; i++) {
-        var n = i + 1;
-        for (var j = 0; j < variables; j++) {
-            var m = j + 1;
-            var coeficiente = $("#" + "r" + (n) + "_" + "x" + m);
-            if (coeficiente.val() == "") coeficiente.val(0);
-            //console.log("variable = "+coeficiente.val());
-        }
-        var total = $("#" + "r" + (n) + "_" + "y");
-        if (total.val() == "") total.val(0);
     }
     return null;
 }

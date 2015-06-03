@@ -1,0 +1,143 @@
+*** simplexControllerOld.js	2015-06-02 23:40:17.804460467 -0300
+--- simplexController.js	2015-06-02 23:27:46.912456000 -0300
+***************
+*** 24,29 ****
+--- 24,30 ----
+      setOnMessageCallback(simplexEvent);
+      actualStep = 0;
+      artVariables = 0;
++     if ($("#slideFrame")) $("#slideFrame").focus();
+      nextStep();
+  }
+  
+***************
+*** 282,288 ****
+      } else {
+          var funcional = $("#funcionalEstandar");
+          funcional.empty();
+!         var max = document.getElementById('max').checked
+          if (max) {
+              objetivo = "MAX";
+          } else {
+--- 283,289 ----
+      } else {
+          var funcional = $("#funcionalEstandar");
+          funcional.empty();
+!         var max = document.getElementById('max').checked;
+          if (max) {
+              objetivo = "MAX";
+          } else {
+***************
+*** 560,566 ****
+      var resultsDiv = $("#resultados");
+      resultsDiv.empty();
+      var table = document.createElement("table");
+!     table.className = "table";
+      var row = table.insertRow(0);
+      var cell1 = row.insertCell(0);
+      var cell2 = row.insertCell(1);
+--- 561,567 ----
+      var resultsDiv = $("#resultados");
+      resultsDiv.empty();
+      var table = document.createElement("table");
+!     table.className = "table table-striped";
+      var row = table.insertRow(0);
+      var cell1 = row.insertCell(0);
+      var cell2 = row.insertCell(1);
+***************
+*** 984,990 ****
+--- 985,994 ----
+      tablePanel.empty();
+      var numberPattern = /(^[-+]?[0-9]*\.?[0-9]+$)/;
+      var table = document.createElement("table");
++     var tableBody = document.createElement("tBody");
++     table.appendChild(tableBody);
+      table.setAttribute("id", "tablaDeSimplex");
++     table.setAttribute("class", "table table-bordered");
+      for (var i = 0; i < rows; i++) {
+          var row = document.createElement("tr");
+          for (var j = 0; j < columns; j++) {
+***************
+*** 1085,1091 ****
+              }
+              row.appendChild(column);
+          }
+!         table.appendChild(row);
+      }
+      tablePanel.append(table);
+  }
+--- 1089,1095 ----
+              }
+              row.appendChild(column);
+          }
+!         tableBody.appendChild(row);
+      }
+      tablePanel.append(table);
+  }
+***************
+*** 1148,1154 ****
+      for (var i = 0; i < variables; i++) {
+          var n = i + 1;
+          var coeficiente = $("#" + "f_x" + n);
+!         if (!numberPattern.test(coeficiente.val())) {
+              return coeficiente;
+          }
+      }
+--- 1152,1158 ----
+      for (var i = 0; i < variables; i++) {
+          var n = i + 1;
+          var coeficiente = $("#" + "f_x" + n);
+!         if (!numberPattern.test(coeficiente.val()) && coeficiente.val() != "") {
+              return coeficiente;
+          }
+      }
+***************
+*** 1157,1171 ****
+          for (var j = 0; j < variables; j++) {
+              var m = j + 1;
+              var coeficiente = $("#" + "r" + (n) + "_" + "x" + m);
+!             if (!numberPattern.test(coeficiente.val())) {
+                  return coeficiente;
+              }
+          }
+          var total = $("#" + "r" + (n) + "_" + "y");
+!         if (!numberPattern.test(total.val())) {
+              return total;
+          }
+      }
+      return null;
+  }
+  
+--- 1161,1192 ----
+          for (var j = 0; j < variables; j++) {
+              var m = j + 1;
+              var coeficiente = $("#" + "r" + (n) + "_" + "x" + m);
+!             if (!numberPattern.test(coeficiente.val()) && coeficiente.val() != "") {
+                  return coeficiente;
+              }
+          }
+          var total = $("#" + "r" + (n) + "_" + "y");
+!         if (!numberPattern.test(total.val()) && coeficiente.val() != "") {
+              return total;
+          }
+      }
++     //poner todos los blanks en 0.
++     for (var i = 0; i < variables; i++) {
++         var n = i + 1;
++         var coeficiente = $("#" + "f_x" + n);
++         if (coeficiente.val() == "") coeficiente.val(0);
++     }
++     for (var i = 0; i < restricciones; i++) {
++         var n = i + 1;
++         for (var j = 0; j < variables; j++) {
++             var m = j + 1;
++             var coeficiente = $("#" + "r" + (n) + "_" + "x" + m);
++             if (coeficiente.val() == "") coeficiente.val(0);
++             //console.log("variable = "+coeficiente.val());
++         }
++         var total = $("#" + "r" + (n) + "_" + "y");
++         if (total.val() == "") total.val(0);
++     }
+      return null;
+  }
+  
