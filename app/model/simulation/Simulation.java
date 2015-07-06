@@ -181,7 +181,7 @@ public class Simulation {
     @Nullable public Customer getCurrentCustomer() { return currentCustomer; }
 
     /** Set Current customer being attended. */
-    public void setCurrentCusomer(@Nullable Customer currentCustomer) { this.currentCustomer = currentCustomer; }
+    public void setCurrentCustomer(@Nullable Customer currentCustomer) { this.currentCustomer = currentCustomer; }
 
     /** Returns First queued Customer, and removes it from queue, null if queue isEmpty(). */
     @Nullable public Customer pollCustomerQueue() {

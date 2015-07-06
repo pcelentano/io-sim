@@ -68,4 +68,8 @@ public class Application extends Controller {
     public static Result schejtmanSimulation(){
         return runSimulationWithStrategy(new AbsolutePriorityPartialIntoleranceStrategy());
     }
+
+    public static Result testoriSimulation(){
+        return runSimulationWithStrategy(new AbsolutePriorityIntoleranceTotalAbandonmentStrategy());
+    }
 }

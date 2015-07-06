@@ -119,7 +119,7 @@ public class RelativePriorityTotalAbandonmentStrategy implements SimulationStrat
 
     private void attendNext(Event event, Simulation simulation) {
         final Customer customer = simulation.pollCustomerQueue();
-        simulation.setCurrentCusomer(customer);
+        simulation.setCurrentCustomer(customer);
 
         if (customer != null){
             customer.waitTime(event.getInitTime() - customer.getArrivalTime());

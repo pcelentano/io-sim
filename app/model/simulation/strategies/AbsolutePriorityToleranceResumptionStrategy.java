@@ -71,7 +71,7 @@ public class AbsolutePriorityToleranceResumptionStrategy implements SimulationSt
 
         simulation.removeEvent(possibleBExit);
         possibleBExit.setRemainingTime(possibleBExit.getInitTime() - event.getInitTime());
-        simulation.setCurrentCusomer(null);
+        simulation.setCurrentCustomer(null);
     }
 
     private void attendThis(Simulation simulation, Event event, Customer nextCustomer) {
@@ -82,7 +82,7 @@ public class AbsolutePriorityToleranceResumptionStrategy implements SimulationSt
         final Event bExit = new Event(SALIDA, nextCustomer, event.getInitTime() + mu, false);
         if (nextCustomer.getType() == B) possibleBExit = bExit;
         simulation.addEventAndSort(bExit);
-        simulation.setCurrentCusomer(nextCustomer);
+        simulation.setCurrentCustomer(nextCustomer);
     }
 
     private void resumeCaged(Simulation simulation, Event event) {
@@ -94,12 +94,12 @@ public class AbsolutePriorityToleranceResumptionStrategy implements SimulationSt
         possibleBExit = new Event(SALIDA, possibleBExit.getCustomer(), event.getInitTime() + possibleBExit.getRemainingTime(), false);
         simulation.addEventAndSort(possibleBExit);
 
-        simulation.setCurrentCusomer(customer);
+        simulation.setCurrentCustomer(customer);
     }
 
     @Override public void handleDeparture(@NotNull Event event, @NotNull Simulation simulation) {
 
-        simulation.setCurrentCusomer(null);
+        simulation.setCurrentCustomer(null);
 
         attend(event, simulation);
 

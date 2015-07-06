@@ -84,13 +84,13 @@ public class AbsolutePriorityPartialIntoleranceStrategy implements SimulationStr
         final Event bExit = new Event(SALIDA, nextCustomer, event.getInitTime() + mu, false);
         if (nextCustomer.getType() == B) possibleBExit = bExit;
         simulation.addEventAndSort(bExit);
-        simulation.setCurrentCusomer(nextCustomer);
+        simulation.setCurrentCustomer(nextCustomer);
     }
 
     @Override
     public void handleDeparture(@NotNull Event event, @NotNull Simulation simulation) {
 
-        simulation.setCurrentCusomer(null);
+        simulation.setCurrentCustomer(null);
 
         attend(event, simulation);
 

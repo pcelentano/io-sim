@@ -80,6 +80,15 @@ angular.module('ngSimulation')
                 resumption : undefined,
                 url : "schejtmanSimulation",
                 maxTime : 100000
+            },
+            {
+                name: 'Franco Testori',
+                priority : "Total",
+                tolerance : "Intolerant",
+                intolerance : "Total",
+                resumption : undefined,
+                url : "testoriSimulation",
+                maxTime : 100000
             }
         ];
 
