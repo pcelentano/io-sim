@@ -23,12 +23,12 @@ public class Mathematics {
 
     /** Random function seems to tell next ocurrence of an event given a ocurrence rate By : Laura Lopez Bukovac, check her code. */
     private static double poissonLikeFunction(double rate) {
-        final double iac = getThreeDecimals((1 / rate) * (Math.log(1 / Math.random())));
-        if (iac <= MIN_PROBABILITY) {
-            return poissonLikeFunction(rate);
-        } else {
+        final double iac =(1 / rate) * (Math.log(1 / Math.random()));
+//        if (iac <= MIN_PROBABILITY) {
+//            return poissonLikeFunction(rate);
+//        } else {
             return iac;
-        }
+       // }
     }
 
     private static double getThreeDecimals(double n) {

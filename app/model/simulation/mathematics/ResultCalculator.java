@@ -41,7 +41,6 @@ public class ResultCalculator {
         double canalOcupado=0;
         double canalLibre=0;
 
-
         for (final Event event : events) {
             final Customer customer = event.getCustomer();
             lcT += event.getQueueLength() * event.getDeltaTime();
@@ -87,7 +86,7 @@ public class ResultCalculator {
 
 
 
-        final double totalTime = events.get(events.size()-1).getInitTime();
+        final double totalTime = events.get(events.size()-1).getInitTime();// events.get(events.size()-1).getDeltaTime();
         final int customersA = results.getAcustomers();
         final int customersB = results.getBcustomers();
         final int totalCustomers = customersA + customersB;
@@ -116,6 +115,8 @@ public class ResultCalculator {
         results.setCanalLibre(canalLibre / totalTime);
 
         System.out.println("#######################!");
+
+        System.out.println("Total time= " + totalTime);
         System.out.println("Canal Ocupado= " + canalOcupado / totalTime);
         System.out.println("Canal libre= " + canalLibre / totalTime);
         System.out.println("Canal libre= " + (totalTime-canalOcupado) / totalTime);
