@@ -24,6 +24,14 @@ public class NumericResults {
     private int aCustomers;
     private float porcentajeBEnjaulado;
 
+    private double canalOcupado;
+    private double canalLibre;
+
+
+public double getCanalOcupado(){return canalOcupado;}
+public void setCanalOcupado(double time){this.canalOcupado=time;}
+public double getCanalLibre(){return canalLibre;}
+public void setCanalLibre(double time){this.canalLibre=time;}
 
     public double getLcA() { return lcA; }
 

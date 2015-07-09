@@ -29,19 +29,19 @@ public class RelativePriorityTotalAbandonmentStrategy implements SimulationStrat
     @Override public void handleArrival(@NotNull Event event, @NotNull  Simulation simulation) {
 
         // no hay alguien siendo atendido -->  pasa
-            // entro A
-                // Atendido A --> se encola
-                // Atendido B
-                    // hay cola ?
-                        // Cola a --> encolo A
-                        // Cola de B --> limpio cola y encolo A
+        // entro A
+        // Atendido A --> se encola
+        // Atendido B
+        // hay cola ?
+        // Cola a --> encolo A
+        // Cola de B --> limpio cola y encolo A
 
         // entra B
-            // Atendido A --> Se va
-            // Atendido B
-                // Hay cola?
-                    // Cola A --> Se va
-                    // Cola B --> Se encola
+        // Atendido A --> Se va
+        // Atendido B
+        // Hay cola?
+        // Cola A --> Se va
+        // Cola B --> Se encola
 
 
         final Customer customer = event.getCustomer();
@@ -93,8 +93,20 @@ public class RelativePriorityTotalAbandonmentStrategy implements SimulationStrat
             }
         }
 
-        event.queueLength(simulation.getQueueLength()).attentionChanelStatus(OCUPADO).setQueueALength(simulation.getALength());
-        if (currentCustomer != null) event.setAttentionChannelCustomer(currentCustomer.getType());
+//        event.queueLength(simulation.getQueueLength()).attentionChanelStatus(OCUPADO).setQueueALength(simulation.getALength());
+//        if (currentCustomer != null) event.setAttentionChannelCustomer(currentCustomer.getType());
+
+// event.queueLength(simulation.getQueueLength()).attentionChanelStatus(OCUPADO).setQueueALength(simulation.getALength());
+// if (currentCustomer != null) event.setAttentionChannelCustomer(currentCustomer.getType());
+
+//Settear la longitud de la cola en este evento de entrada
+        event.queueLength(simulation.getQueueLength())
+                .attentionChanelStatus(OCUPADO)
+                .setQueueALength(simulation.getALength());
+
+        if (simulation.getCurrentCustomer() != null)
+            event.setAttentionChannelCustomer(simulation.getCurrentCustomer().getType());
+
 
     }
 
@@ -107,8 +119,18 @@ public class RelativePriorityTotalAbandonmentStrategy implements SimulationStrat
         final Customer customer = event.getCustomer();
         customer.setPermanence(event.getInitTime() - customer.getArrivalTime());
 
-        event.queueLength(simulation.getQueueLength()).attentionChanelStatus(simulation.getCurrentCustomer() == null ? VACIO : OCUPADO).setQueueALength(simulation.getALength());
-        if (simulation.getCurrentCustomer() != null) event.setAttentionChannelCustomer(simulation.getCurrentCustomer().getType());
+//        event.queueLength(simulation.getQueueLength()).attentionChanelStatus(simulation.getCurrentCustomer() == null ? VACIO : OCUPADO).setQueueALength(simulation.getALength());
+//        if (simulation.getCurrentCustomer() != null) event.setAttentionChannelCustomer(simulation.getCurrentCustomer().getType());
+
+        event.getCustomer().setPermanence(event.getInitTime() - event.getCustomer().getArrivalTime());
+
+//Settear la longitud de la cola en este evento de salida
+        event.queueLength(simulation.getQueueLength())
+                .attentionChanelStatus(simulation.getCurrentCustomer() == null ? VACIO : OCUPADO)
+                .setQueueALength(simulation.getALength());
+
+        if (simulation.getCurrentCustomer() != null)
+            event.setAttentionChannelCustomer(simulation.getCurrentCustomer().getType());
 
     }
 

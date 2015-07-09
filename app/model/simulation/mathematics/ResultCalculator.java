@@ -10,6 +10,7 @@ import static model.simulation.Customer.CustomerType.A;
 import static model.simulation.Customer.CustomerType.B;
 import static model.simulation.Event.EventType.SALIDA;
 import static model.simulation.Event.Status.OCUPADO;
+import static model.simulation.Event.Status.VACIO;
 
 /**
  * Created by pablo on 5/14/15.
@@ -37,6 +38,8 @@ public class ResultCalculator {
         int abandonment = 0;
         int notEnter = 0;
         int cagedTotal = 0;
+        double canalOcupado=0;
+        double canalLibre=0;
 
 
         for (final Event event : events) {
@@ -77,8 +80,11 @@ public class ResultCalculator {
                     }
             }
 
-
+            canalOcupado+=(event.getAttentionChanelStatus() == OCUPADO ? 1 : 0) * event.getDeltaTime();
+            canalLibre+=(event.getAttentionChanelStatus() == VACIO ? 1 : 0) * event.getDeltaTime();
         }
+
+
 
 
         final double totalTime = events.get(events.size()-1).getInitTime();
@@ -92,18 +98,30 @@ public class ResultCalculator {
         results.setL(lT / totalTime);
         results.setLa(laT / totalTime);
         results.setLb(lbT / totalTime);
-        results.setW(totalCustomers!=0?wN / totalCustomers:0);
-        results.setWa(customersA!=0?waN / customersA:0);
-        results.setWb(customersB!=0?wbN / customersB:0);
-        results.setWc(totalCustomers!=0?wcN / totalCustomers:0);
-        results.setWcA(customersA!=0?wcaN / customersA:0);
-        results.setWcB(customersB!=0?wcbN / customersB:0);
-        results.setH(totalCustomers!=0?h/totalCustomers:0);
-        results.setHa(customersA!=0?ha/ customersA:0);
-        results.setHb(customersB!=0?hb/ customersB:0);
-        results.setPorcentajeBAbandono(customersB!=0?(float)abandonment / customersB:0);
-        results.setPorcentajeBNoIngresa(customersB!=0?(float)notEnter / customersB:0);
-        results.setPorcentajeBEnjaulado(customersB!=0?(float)cagedTotal/customersB:0);
+        results.setW(totalCustomers != 0 ? wN / totalCustomers : 0);
+        results.setWa(customersA != 0 ? waN / customersA : 0);
+        results.setWb(customersB != 0 ? wbN / customersB : 0);
+        results.setWc(totalCustomers != 0 ? wcN / totalCustomers : 0);
+        results.setWcA(customersA != 0 ? wcaN / customersA : 0);
+        results.setWcB(customersB != 0 ? wcbN / customersB : 0);
+        results.setH(totalCustomers != 0 ? h / totalCustomers : 0);
+        results.setHa(customersA != 0 ? ha / customersA : 0);
+        results.setHb(customersB != 0 ? hb / customersB : 0);
+        results.setPorcentajeBAbandono(customersB != 0 ? (float) abandonment / customersB : 0);
+        results.setPorcentajeBNoIngresa(customersB != 0 ? (float) notEnter / customersB : 0);
+        results.setPorcentajeBEnjaulado(customersB != 0 ? (float) cagedTotal / customersB : 0);
+
+
+        results.setCanalOcupado(canalOcupado / totalTime);
+        results.setCanalLibre(canalLibre / totalTime);
+
+        System.out.println("#######################!");
+        System.out.println("Canal Ocupado= " + canalOcupado / totalTime);
+        System.out.println("Canal libre= " + canalLibre / totalTime);
+        System.out.println("Canal libre= " + (totalTime-canalOcupado) / totalTime);
+
+        System.out.println("#######################!");
+
 
 
 
