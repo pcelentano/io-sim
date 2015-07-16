@@ -69,31 +69,12 @@ public class AbsolutePriorityIntoleranceTotalAbandonmentStrategy implements Simu
         final Customer customer = event.getCustomer();
         final Customer current = simulation.getCurrentCustomer();
 
-        //If customer is an A type customer
+        //If customer is A typed
         if(customer.getType() == A){
-            //Evaluates if priority queue is empty
-            if(simulation.isPriorityQueueEmpty()){
-                //If regular queue is empty, customers queues into priority queue
-                if(simulation.isQueueEmpty()){
-                    //If there is no current or it's type equals to A
-                    if(current == null || current.getType() == A) simulation.addCustomertoPriorityQueue(customer);
-                    //If type is B
-                    else{
-                        simulation.removeEvent(possibleBExitEvent);
-                        current.interrupted();
-                        final Event currentExitEvent = new Event(SALIDA, current, event.getInitTime(), true);
-                        simulation.addEventAndSort(currentExitEvent.comment("Left because A entered"));
-                        simulation.addCustomertoPriorityQueue(customer);
-                    }
-                }
-                //Else all B type customers queued are interrupted and leave the system
-                else{
-                    if(current != null && current.getType() == B){
-                        simulation.removeEvent(possibleBExitEvent);
-                        current.interrupted();
-                        final Event currentExitEvent = new Event(SALIDA, current, event.getInitTime(), true);
-                        simulation.addEventAndSort(currentExitEvent.comment("Left because A entered"));
-                    }
+            //Check that current is not null
+            if(current == null){
+                //If there are B typed customers in System, they leave
+                if(!simulation.isQueueEmpty()){
                     for (int i = 0; i < simulation.getQueueLength(); i++) {
                         final Customer c = simulation.pollCustomerQueue();
                         if (c != null) {
@@ -103,25 +84,53 @@ public class AbsolutePriorityIntoleranceTotalAbandonmentStrategy implements Simu
                     }
                     simulation.addCustomertoPriorityQueue(customer);
                 }
+                else simulation.addCustomertoPriorityQueue(customer);
             }
-            //If priority queue is not empty, customer is enqueued
-            else simulation.addCustomertoPriorityQueue(customer);
+            //If current is not null
+            else{
+                if(current.getType() == A) simulation.addCustomertoPriorityQueue(customer);
+                //If current is a B typed customer, he is interrupted
+                else{
+                    simulation.removeEvent(possibleBExitEvent);
+                    current.interrupted();
+                    final Event currentExitEvent = new Event(SALIDA, current, event.getInitTime(), true);
+                    simulation.addEventAndSort(currentExitEvent.comment("Left because A entered"));
+                    //All B typed customers queued leave
+                    if(!simulation.isQueueEmpty()){
+                        for (int i = 0; i < simulation.getQueueLength(); i++) {
+                            final Customer c = simulation.pollCustomerQueue();
+                            if (c != null) {
+                                c.interrupted();
+                                simulation.addEventAndSort(new Event(SALIDA, c, event.getInitTime(), true).comment("Left because A entered"));
+                            }
+                        }
+                    }
+                    simulation.addCustomertoPriorityQueue(customer);
+                }
+            }
         }
 
-        //If customer is a B type customer
-        else{
-            //Evaluates if current customer being attended is an A type customer and leaves without queueing
-            if(current != null && current.getType() == A){
-                customer.setPermanence(0).interrupted();
-                simulation.addEventAndSort(new Event(SALIDA, customer, event.getInitTime(), true).comment("Left Because A current"));
+        //If customer is B typed
+        else if(customer.getType() == B){
+            //Check if current is null
+            if(current == null){
+                //If there are no A typed customers queued, customer is queued
+                if(simulation.isPriorityQueueEmpty()) simulation.addCustomertoQueue(customer);
+                //Else he leaves without entering
+                else {
+                    customer.setPermanence(0).interrupted();
+                    simulation.addEventAndSort(new Event(SALIDA, customer, event.getInitTime(), true).comment("Left because A in queue"));
+                }
             }
-            //Or if there are A type customers in queue, customer also leaves without queueing
-            else if(!simulation.isPriorityQueueEmpty()){
-                customer.setPermanence(0).interrupted();
-                simulation.addEventAndSort(new Event(SALIDA, customer, event.getInitTime(), true).comment("Left because A in queue"));
+            //When current is not null
+            else{
+                //If current is A typed, customers leaves without entering
+                if(current.getType() == A){
+                    customer.setPermanence(0).interrupted();
+                    simulation.addEventAndSort(new Event(SALIDA, customer, event.getInitTime(), true).comment("Left Because A current"));
+                }
+                else simulation.addCustomertoQueue(customer);
             }
-            //If there are no A type customers in system, customers queues
-            else simulation.addCustomertoQueue(customer);
         }
     }
 
