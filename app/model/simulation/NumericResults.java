@@ -26,9 +26,11 @@ public class NumericResults {
 
     private double canalOcupado;
     private double canalLibre;
+    private double canalOcpuadoPorClienteB;
+    private double canalOcpuadoPorClienteA;
 
 
-public double getCanalOcupado(){return canalOcupado;}
+    public double getCanalOcupado(){return canalOcupado;}
 public void setCanalOcupado(double time){this.canalOcupado=time;}
 public double getCanalLibre(){return canalLibre;}
 public void setCanalLibre(double time){this.canalLibre=time;}
@@ -185,4 +187,20 @@ public void setCanalLibre(double time){this.canalLibre=time;}
     public void setPorcentajeBEnjaulado(float porcentajeBEnjaulado) { this.porcentajeBEnjaulado = porcentajeBEnjaulado; }
 
     public float getPorcentajeBEnjaulado() { return porcentajeBEnjaulado; }
+
+    public void setCanalOcpuadoPorClienteB(double canalOcpuadoPorClienteB) {
+        this.canalOcpuadoPorClienteB = canalOcpuadoPorClienteB;
+    }
+
+    public double getCanalOcpuadoPorClienteB() {
+        return canalOcpuadoPorClienteB;
+    }
+
+    public void setCanalOcpuadoPorClienteA(double canalOcpuadoPorClienteA) {
+        this.canalOcpuadoPorClienteA = canalOcpuadoPorClienteA;
+    }
+
+    public double getCanalOcpuadoPorClienteA() {
+        return canalOcpuadoPorClienteA;
+    }
 }

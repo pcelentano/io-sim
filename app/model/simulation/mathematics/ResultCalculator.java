@@ -40,6 +40,9 @@ public class ResultCalculator {
         int cagedTotal = 0;
         double canalOcupado=0;
         double canalLibre=0;
+        double canalOcpuadoPorClienteA=0;
+        double canalOcpuadoPorClienteB=0;
+
 
         for (final Event event : events) {
             final Customer customer = event.getCustomer();
@@ -79,8 +82,15 @@ public class ResultCalculator {
                     }
             }
 
-            canalOcupado+=(event.getAttentionChanelStatus() == OCUPADO ? 1 : 0) * event.getDeltaTime();
+            if(customer!=null){
+                if(customer.getType()==A)
+                    canalOcpuadoPorClienteA+=(event.getAttentionChanelStatus() == OCUPADO ? 1 : 0) * event.getDeltaTime();
+                else
+                    canalOcpuadoPorClienteB+=(event.getAttentionChanelStatus() == OCUPADO ? 1 : 0) * event.getDeltaTime();
+            }
+
             canalLibre+=(event.getAttentionChanelStatus() == VACIO ? 1 : 0) * event.getDeltaTime();
+            canalOcupado+=(event.getAttentionChanelStatus() == OCUPADO ? 1 : 0) * event.getDeltaTime();
         }
 
 
@@ -113,6 +123,8 @@ public class ResultCalculator {
 
         results.setCanalOcupado(canalOcupado / totalTime);
         results.setCanalLibre(canalLibre / totalTime);
+        results.setCanalOcpuadoPorClienteA(canalOcpuadoPorClienteA / totalTime);
+        results.setCanalOcpuadoPorClienteB(canalOcpuadoPorClienteB / totalTime);
 
         System.out.println("#######################!");
 
@@ -120,6 +132,9 @@ public class ResultCalculator {
         System.out.println("Canal Ocupado= " + canalOcupado / totalTime);
         System.out.println("Canal libre= " + canalLibre / totalTime);
         System.out.println("Canal libre= " + (totalTime-canalOcupado) / totalTime);
+        System.out.println("Canal ocupado cliente A= " + (canalOcpuadoPorClienteA) / totalTime);
+        System.out.println("Canal ocuapdo cliente B= " + (canalOcpuadoPorClienteB) / totalTime);
+        System.out.println("Canal ocuapdo cliente B= " + (canalOcupado-canalOcpuadoPorClienteA) / totalTime);
 
         System.out.println("#######################!");
 
