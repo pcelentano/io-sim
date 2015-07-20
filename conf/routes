@@ -11,6 +11,7 @@ POST        /api/simulation/chelenSimulation        controllers.Application.chel
 POST        /api/simulation/guteSimulation          controllers.Application.guteSimulation()
 POST        /api/simulation/mingoSimulation         controllers.Application.mingoSimulation()
 POST        /api/simulation/schejtmanSimulation     controllers.Application.schejtmanSimulation()
+POST        /api/simulation/lucasSimulation         controllers.Application.lucasSimulation()
 
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file                           controllers.Assets.at(path="/public", file)
