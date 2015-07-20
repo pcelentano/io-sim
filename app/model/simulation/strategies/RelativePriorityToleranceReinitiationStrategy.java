@@ -43,7 +43,9 @@ public class RelativePriorityToleranceReinitiationStrategy implements Simulation
 
             simulation.clearCustomerQueue();
             simulation.addCustomertoQueue(customer);
-            auxCustomerQueue.forEach(simulation::addCustomertoQueue);
+            for (int i = 0; i < auxCustomerQueue.size(); i++) {
+                simulation.addCustomertoQueue(auxCustomerQueue.poll());
+            }
             simulation.addAinQueue();
         }
         else {
@@ -62,7 +64,9 @@ public class RelativePriorityToleranceReinitiationStrategy implements Simulation
 
                 simulation.clearCustomerQueue();
                 simulation.addCustomertoQueue(currentCustomer);
-                auxCustomerQueue.forEach(simulation::addCustomertoQueue);
+                for (int i = 0; i < auxCustomerQueue.size(); i++) {
+                    simulation.addCustomertoQueue(auxCustomerQueue.poll());
+                }
                 simulation.setCurrentCusomer(null);
                 handleArrival(event, simulation);
             }
