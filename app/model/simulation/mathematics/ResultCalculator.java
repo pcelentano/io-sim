@@ -139,8 +139,6 @@ public class ResultCalculator {
         System.out.println("#######################!");
 
 
-
-
     }
 
 

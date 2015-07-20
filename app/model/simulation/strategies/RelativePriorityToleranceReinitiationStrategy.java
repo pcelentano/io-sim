@@ -20,59 +20,15 @@ import static model.simulation.Event.Status.VACIO;
  * Created by lucas on 09/07/15.
  */
 public class RelativePriorityToleranceReinitiationStrategy implements SimulationStrategy {
-
     private Event possibleBExit;
 
+    @Override public void handleArrival(@NotNull Event event, @NotNull Simulation simulation) {
+        addEventCustomer(simulation, event.getCustomer());
 
-    @Override public void handleArrival(@NotNull Event event, @NotNull  Simulation simulation) {
+        attend(event, simulation);
 
-        final Customer customer = event.getCustomer(); //Cliente nuevo
-        final Customer currentCustomer = simulation.getCurrentCustomer(); //Cliente siendo atendido
-
-        if (currentCustomer == null) {
-            //Si no hay nadie siendo atendido
-            simulation.addCustomertoQueue(customer);
-            attendNext(event, simulation);
-        }
-        else if (customer.getType() == A){
-            //Si hay un cliente siendo atendido y el cliente nuevo es tipo A
-            //Agrego cliente nuevo primero para que sea atendido luego del actual
-
-            Queue<Customer> auxCustomerQueue;
-            auxCustomerQueue = simulation.getCustomerQueue();
-
-            simulation.clearCustomerQueue();
-            simulation.addCustomertoQueue(customer);
-            for (int i = 0; i < auxCustomerQueue.size(); i++) {
-                simulation.addCustomertoQueue(auxCustomerQueue.poll());
-            }
-            simulation.addAinQueue();
-        }
-        else {
-            //Si hay un cliente siendo atendido y el cliente nuevo es tipo B
-            if (currentCustomer.getType() == A){
-                // Si el cliente acutal es tipo A, agrego cliente B a la cola
-                simulation.addCustomertoQueue(customer);
-            }
-            else {
-                //Si el cliente actual es tipo B, agrego cliente B a la cola y reinicio atencion a cliente actual
-                simulation.addCustomertoQueue(customer);
-
-                simulation.removeEvent(possibleBExit);
-                Queue<Customer> auxCustomerQueue;
-                auxCustomerQueue = simulation.getCustomerQueue();
-
-                simulation.clearCustomerQueue();
-                simulation.addCustomertoQueue(currentCustomer);
-                for (int i = 0; i < auxCustomerQueue.size(); i++) {
-                    simulation.addCustomertoQueue(auxCustomerQueue.poll());
-                }
-                simulation.setCurrentCusomer(null);
-                handleArrival(event, simulation);
-            }
-        }
         //Settear la longitud de la cola en este evento de entrada
-        event.queueLength(simulation.getQueueLength())
+        event.queueLength(simulation.getQueueLength() + simulation.getPriorityQueueLength())
                 .attentionChanelStatus(OCUPADO)
                 .setQueueALength(simulation.getALength());
 
@@ -80,19 +36,49 @@ public class RelativePriorityToleranceReinitiationStrategy implements Simulation
             event.setAttentionChannelCustomer(simulation.getCurrentCustomer().getType());
     }
 
-    @Override public void handleDeparture(@NotNull Event event, @NotNull Simulation simulation) {
-        if (!event.isSilent()){
-            event.comment("Attended Client");
-            simulation.setCurrentCusomer(null);
-            attendNext(event, simulation);
+    private void addEventCustomer(Simulation simulation, Customer customer) {
+        if(customer.getType() == A) simulation.addCustomertoPriorityQueue(customer);
+        else simulation.addCustomertoQueue(customer);
+    }
+
+    private void attend(final Event event, final Simulation simulation) {
+        if (simulation.getCurrentCustomer() == null) {
+            //si no hay nadie atendiendose
+            final Customer priorityCustomer = simulation.peekPriorityQueue();
+            if(priorityCustomer != null){
+                //me fijo si hay un A
+                attendThis(simulation, event, simulation.pollPriorityQueue());
+            } else{
+                //sino me fijo si hay alguien en la cola y lo meto
+                final Customer normalCustomer = simulation.peekCustomerQueue();
+                if(normalCustomer != null){
+                    attendThis(simulation, event, simulation.pollCustomerQueue());
+                }
+            }
         }
+    }
+
+    private void attendThis(Simulation simulation, Event event, Customer nextCustomer) {
+        nextCustomer.waitTime(event.getInitTime() - nextCustomer.getArrivalTime());
+        final Customer.CustomerType type = nextCustomer.getType();
+        event.attentionChanelStatus(OCUPADO);
+        final double mu = Mathematics.getDurationChannel(type == A ? simulation.getMuA() : simulation.getMuB());
+        final Event bExit = new Event(SALIDA, nextCustomer, event.getInitTime() + mu, false);
+        simulation.addEventAndSort(bExit);
+        simulation.setCurrentCusomer(nextCustomer);
+    }
+
+    @Override public void handleDeparture(@NotNull Event event, @NotNull Simulation simulation) {
+
+        simulation.setCurrentCusomer(null);
+
+        attend(event, simulation);
 
         //Settear permanencia del cliente en el sistema
-        final Customer customer = event.getCustomer();
-        customer.setPermanence(event.getInitTime() - customer.getArrivalTime());
+        event.getCustomer().setPermanence(event.getInitTime() - event.getCustomer().getArrivalTime());
 
         //Settear la longitud de la cola en este evento de salida
-        event.queueLength(simulation.getQueueLength())
+        event.queueLength(simulation.getQueueLength() + simulation.getPriorityQueueLength())
                 .attentionChanelStatus(simulation.getCurrentCustomer() == null ? VACIO : OCUPADO)
                 .setQueueALength(simulation.getALength());
 
@@ -101,26 +87,7 @@ public class RelativePriorityToleranceReinitiationStrategy implements Simulation
     }
 
     @Override public void handleInitiation(@NotNull Event event, @NotNull Simulation simulation) {
-        event.queueLength(0).attentionChanelStatus(VACIO).setQueueALength(simulation.getALength());
-    }
-
-    private void attendNext(Event event, Simulation simulation) {
-        final Customer customer = simulation.pollCustomerQueue(); //Elijo al proximo cliente de la cola
-        simulation.setCurrentCusomer(customer);
-
-        if (customer != null) {
-            //Si hay alguien en la cola, lo atiendo, ocupando el canal
-            customer.waitTime(event.getInitTime() - customer.getArrivalTime());
-            final Customer.CustomerType type = customer.getType();
-            event.attentionChanelStatus(OCUPADO);
-            final double mu = Mathematics.getDurationChannel(type == A ? simulation.getMuA() : simulation.getMuB());
-            final Event exitEvent = new Event(SALIDA, customer, event.getInitTime() + mu, false);
-            if (customer.getType() == B) possibleBExit = exitEvent;
-            simulation.addEventAndSort(exitEvent);
-        }
-        else {
-            //Si no hay nadie en la cola, el canal queda vacio
-            event.attentionChanelStatus(VACIO);
-        }
+        simulation.absolutePriority();
+        event.queueLength(0).attentionChanelStatus(VACIO);
     }
 }
