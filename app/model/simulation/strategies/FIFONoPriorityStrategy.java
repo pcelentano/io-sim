@@ -33,18 +33,18 @@ public class FIFONoPriorityStrategy implements SimulationStrategy {
     }
 
     private void addEventCustomer(Simulation simulation, Customer customer) {
-       simulation.addCustomertoQueue(customer);
+        simulation.addCustomertoQueue(customer);
     }
 
     private void attend(final Event event, final Simulation simulation) {
         if (simulation.getCurrentCustomer() == null) {
             //si no hay nadie atendiendose
 
-                // me fijo si hay alguien en la cola y lo meto
-                final Customer normalCustomer = simulation.peekCustomerQueue();
-                if(normalCustomer != null){
-                    attendThis(simulation, event, simulation.pollCustomerQueue());
-                }
+            // me fijo si hay alguien en la cola y lo meto
+            final Customer normalCustomer = simulation.peekCustomerQueue();
+            if(normalCustomer != null){
+                attendThis(simulation, event, simulation.pollCustomerQueue());
+            }
         }
     }
 
@@ -56,18 +56,12 @@ public class FIFONoPriorityStrategy implements SimulationStrategy {
         final Event bExit = new Event(SALIDA, nextCustomer, event.getInitTime() + mu, false);
 
         simulation.addEventAndSort(bExit);
-        simulation.setCurrentCusomer(nextCustomer);
+        simulation.setCurrentCustomer(nextCustomer);
     }
 
     @Override public void handleDeparture(@NotNull Event event, @NotNull Simulation simulation) {
 
-<<<<<<< HEAD
-    private void attendNext(Event event, Simulation simulation) {
-        final Customer customer = simulation.pollCustomerQueue();
-        simulation.setCurrentCustomer(customer);
-=======
-        simulation.setCurrentCusomer(null);
->>>>>>> origin/master
+        simulation.setCurrentCustomer(null);
 
         attend(event, simulation);
 

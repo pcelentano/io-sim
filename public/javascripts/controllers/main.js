@@ -81,21 +81,21 @@ angular.module('ngSimulation')
                 maxTime : 100000
             },
             {
-<<<<<<< HEAD
                 name: 'Franco Testori',
-                priority : "Total",
-                tolerance : "Intolerant",
-                intolerance : "Total",
-                resumption : undefined,
-                url : "testoriSimulation",
-=======
+                priority: "Total",
+                tolerance: "Intolerant",
+                intolerance: "Total",
+                resumption: undefined,
+                url: "testoriSimulation",
+                maxTime : 100000
+            },
+            {
                 name : 'Lucas Ramos Oromi',
                 priority : "Relative",
                 tolerance : "Tolerant",
                 resumption : "Reinitiation",
                 intolerance : undefined,
                 url : "lucasSimulation",
->>>>>>> origin/master
                 maxTime : 100000
             }
         ];

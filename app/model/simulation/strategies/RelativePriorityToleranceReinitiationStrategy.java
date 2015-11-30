@@ -65,12 +65,12 @@ public class RelativePriorityToleranceReinitiationStrategy implements Simulation
         final double mu = Mathematics.getDurationChannel(type == A ? simulation.getMuA() : simulation.getMuB());
         final Event bExit = new Event(SALIDA, nextCustomer, event.getInitTime() + mu, false);
         simulation.addEventAndSort(bExit);
-        simulation.setCurrentCusomer(nextCustomer);
+        simulation.setCurrentCustomer(nextCustomer);
     }
 
     @Override public void handleDeparture(@NotNull Event event, @NotNull Simulation simulation) {
 
-        simulation.setCurrentCusomer(null);
+        simulation.setCurrentCustomer(null);
 
         attend(event, simulation);
 
