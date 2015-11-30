@@ -31,6 +31,11 @@ public class Application extends Controller {
         return runSimulationWithStrategy(new RelativePriorityTotalAbandonmentStrategy());
     }
 
+    public static Result lucasSimulation() {
+        return runSimulationWithStrategy(new RelativePriorityToleranceReinitiationStrategy());
+    }
+
+
     @NotNull private static Result runSimulationWithStrategy(SimulationStrategy strategy) {
         final JsonNode json = request().body().asJson();
         final InputData data = Json.fromJson(json.get("simData"), InputData.class);

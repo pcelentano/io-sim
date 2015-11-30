@@ -6,17 +6,21 @@ import model.simulation.Simulation;
 import model.simulation.mathematics.Mathematics;
 
 import javax.validation.constraints.NotNull;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.function.Predicate;
 
 import static model.simulation.Customer.CustomerType.A;
 import static model.simulation.Customer.CustomerType.B;
 import static model.simulation.Event.EventType.SALIDA;
-import static model.simulation.Event.Status.VACIO;
 import static model.simulation.Event.Status.OCUPADO;
+import static model.simulation.Event.Status.VACIO;
 
 /**
- * Created by Megamingus on 16/5/2015.
+ * Created by lucas on 09/07/15.
  */
-public class FIFONoPriorityStrategy implements SimulationStrategy {
+public class RelativePriorityToleranceReinitiationStrategy implements SimulationStrategy {
+    private Event possibleBExit;
 
     @Override public void handleArrival(@NotNull Event event, @NotNull Simulation simulation) {
         addEventCustomer(simulation, event.getCustomer());
@@ -33,18 +37,24 @@ public class FIFONoPriorityStrategy implements SimulationStrategy {
     }
 
     private void addEventCustomer(Simulation simulation, Customer customer) {
-       simulation.addCustomertoQueue(customer);
+        if(customer.getType() == A) simulation.addCustomertoPriorityQueue(customer);
+        else simulation.addCustomertoQueue(customer);
     }
 
     private void attend(final Event event, final Simulation simulation) {
         if (simulation.getCurrentCustomer() == null) {
             //si no hay nadie atendiendose
-
-                // me fijo si hay alguien en la cola y lo meto
+            final Customer priorityCustomer = simulation.peekPriorityQueue();
+            if(priorityCustomer != null){
+                //me fijo si hay un A
+                attendThis(simulation, event, simulation.pollPriorityQueue());
+            } else{
+                //sino me fijo si hay alguien en la cola y lo meto
                 final Customer normalCustomer = simulation.peekCustomerQueue();
                 if(normalCustomer != null){
                     attendThis(simulation, event, simulation.pollCustomerQueue());
                 }
+            }
         }
     }
 
@@ -54,20 +64,13 @@ public class FIFONoPriorityStrategy implements SimulationStrategy {
         event.attentionChanelStatus(OCUPADO);
         final double mu = Mathematics.getDurationChannel(type == A ? simulation.getMuA() : simulation.getMuB());
         final Event bExit = new Event(SALIDA, nextCustomer, event.getInitTime() + mu, false);
-
         simulation.addEventAndSort(bExit);
         simulation.setCurrentCusomer(nextCustomer);
     }
 
     @Override public void handleDeparture(@NotNull Event event, @NotNull Simulation simulation) {
 
-<<<<<<< HEAD
-    private void attendNext(Event event, Simulation simulation) {
-        final Customer customer = simulation.pollCustomerQueue();
-        simulation.setCurrentCustomer(customer);
-=======
         simulation.setCurrentCusomer(null);
->>>>>>> origin/master
 
         attend(event, simulation);
 
@@ -87,5 +90,4 @@ public class FIFONoPriorityStrategy implements SimulationStrategy {
         simulation.absolutePriority();
         event.queueLength(0).attentionChanelStatus(VACIO);
     }
-
 }

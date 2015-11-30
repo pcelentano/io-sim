@@ -196,6 +196,21 @@ public class Simulation {
         if (customer.getType() == A) aInQueue++;
     }
 
+    /** Add one A in queue */
+    public void addAinQueue() {
+        aInQueue ++;
+    }
+
+    /** Gets the customerQueue */
+    public Queue<Customer> getCustomerQueue() {
+        return customerQueue;
+    }
+
+    /** Clear all customers from customerQueue */
+    public void clearCustomerQueue() {
+        customerQueue.clear();
+    }
+
     /** Customer queue empty */
     public boolean isQueueEmpty() { return customerQueue.isEmpty(); }
 

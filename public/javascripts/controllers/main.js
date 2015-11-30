@@ -45,6 +45,14 @@ angular.module('ngSimulation')
 
         self.simulations = [
             {
+                name: 'Juan D. Llorente',
+                priority : "None",
+                tolerance : undefined,
+                resumption : undefined,
+                intolerance : undefined,
+                url : "mingoSimulation"
+            },
+            {
                 name : 'Pablo Celentano',
                 priority : "Relative",
                 tolerance : "Intolerant",
@@ -64,15 +72,6 @@ angular.module('ngSimulation')
                 maxTime : 100000
             },
             {
-                name: 'Juan D. Llorente',
-                priority : "None",
-                tolerance : undefined,
-                resumption : undefined,
-                intolerance : undefined,
-                maxTime : 100000,
-                url : "mingoSimulation"
-            },
-            {
                 name: 'Nicolas Schejtman',
                 priority : "Total",
                 tolerance : "Intolerant",
@@ -82,12 +81,21 @@ angular.module('ngSimulation')
                 maxTime : 100000
             },
             {
+<<<<<<< HEAD
                 name: 'Franco Testori',
                 priority : "Total",
                 tolerance : "Intolerant",
                 intolerance : "Total",
                 resumption : undefined,
                 url : "testoriSimulation",
+=======
+                name : 'Lucas Ramos Oromi',
+                priority : "Relative",
+                tolerance : "Tolerant",
+                resumption : "Reinitiation",
+                intolerance : undefined,
+                url : "lucasSimulation",
+>>>>>>> origin/master
                 maxTime : 100000
             }
         ];
