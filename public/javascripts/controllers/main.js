@@ -93,7 +93,7 @@ angular.module('ngSimulation')
                 name : 'Lucas Ramos Oromi',
                 priority : "Relative",
                 tolerance : "Tolerant",
-                resumption : "Reinitiation",
+                resumption : undefined,
                 intolerance : undefined,
                 url : "lucasSimulation",
                 maxTime : 100000
@@ -166,7 +166,11 @@ angular.module('ngSimulation')
                 self.simulation.resumption = undefined;
                 self.simulation.intolerance = undefined;
             }
-            if(self.simulation.tolerance == 'Tolerant') self.simulation.intolerance = undefined;
+            if(self.simulation.tolerance == 'Tolerant') {
+                self.simulation.intolerance = undefined;
+                if (self.simulation.priority == 'Relative')
+                    self.simulation.resumption = undefined;
+            }
             else if(self.simulation.tolerance == 'Intolerant') self.simulation.resumption = undefined;
 
             for (var i = 0; i < self.simulations.length; i++){
