@@ -36,7 +36,7 @@ public class AbsolutePriorityPartialIntoleranceStrategy implements SimulationStr
      * @param customer   A/B customer
      */
     private void addEventCustomer(Simulation simulation, Customer customer) {
-        if (customer.getType() == A) simulation.addCustomertoPriorityQueue(customer);
+        if (customer.getType() == A) simulation.addCustomerToPriorityQueue(customer);
         else simulation.addCustomertoQueue(customer);
     }
 

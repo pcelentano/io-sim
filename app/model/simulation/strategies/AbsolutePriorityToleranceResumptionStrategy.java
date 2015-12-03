@@ -34,7 +34,7 @@ public class AbsolutePriorityToleranceResumptionStrategy implements SimulationSt
     }
 
     private void addEventCustomer(Simulation simulation, Customer customer) {
-        if(customer.getType() == A) simulation.addCustomertoPriorityQueue(customer);
+        if(customer.getType() == A) simulation.addCustomerToPriorityQueue(customer);
         else simulation.addCustomertoQueue(customer);
     }
 

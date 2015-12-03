@@ -6,12 +6,8 @@ import model.simulation.Simulation;
 import model.simulation.mathematics.Mathematics;
 
 import javax.validation.constraints.NotNull;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.function.Predicate;
 
 import static model.simulation.Customer.CustomerType.A;
-import static model.simulation.Customer.CustomerType.B;
 import static model.simulation.Event.EventType.SALIDA;
 import static model.simulation.Event.Status.OCUPADO;
 import static model.simulation.Event.Status.VACIO;
@@ -37,7 +33,7 @@ public class RelativePriorityToleranceReinitiationStrategy implements Simulation
     }
 
     private void addEventCustomer(Simulation simulation, Customer customer) {
-        if(customer.getType() == A) simulation.addCustomertoPriorityQueue(customer);
+        if(customer.getType() == A) simulation.addCustomerToPriorityQueue(customer);
         else simulation.addCustomertoQueue(customer);
     }
 

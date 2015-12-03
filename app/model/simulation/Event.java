@@ -7,8 +7,20 @@ public class Event implements Comparable<Event> {
 
     private final EventType type;
     private final Customer customer;
-    private final double initTime;
+
     private int queueLength;
+
+    private int queueALength;
+    private Status attentionChanelStatus;
+
+    private Customer.CustomerType attentionChannelCustomer;
+
+    private final double initTime;
+    private  double deltaTime;
+    private double remainingTime;
+
+    private final boolean silent;
+    private String comment;
 
     public int getQueueALength() {
         return queueALength;
@@ -17,9 +29,6 @@ public class Event implements Comparable<Event> {
     public void setQueueALength(int queueALength) {
         this.queueALength = queueALength;
     }
-
-    private int queueALength;
-    private Status attentionChanelStatus;
 
     public Customer.CustomerType getAttentionChannelCustomer() {
         return attentionChannelCustomer;
@@ -32,12 +41,6 @@ public class Event implements Comparable<Event> {
     public void setAttentionChannelCustomer(Customer.CustomerType attentionChannelCustomer) {
         this.attentionChannelCustomer = attentionChannelCustomer;
     }
-
-    private Customer.CustomerType attentionChannelCustomer;
-    private  double deltaTime;
-    private final boolean silent;
-    private String comment;
-    private double remainingTime;
 
     /** Event Type. */
     public EventType getType() { return type; }

@@ -48,12 +48,10 @@ public class Simulation {
         this.muB = muB;
         MAX_TIME = max_time;
         aInQueue = 0;
-        customerQueue = new LinkedList<Customer>();
+        customerQueue = new LinkedList<>();
         priorityQueue = null;
-        events = new TreeSet<Event>(new Comparator<Event>() {
-            @Override public int compare(Event o1, Event o2) {
-                return o1.compareTo(o2);
-            }
+        events = new TreeSet<>((o1, o2) -> {
+            return o1.compareTo(o2);
         });
         currentCustomer = null;
         cagedCustomer = null;
@@ -76,7 +74,6 @@ public class Simulation {
             final Event event = events.pollFirst();
             handleEvent(event);
             result.addEvent(event);
-//            eventPosition++;
             time = event.getInitTime();
         }
 
@@ -226,9 +223,6 @@ public class Simulation {
     }
 
     public int getALength() {
-//        for (final Customer customer : customerQueue) {
-//            if (customer.getType() == A) aux++;
-//        }
         return aInQueue;
     }
 
@@ -240,7 +234,7 @@ public class Simulation {
     }
 
     /** Add customer to priorityQueue. */
-    public void addCustomertoPriorityQueue(Customer customer) {
+    public void addCustomerToPriorityQueue(Customer customer) {
         checkValidPriorityQueue();
         priorityQueue.add(customer);
         if (customer.getType() == A) aInQueue++;
