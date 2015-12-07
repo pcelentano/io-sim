@@ -105,8 +105,21 @@ public class ResultCalculator {
         results.setLcA(lcaT / totalTime);
         results.setLcB(lcbT / totalTime);
         results.setL(lT / totalTime);
-        results.setLa(laT / totalTime);
-        results.setLb(lbT / totalTime);
+
+        if(lcaT / totalTime <= 0.000000009){
+            results.setLa(canalOcpuadoPorClienteA / totalTime);
+            results.setL((lbT / totalTime) + results.getLa());
+        }
+        else
+            results.setLa(laT / totalTime);
+
+        if(lcbT / totalTime <= 0.000000009){
+            results.setLb(canalOcpuadoPorClienteB / totalTime);
+            results.setL(results.getLa() + results.getLb());
+        }
+        else
+            results.setLb(lbT / totalTime);
+
         results.setW(totalCustomers != 0 ? wN / totalCustomers : 0);
         results.setWa(customersA != 0 ? waN / customersA : 0);
         results.setWb(customersB != 0 ? wbN / customersB : 0);
