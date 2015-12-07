@@ -16,7 +16,6 @@ import static model.simulation.Event.Status.VACIO;
  * Created by lucas on 09/07/15.
  */
 public class RelativePriorityToleranceReinitiationStrategy implements SimulationStrategy {
-    private Event possibleBExit;
 
     @Override public void handleArrival(@NotNull Event event, @NotNull Simulation simulation) {
         addEventCustomer(simulation, event.getCustomer());
@@ -56,10 +55,13 @@ public class RelativePriorityToleranceReinitiationStrategy implements Simulation
 
     private void attendThis(Simulation simulation, Event event, Customer nextCustomer) {
         nextCustomer.waitTime(event.getInitTime() - nextCustomer.getArrivalTime());
+
         final Customer.CustomerType type = nextCustomer.getType();
         event.attentionChanelStatus(OCUPADO);
+
         final double mu = Mathematics.getDurationChannel(type == A ? simulation.getMuA() : simulation.getMuB());
         final Event bExit = new Event(SALIDA, nextCustomer, event.getInitTime() + mu, false);
+
         simulation.addEventAndSort(bExit);
         simulation.setCurrentCustomer(nextCustomer);
     }
