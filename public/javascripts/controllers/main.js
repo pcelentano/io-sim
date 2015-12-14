@@ -97,6 +97,15 @@ angular.module('ngSimulation')
                 intolerance : undefined,
                 url : "lucasSimulation",
                 maxTime : 100000
+            },
+            {
+                name : 'Tomas Vilaboa',
+                priority : "Relative",
+                tolerance : "Intolerant",
+                resumption : undefined,
+                intolerance : "Partial",
+                url : "vilaboaSimulation",
+                maxTime : 100000
             }
         ];
 

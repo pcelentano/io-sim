@@ -70,6 +70,10 @@ public class Application extends Controller {
         };
     }
 
+    public static Result vilaboaSimulation(){
+        return runSimulationWithStrategy(new RelativePriorityIntolerancePartialAbandonmentStrategy());
+    }
+
     public static Result schejtmanSimulation(){
         return runSimulationWithStrategy(new AbsolutePriorityPartialIntoleranceStrategy());
     }
