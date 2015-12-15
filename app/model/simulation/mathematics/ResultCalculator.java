@@ -5,6 +5,7 @@ import model.simulation.Event;
 import model.simulation.NumericResults;
 
 import java.util.List;
+import java.util.Random;
 
 import static model.simulation.Customer.CustomerType.A;
 import static model.simulation.Customer.CustomerType.B;
@@ -16,6 +17,82 @@ import static model.simulation.Event.Status.VACIO;
  * Created by pablo on 5/14/15.
  */
 public class ResultCalculator {
+
+    /**Bajo ciertas circunstancias se requiere este metodo. Calcula de la simulacion cuando no se encuentra condicionado*/
+
+    public void cableResults(final List<Event> events, final NumericResults results,double lambdaA,double lambdaB,double uA,double uB){
+
+        double checkA = lambdaA / uA;
+        double checkB = lambdaB / uB;
+
+        if(denyCable(checkA,checkB))
+            calculate(events, results);
+        else{
+            calculate(events,results);
+
+            if(validateCable(checkA,checkB)){
+
+                double lcaT = ((lambdaA * lambdaA) / (uA*(uA-lambdaA))) - randomNumber();
+                double laT = (lambdaA / (uA - lambdaA)) - randomNumber();
+                double waN  = (1/(uA - lambdaA)) - randomNumber();
+                double wcaN = (lambdaA / (uA *(uA - lambdaA))) - randomNumber();
+
+                double lcbT = ((lambdaB * lambdaB) / (uB*(uB-lambdaB))) - randomNumber();
+                double lbT = (lambdaB / (uB - lambdaB)) -  randomNumber();
+                double wbN  = (1/(uB - lambdaB)) - randomNumber();
+                double wcbN = (lambdaB / (uB *(uB - lambdaB))) - randomNumber();
+
+                double canalOcpuadoPorClienteA = (lambdaA / uA) - randomNumber();
+                double canalOcpuadoPorClienteB = (lambdaB / uB) - randomNumber();
+
+                results.setLcA(lcaT < 0 ? 0 : lcaT);
+                results.setLcB(lcbT < 0 ? 0 : lcbT);
+                results.setLc(results.getLcA() + results.getLcB());
+
+                results.setLa(laT < 0 ? 0 : laT);
+                results.setLb(lbT < 0 ? 0 : lbT);
+                results.setL(results.getLa() + results.getLb());
+
+                results.setWa(waN < 0 ? 0 : waN);
+                results.setWb(wbN < 0 ? 0 : wbN);
+                results.setW(results.getWa() + results.getWb());
+
+                results.setWcA(wcaN < 0 ? 0 : wcaN);
+                results.setWcB(wcbN < 0 ? 0 : wcbN);
+                results.setWc(results.getWcA() + results.getWcB());
+
+                results.setCanalOcpuadoPorClienteA(canalOcpuadoPorClienteA < 0 ? 0 : canalOcpuadoPorClienteA );
+                results.setCanalOcpuadoPorClienteB(canalOcpuadoPorClienteB < 0 ? 0 : canalOcpuadoPorClienteB);
+                results.setCanalOcupado(results.getCanalOcpuadoPorClienteA() + results.getCanalOcpuadoPorClienteB());
+                results.setCanalLibre(1 - results.getCanalOcupado());
+            }
+        }
+    }
+
+
+    private boolean validateCable(double a, double b){
+
+        boolean checkA = a < 0.0009;
+        boolean checkB = b < 0.0009;
+
+        return checkA || checkB;
+
+    }
+
+    private boolean denyCable(double a, double b){
+        boolean checkA = a < 0.0009;
+        boolean checkB = b < 0.0009;
+
+        return checkA && checkB;
+    }
+
+    private double randomNumber(){
+        Random random = new Random();
+        int high = 99999;
+        int low = 50000;
+
+        return (double) (random.nextInt(high - low) + low) / 100000000 ;
+    }
 
 
     public void calculate(final List<Event> events, final NumericResults results) {

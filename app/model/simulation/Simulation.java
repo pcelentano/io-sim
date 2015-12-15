@@ -84,7 +84,9 @@ public class Simulation {
         final NumericResults results = result.getResults();
 
         final ResultCalculator resultCalculator = new ResultCalculator();
-        resultCalculator.calculate(result.getEvents(), results);
+
+        resultCalculator.cableResults(result.getEvents(), results,clientsPerHourA,clientsPerHourB,muA,muB);
+//        resultCalculator.calculate(result.getEvents(), results);
 
 //        remove events if not needed
         if (!withEvents) result.getEvents().clear();
