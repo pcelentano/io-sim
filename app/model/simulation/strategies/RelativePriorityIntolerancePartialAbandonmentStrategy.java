@@ -51,7 +51,7 @@ public class RelativePriorityIntolerancePartialAbandonmentStrategy implements Si
         if (simulation.getCurrentCustomer() == null)
             if (simulation.peekPriorityQueue() != null)
             attendCustomer(simulation, event, simulation.pollPriorityQueue());
-        else if (simulation.peekPriorityQueue() != null)
+        else if (simulation.peekCustomerQueue() != null)
                 attendCustomer(simulation, event, simulation.pollCustomerQueue());
     }
 
